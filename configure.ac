@@ -3,6 +3,7 @@ AC_INIT([programName], [0.1], [mike@conlen.org])
 AC_CONFIG_SRCDIR([src/test.cpp])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([-Wall -Werror])
+LT_INIT
 AC_PROG_CXX([g++])
 AC_HEADER_STDC
 
@@ -17,5 +18,10 @@ AC_FUNC_MALLOC
 AC_FUNC_MMAP
 AC_CHECK_FUNCS([fstat])
 AC_CONFIG_FILES([Makefile
-	src/Makefile])
+	src/Makefile
+])
+AC_CONFIG_SUBDIRS([
+	googletest/googletest
+	googletest/googlemock
+])
 AC_OUTPUT
