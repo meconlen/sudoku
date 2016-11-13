@@ -12,6 +12,7 @@
 *.la
 *.a
 
+INSTALL
 Makefile
 Makefile.in
 aclocal.m4
@@ -22,6 +23,8 @@ config.h.in
 config.log
 config.status
 configure
+depcomp
 install.sh
+install-sh
 missing
 stamp-h1
