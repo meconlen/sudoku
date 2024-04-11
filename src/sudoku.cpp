@@ -84,6 +84,28 @@ void sudoku::set_candidates()
    return;
 }
 
+void sudoku::solve_cell(uint_fast8_t row, uint_fast8_t column, uint_fast8_t value)
+{
+   puzzle[row][column].first = value;
+   // remove candidate from the row and column
+   for(auto k = 0; k < 9; k++) {
+      // row i
+      puzzle[row][k].second.erase(value);
+      // column j
+      puzzle[k][column].second.erase(value);
+   }
+   // we need to find the top left of the block. 
+   uint_fast8_t first_row = row - (row % 3);
+   uint_fast8_t first_column = column - (column % 3);
+   // remove the candidate from the block
+   for(auto k = first_row; k < first_row + 3; k++) {
+      for(auto l = first_column; l < first_column + 3; l++) {
+         puzzle[k][l].second.erase(value);
+      }
+   }
+   return;
+}
+
 void sudoku::print() const
 {
    std::cout << to_string() << std::endl;
@@ -176,34 +198,64 @@ sudoku::puzzle_input_data_t sudoku::get_puzzle() const
 
 void sudoku::solve_single_candidates()
 {
-   while(true) {
-      bool updated = false;
-      for(auto i = 0; i < 9; i++) {
-         for(auto j = 0; j < 9; j++) {
-            if(puzzle[i][j].first == 0 && puzzle[i][j].second.size() == 1) {
-               puzzle[i][j].first = *(puzzle[i][j].second.begin());
-               puzzle[i][j].second.erase(puzzle[i][j].first);
-               // remove candidate from the row and column
-               for(auto k = 0; k < 9; k++) {
-                  // row i
-                  puzzle[i][k].second.erase(puzzle[i][j].first);
-                  // column j
-                  puzzle[k][j].second.erase(puzzle[i][j].first);
+   for(auto i = 0; i < 9; i++) {
+      for(auto j = 0; j < 9; j++) {
+         if(puzzle[i][j].first == 0 && puzzle[i][j].second.size() == 1) {
+            solve_cell(i, j, *(puzzle[i][j].second.begin()));
+         }
+      }
+   }
+   return;
+}
+
+void sudoku::solve_unique_candidates()
+{
+   // for each cell, for each candidate, check each house, if it is unique in any house then it's the solution for the cell
+   for(auto i = 0; i < 9; i++) {
+      for(auto j = 0; j < 9; j++) {
+         for(const auto& candidate : puzzle[i][j].second) {
+            uint_fast8_t house_count = 0;
+            // row i
+            for(auto k = 0; k < 9; k++) {
+               if(puzzle[i][k].second.contains(candidate)) { house_count++; }
+            }
+            if(house_count == 1) { 
+               solve_cell(i, j, candidate); 
+               break; // next cell
+            }
+            house_count = 0;
+            for(auto k = 0; k < 9; k++) {
+               if(puzzle[k][j].second.contains(candidate)) { house_count++; }
+            }
+            if(house_count == 1) {
+               solve_cell(i, j, candidate); 
+               break; // next cell
+            }
+            house_count = 0;
+            uint_fast8_t first_row = i - (i % 3);
+            uint_fast8_t first_column = j - (j % 3); 
+            for(auto k = first_row; k < first_row + 3; k++) {
+               for(auto l = first_column; l < first_column + 3; l++) {
+                  if(puzzle[k][l].second.contains(candidate)) { house_count++; }                  
                }
-               // we need to find the top left of the block. 
-               uint_fast8_t first_row = i - (i % 3);
-               uint_fast8_t first_column = j - (j % 3);
-               // remove the candidate from the block
-               for(auto k = first_row; k < first_row + 3; k++) {
-                  for(auto l = first_column; l < first_column + 3; l++) {
-                     puzzle[k][l].second.erase(puzzle[i][j].first);
-                  }
-               }
-               updated = true;
+            }
+            if(house_count == 1) {
+               solve_cell(i, j, candidate); 
+               break;
             }
          }
       }
-      if(updated == false) break;
+   }
+   return;
+}
+
+void sudoku::solve_puzzle()
+{
+   while(true) {
+      sudoku current_puzzle = puzzle;
+      solve_single_candidates();
+      solve_unique_candidates();
+      if(puzzle == current_puzzle) break; // we didn't update the puzzle this iteration. 
    }
    return;
 }

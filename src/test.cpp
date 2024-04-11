@@ -354,6 +354,46 @@ TEST(sudoku, solve_single_candidates)
    EXPECT_EQ(s1.get_puzzle(), s2.get_puzzle());
 }
 
+TEST(sudoku, grid_2) 
+{
+   sudoku::puzzle_input_data_t p1 {{
+      {2,0,0,0,8,0,3,0,0},
+      {0,6,0,0,7,0,0,8,4},
+      {0,3,0,5,0,0,2,0,9},
+      {0,0,0,1,0,5,4,0,8},
+      {0,0,0,0,0,0,0,0,0},
+      {4,0,2,7,0,6,0,0,0},
+      {3,0,1,0,0,7,0,4,0},
+      {7,2,0,0,4,0,0,6,0},
+      {0,0,4,0,1,0,0,0,3},
+   }};
+
+
+
+   sudoku s1(p1);
+   s1.set_candidates();
+   s1.solve_puzzle();
+
+   sudoku::puzzle_input_data_t p2 {{
+      {2,4,5,9,8,1,3,7,6},
+      {1,6,9,2,7,3,5,8,4},
+      {8,3,7,5,6,4,2,1,9},
+      {9,7,6,1,2,5,4,3,8},
+      {5,1,3,4,9,8,6,2,7},
+      {4,8,2,7,3,6,9,5,1},
+      {3,9,1,6,5,7,8,4,2},
+      {7,2,8,3,4,9,1,6,5},
+      {6,5,4,8,1,2,7,9,3},
+   }};
+
+   sudoku s2(p2);
+   EXPECT_EQ(s1.get_puzzle(), s2.get_puzzle());
+
+   if(s1.get_puzzle() != s2.get_puzzle()) {
+      s1.print_differences(s2);
+   }
+}
+
 int main(int argc, char **argv) {
    testing::InitGoogleTest(&argc, argv);
    return RUN_ALL_TESTS();
