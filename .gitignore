@@ -29,3 +29,14 @@ install-sh
 missing
 stamp-h1
 test-driver
+
+
+.vscode/
+ar-lib
+config.guess
+config.h.in~
+config.sub
+configure.ac~
+configure~
+libtool
+ltmain.sh
