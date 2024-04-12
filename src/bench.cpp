@@ -51,4 +51,13 @@ static void BM_PUZZLE_5(benchmark::State& state) {
 }
 BENCHMARK(BM_PUZZLE_5);
 
+static void BM_PUZZLE_6(benchmark::State& state) {
+   for (auto _ : state) {
+      sudoku s1(p06);
+      s1.set_candidates();
+      s1.solve_puzzle();
+   }
+}
+BENCHMARK(BM_PUZZLE_6);
+
 BENCHMARK_MAIN();
