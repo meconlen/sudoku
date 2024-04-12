@@ -446,6 +446,39 @@ void sudoku::print_puzzle_raw() const
    }
 }
 
+void sudoku::print_puzzle_candidates_cpp() const 
+{
+   std::cout << "sudoku::puzzle_input_data_t p00 {{ // puzzle" << std::endl;
+   for(auto i = 0; i < 9; i++) {
+      std::cout << "   {{ // row " << i+1 << std::endl;;
+      for(auto j = 0; j < 9; j++) {
+         std::cout << "      { " << static_cast<unsigned>(puzzle[i][j].first) << ", ";
+         if(puzzle[i][j].second.size() > 0) {
+            std::cout << "{{ ";
+            for(auto it = puzzle[i][j].second.begin(); it != puzzle[i][j].second.end(); it++) {
+               std::cout << static_cast<unsigned>(*it);
+               if(std::next(it) != puzzle[i][j].second.end()) {
+                  std::cout << ", ";
+               }
+            }
+            std::cout << " }} }";
+         } else {
+            std::cout << " sudoku::default_candidates }";
+         }
+         if(j < 8) {
+            std::cout << ",";
+         }
+         std::cout << std::endl;
+      }      
+      std::cout << "   }}";
+      if(i < 8) {
+         std::cout << ",";
+      }
+      std::cout << std::endl;
+   }
+   std::cout << "}};" << std::endl;
+}
+
 std::pair<sudoku::value_t, sudoku::value_t> sudoku::get_block_start(value_t block)
 {
    std::pair<value_t, value_t> start;

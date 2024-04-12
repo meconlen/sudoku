@@ -7,6 +7,11 @@
 #include <string>
 #include <utility>
 
+// open issues
+// find_hidden_pairs for row and column. Currently only does this for a block (careful here, the example is actually a row, we need a test case for a block)
+// reduce_naked_pairs for a column and block
+// reduce_pointing_pairs for a column
+
 class sudoku 
 {
 public:
@@ -55,6 +60,7 @@ public:
    void print_blanks() const;
    void print_puzzle_cpp() const;
    void print_puzzle_raw() const; 
+   void print_puzzle_candidates_cpp() const;
 
 private:
 
