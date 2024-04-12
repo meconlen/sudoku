@@ -43,6 +43,7 @@ public:
    void solve_hidden_singles(); // this solves where there's only one cell in a house for a candidate 
    void find_hidden_pairs(); // this finds a hidden pair and removes candidates from those cells
    void reduce_naked_pairs(); // this finds naked pairs and removes candidates from the rest of the house
+   void reduce_pointing_pairs(); // this finds a pair (or triple) that is only in one row or column in a box. If so remove it from the row/column outside the box
    void solve_puzzle();
 
    bool is_solved();
@@ -57,9 +58,11 @@ public:
 
 private:
 
+   static std::pair<value_t, value_t> get_block_start(value_t block);
+
    std::set<uint_fast8_t> get_row(uint_fast8_t r);
    std::set<uint_fast8_t> get_column(uint_fast8_t c);
-   std::set<uint_fast8_t> get_block(uint_fast8_t b);
+   std::set<uint_fast8_t> get_block(uint_fast8_t block);
 
    puzzle_data_t puzzle{ empty_puzzle };
 

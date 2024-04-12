@@ -133,49 +133,12 @@ std::set<uint_fast8_t> sudoku::get_column(uint_fast8_t c)
    return rv;
 }
 
-std::set<uint_fast8_t> sudoku::get_block(uint_fast8_t b)
+std::set<uint_fast8_t> sudoku::get_block(uint_fast8_t block)
 {
    std::set<uint_fast8_t> rv;
-   uint_fast8_t first_row = 0;
-   uint_fast8_t first_column = 0;
-   switch(b) {
-      case 1:
-         first_row = 0;
-         first_column = 0;
-         break;
-      case 2:
-         first_row = 0;
-         first_column = 3;
-         break;
-      case 3:
-         first_row = 0; 
-         first_column = 6;
-         break;
-      case 4:
-         first_row = 3;
-         first_column = 0;
-         break;
-      case 5:
-         first_row = 3;
-         first_column = 3;
-         break;
-      case 6:
-         first_row = 3;
-         first_column = 6;
-         break;
-      case 7:
-         first_row = 6;
-         first_column = 0;
-         break;
-      case 8:
-         first_row = 6;
-         first_column = 3; 
-         break;
-      case 9:
-         first_row = 6;
-         first_column = 6;
-         break;
-   }
+   auto start = get_block_start(block);
+   uint_fast8_t first_row = start.first;
+   uint_fast8_t first_column = start.second;
    for(auto i = first_row; i < first_row + 3; i++) {
       for(auto j = first_column; j < first_column +3; j++) {
          rv.insert(puzzle[i][j].first);
@@ -277,46 +240,9 @@ void sudoku::find_hidden_pairs()
    // the hidden pair is found in a block 
    for(auto block = 0; block < 9; block++) {
       std::array<std::set<std::pair<value_t, value_t>>, 9> candidate_cells;
-      uint_fast8_t first_row = 0;
-      uint_fast8_t first_column = 0;
-      switch(block) {
-         case 1:
-            first_row = 0;
-            first_column = 0;
-            break;
-         case 2:
-            first_row = 0;
-            first_column = 3;
-            break;
-         case 3:
-            first_row = 0; 
-            first_column = 6;
-            break;
-         case 4:
-            first_row = 3;
-            first_column = 0;
-            break;
-         case 5:
-            first_row = 3;
-            first_column = 3;
-            break;
-         case 6:
-            first_row = 3;
-            first_column = 6;
-            break;
-         case 7:
-            first_row = 6;
-            first_column = 0;
-            break;
-         case 8:
-            first_row = 6;
-            first_column = 3; 
-            break;
-         case 9:
-            first_row = 6;
-            first_column = 6;
-            break;
-      }      
+      auto start = get_block_start(block);
+      uint_fast8_t first_row = start.first;
+      uint_fast8_t first_column = start.second;
       // fill out the candidate list 
       for(value_t row = first_row; row < first_row + 3; row++) {
          for(value_t column = first_column; column < first_column + 3; column++) {
@@ -381,8 +307,38 @@ void sudoku::reduce_naked_pairs()
 // if there is a candidate which is only in a single row(column)
 //    remove the candidate from the rest of the row 
 
-void reduce_pointing_pairs()
+void sudoku::reduce_pointing_pairs()
 {
+   // for each block
+   for(value_t block = 1; block < 10; block++) {
+      // for each candidate get a list of rows
+      std::array<std::set<value_t>, 9> candidate_rows;
+      auto start = get_block_start(block);
+      for(value_t candidate = 1; candidate < 10; candidate++) {
+         for(value_t i = start.first; i < start.first + 3; i++) {
+            for(value_t j = start.second; j < start.second + 3; j++) {
+               // for this cell for each candidate add i to the list
+               for(const auto& candidate : puzzle[i][j].second) {
+                  candidate_rows[candidate-1].insert(i);
+               }
+            }
+         }
+         // now we know which rows each candidate appears in
+         for(value_t candidate = 1; candidate < 10; candidate++) {
+            // for the candidate we see if there's only one row 
+            if(candidate_rows[candidate-1].size() == 1) {
+               // the canddiate is in a single row
+               value_t i = *(candidate_rows[candidate-1].begin());
+               for(value_t j = 0; j < 9; j++) {
+                  if(j < start.second || j >= start.second + 3) {
+                     // remove the candidate if we are outside the block
+                     puzzle[i][j].second.erase(candidate);
+                  }
+               }
+            }
+         }
+      }
+   }
    return;
 }
 
@@ -488,6 +444,50 @@ void sudoku::print_puzzle_raw() const
       }
       std::cout << std::endl;
    }
+}
+
+std::pair<sudoku::value_t, sudoku::value_t> sudoku::get_block_start(value_t block)
+{
+   std::pair<value_t, value_t> start;
+   switch(block) {
+      case 1:
+         start.first = 0;
+         start.second = 0;
+         break;
+      case 2:
+         start.first = 0;
+         start.second = 3;
+         break;
+      case 3:
+         start.first = 0; 
+         start.second = 6;
+         break;
+      case 4:
+         start.first = 3;
+         start.second = 0;
+         break;
+      case 5:
+         start.first = 3;
+         start.second = 3;
+         break;
+      case 6:
+         start.first = 3;
+         start.second = 6;
+         break;
+      case 7:
+         start.first = 6;
+         start.second = 0;
+         break;
+      case 8:
+         start.first = 6;
+         start.second = 3; 
+         break;
+      case 9:
+         start.first = 6;
+         start.second = 6;
+         break;
+   }         
+   return start;
 }
 
 bool operator==(const sudoku& lhs, const sudoku& rhs) 
