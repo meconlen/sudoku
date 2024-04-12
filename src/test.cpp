@@ -3,6 +3,8 @@
 #include <gtest/gtest.h>
 
 #include "sudoku.hpp"
+#include "puzzles.hpp"
+
 
 TEST(sudoku, operator_equal_equal)
 {
@@ -305,7 +307,8 @@ TEST(sudoku, set_candidates)
    EXPECT_EQ(s1, s2);
 }
 
-TEST(sudoku, solve_single_candidates) 
+// solve_single_candidates
+TEST(sudoku, p01) 
 {
    sudoku::puzzle_input_data_t p1 {{
       {0,0,3,0,2,0,6,0,0},
@@ -334,9 +337,9 @@ TEST(sudoku, solve_single_candidates)
 0 0 5 | 0 1 0 | 3 0 0 
 */
 
-   sudoku s1(p1);
+   sudoku s1(p01);
    s1.set_candidates();
-   s1.solve_single_candidates();
+   s1.solve_puzzle();
 
    sudoku::puzzle_input_data_t p2 {{
       {4,8,3,9,2,1,6,5,7},
@@ -352,9 +355,13 @@ TEST(sudoku, solve_single_candidates)
 
    sudoku s2(p2);
    EXPECT_EQ(s1.get_puzzle(), s2.get_puzzle());
+   if(s1.get_puzzle() != s2.get_puzzle()) {
+      s1.print();
+   }
 }
 
-TEST(sudoku, grid_2) 
+// solve_unique_candidates
+TEST(sudoku, p02) 
 {
    sudoku::puzzle_input_data_t p1 {{
       {2,0,0,0,8,0,3,0,0},
@@ -370,7 +377,7 @@ TEST(sudoku, grid_2)
 
 
 
-   sudoku s1(p1);
+   sudoku s1(p02);
    s1.set_candidates();
    s1.solve_puzzle();
 

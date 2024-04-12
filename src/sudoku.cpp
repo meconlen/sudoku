@@ -198,12 +198,17 @@ sudoku::puzzle_input_data_t sudoku::get_puzzle() const
 
 void sudoku::solve_single_candidates()
 {
-   for(auto i = 0; i < 9; i++) {
-      for(auto j = 0; j < 9; j++) {
-         if(puzzle[i][j].first == 0 && puzzle[i][j].second.size() == 1) {
-            solve_cell(i, j, *(puzzle[i][j].second.begin()));
+   while(true) {
+      bool updated = false;
+      for(auto i = 0; i < 9; i++) {
+         for(auto j = 0; j < 9; j++) {
+            if(puzzle[i][j].first == 0 && puzzle[i][j].second.size() == 1) {
+               solve_cell(i, j, *(puzzle[i][j].second.begin()));
+               updated = true;
+            }
          }
       }
+      if(updated == false) break;
    }
    return;
 }
