@@ -39,7 +39,7 @@ public:
    void set_candidates();
    void solve_cell(uint_fast8_t row, uint_fast8_t column, uint_fast8_t value); // this solves the cell with the value and removes the value from the candidate list for the houses 
    void solve_single_candidates(); // this solves where there's only a single candidate in a cell
-   void solve_unique_candidates(); // this solves where there's only one cell in a house for a candidate 
+   void solve_hidden_singles(); // this solves where there's only one cell in a house for a candidate 
    void solve_puzzle();
    puzzle_input_data_t get_puzzle() const;
 

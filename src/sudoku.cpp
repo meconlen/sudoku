@@ -213,7 +213,7 @@ void sudoku::solve_single_candidates()
    return;
 }
 
-void sudoku::solve_unique_candidates()
+void sudoku::solve_hidden_singles()
 {
    // for each cell, for each candidate, check each house, if it is unique in any house then it's the solution for the cell
    for(auto i = 0; i < 9; i++) {
@@ -259,7 +259,7 @@ void sudoku::solve_puzzle()
    while(true) {
       sudoku current_puzzle = puzzle;
       solve_single_candidates();
-      solve_unique_candidates();
+      solve_hidden_singles();
       if(puzzle == current_puzzle) break; // we didn't update the puzzle this iteration. 
    }
    return;
