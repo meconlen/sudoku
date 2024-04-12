@@ -87,6 +87,7 @@ void sudoku::set_candidates()
 void sudoku::solve_cell(uint_fast8_t row, uint_fast8_t column, uint_fast8_t value)
 {
    puzzle[row][column].first = value;
+   puzzle[row][column].second.clear();
    // remove candidate from the row and column
    for(auto k = 0; k < 9; k++) {
       // row i
@@ -269,12 +270,11 @@ void sudoku::print_candidate(uint_fast8_t row, uint_fast8_t column) const
 {
  
    for(auto it = puzzle[row][column].second.begin(); it != puzzle[row][column].second.end(); it++) {
-      std::cout << *it;
+      std::cout << static_cast<unsigned>(*it);
       if(std::next(it) != puzzle[row][column].second.end()) {
          std::cout << ", ";
       }
    }
-   std::cout << std::endl;
 }
 
 void sudoku::print_differences(const sudoku& other) const
@@ -298,6 +298,19 @@ void sudoku::print_differences(const sudoku& other) const
                }
             }
             std::cout << "} }" << std::endl;
+         }
+      }
+   }
+}
+
+void sudoku::print_blanks() const
+{
+   for(auto i = 0; i < 9; i++) {
+      for(auto j = 0; j < 9; j++) {
+         if(puzzle[i][j].second.size() > 0) {
+            std::cout << "puzzle[" << i << "][" << j << "] = { " << static_cast<unsigned>(puzzle[i][j].first) << " }, {";
+            print_candidate(i, j);
+            std::cout << "} }" << std::endl; 
          }
       }
    }

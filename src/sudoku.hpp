@@ -46,6 +46,8 @@ public:
    // utilities 
    void print_candidate(uint_fast8_t row, uint_fast8_t column) const;
    void print_differences(const sudoku& other) const;
+   void print_blanks() const;
+
 private:
 
    std::set<uint_fast8_t> get_row(uint_fast8_t r);
