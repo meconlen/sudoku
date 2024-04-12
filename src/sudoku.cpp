@@ -3,6 +3,7 @@
 #include <iterator>
 #include <string>
 #include <sstream>
+#include <utility>
 
 #include "sudoku.hpp"
 
@@ -255,15 +256,118 @@ void sudoku::solve_hidden_singles()
    return;
 }
 
+// We find two cells in a house with the same pair of candidates which are not shared with another house
+//
+
+// for each house 
+// compile a list of cells each candidate is in 
+// candidate_cells[candidate] = set of cells in the house 
+// for each candidate 
+//    if there are two cells with that candidate 
+//       if we find another candidate with the same pair of cells 
+//          for those two cells fix the candidate list to be only those two candidates 
+
+// this currently works for the test block 
+// we need to extend this to a row and column
+// and abstract out the first_row, first_column from a block
+// now we need to handle naked_pairs 
+void sudoku::find_hidden_pairs()
+{
+   // our first test case with this is p05
+   // the hidden pair is found in a block 
+   for(auto block = 0; block < 9; block++) {
+      std::array<std::set<std::pair<value_t, value_t>>, 9> candidate_cells;
+      uint_fast8_t first_row = 0;
+      uint_fast8_t first_column = 0;
+      switch(block) {
+         case 1:
+            first_row = 0;
+            first_column = 0;
+            break;
+         case 2:
+            first_row = 0;
+            first_column = 3;
+            break;
+         case 3:
+            first_row = 0; 
+            first_column = 6;
+            break;
+         case 4:
+            first_row = 3;
+            first_column = 0;
+            break;
+         case 5:
+            first_row = 3;
+            first_column = 3;
+            break;
+         case 6:
+            first_row = 3;
+            first_column = 6;
+            break;
+         case 7:
+            first_row = 6;
+            first_column = 0;
+            break;
+         case 8:
+            first_row = 6;
+            first_column = 3; 
+            break;
+         case 9:
+            first_row = 6;
+            first_column = 6;
+            break;
+      }      
+      // fill out the candidate list 
+      for(value_t row = first_row; row < first_row + 3; row++) {
+         for(value_t column = first_column; column < first_column + 3; column++) {
+            for(const auto& candidate : puzzle[row][column].second) {
+               candidate_cells[candidate - 1].insert({row, column});
+            }
+         }
+      }
+      // loop over the candidates to find ones with two cells 
+      for(auto candidate = 1; candidate < 10; candidate++) {
+         if(candidate_cells[candidate - 1].size() == 2) {
+            // find another candidate with the same cell list 
+            for(auto second_candidate = candidate + 1; second_candidate < 10; second_candidate++) {
+               if(candidate_cells[candidate - 1] == candidate_cells[second_candidate - 1]) {
+                  // we have a match, create a candidate set with the two candidates 
+                  puzzle_candidate_t candidate_set;
+                  candidate_set.insert(candidate);
+                  candidate_set.insert(second_candidate);
+                  // for each cell in candidate_cells[candidate - 1] set the puzzle[][].second to candidate_set
+                  for(const auto& cell : candidate_cells[candidate - 1]) {
+                     puzzle[cell.first][cell.second].second = candidate_set;
+                  }
+               }
+            }
+         }
+      }
+   }
+   return;
+}
+
+
 void sudoku::solve_puzzle()
 {
    while(true) {
       sudoku current_puzzle = puzzle;
       solve_single_candidates();
       solve_hidden_singles();
+      find_hidden_pairs();
       if(puzzle == current_puzzle) break; // we didn't update the puzzle this iteration. 
    }
    return;
+}
+
+bool sudoku::is_solved()
+{
+   for(auto i = 0; i < 9; i++) {
+      for(auto j = 0; j < 9; j++) {
+         if(puzzle[i][j].first == 0) return false;
+      }
+   }
+   return true;
 }
 
 void sudoku::print_candidate(uint_fast8_t row, uint_fast8_t column) const
@@ -313,6 +417,49 @@ void sudoku::print_blanks() const
             std::cout << "} }" << std::endl; 
          }
       }
+   }
+}
+
+   // sudoku::puzzle_input_data_t p2 {{
+   //    {4,6,2,8,3,1,9,5,7},
+   //    {7,9,5,4,2,6,1,8,3},
+   //    {3,8,1,7,9,5,4,2,6},
+   //    {1,7,3,9,8,4,2,6,5},
+   //    {6,5,9,3,1,2,7,4,8},
+   //    {2,4,8,5,6,7,3,1,9},
+   //    {9,2,6,1,7,8,5,3,4},
+   //    {8,3,4,2,5,9,6,7,1},
+   //    {5,1,7,6,4,3,8,9,2},
+   // }};
+
+
+void sudoku::print_puzzle_cpp() const
+{
+   std::cout << "sudoku::puzzle_input_data_t p00 {{" << std::endl;
+   for(auto i = 0; i < 9; i++) {
+      std::cout << "   {";
+      for(auto j = 0; j < 9; j++) {
+         std::cout << static_cast<unsigned>(puzzle[i][j].first);
+         if(j < 8) {
+            std::cout << ",";
+         }
+      }      
+      std::cout << "}";
+      if(i < 8) {
+         std::cout << ",";
+      }
+      std::cout << std::endl;
+   }
+   std::cout << "}};" << std::endl;
+}
+
+void sudoku::print_puzzle_raw() const
+{
+   for(auto i = 0; i < 9; i++) {
+      for(auto j = 0; j < 9; j++) {
+         std::cout << static_cast<unsigned>(puzzle[i][j].first);
+      }
+      std::cout << std::endl;
    }
 }
 

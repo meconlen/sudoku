@@ -363,8 +363,79 @@ TEST(sudoku, p03)
 
    sudoku s2(p2);
    EXPECT_EQ(s1.get_puzzle(), s2.get_puzzle());
-
 }
+
+TEST(sudoku, p04) 
+{
+   sudoku s1(p04);
+   s1.set_candidates();
+   s1.solve_puzzle();
+
+   sudoku::puzzle_input_data_t p2 {{
+      {1,3,7,2,5,6,8,4,9},
+      {9,2,8,3,1,4,5,6,7},
+      {4,6,5,8,9,7,3,1,2},
+      {6,7,3,5,4,2,9,8,1},
+      {8,1,9,6,7,3,2,5,4},
+      {5,4,2,1,8,9,7,3,6},
+      {2,5,6,7,3,1,4,9,8},
+      {3,9,1,4,2,8,6,7,5},
+      {7,8,4,9,6,5,1,2,3}
+   }};
+
+   sudoku s2(p2);
+   EXPECT_EQ(s1, s2);
+   if(!(s1 == s2)) s1.print_puzzle_cpp();
+}
+
+// naked pairs 
+TEST(sudoku, p05) 
+{
+   sudoku s1(p05);
+   s1.set_candidates();
+   s1.solve_puzzle();
+
+   sudoku::puzzle_input_data_t p2 {{
+      {5,2,3,8,1,6,7,4,9},
+      {7,8,4,5,9,3,1,2,6},
+      {6,9,1,4,7,2,8,3,5},
+      {2,3,9,1,4,5,6,8,7},
+      {4,5,7,2,6,8,9,1,3},
+      {1,6,8,9,3,7,2,5,4},
+      {3,4,2,7,8,9,5,6,1},
+      {9,1,5,6,2,4,3,7,8},
+      {8,7,6,3,5,1,4,9,2}
+   }};
+
+   sudoku s2(p2);
+   EXPECT_EQ(s1, s2);
+   if(!(s1 == s2)) s1.print_puzzle_cpp();
+}
+
+// TEST(sudoku, p06) 
+// {
+//    sudoku s1(p06);
+//    s1.set_candidates();
+//    s1.solve_puzzle();
+
+//    sudoku::puzzle_input_data_t p2 {{
+//       {5,2,3,8,1,6,7,4,9},
+//       {7,8,4,5,9,3,1,2,6},
+//       {6,9,1,4,7,2,8,3,5},
+//       {2,3,9,1,4,5,6,8,7},
+//       {4,5,7,2,6,8,9,1,3},
+//       {1,6,8,9,3,7,2,5,4},
+//       {3,4,2,7,8,9,5,6,1},
+//       {9,1,5,6,2,4,3,7,8},
+//       {8,7,6,3,5,1,4,9,2}
+//    }};
+
+//    sudoku s2(p2);
+//    EXPECT_EQ(s1, s2);
+//    if(!(s1 == s2)) s1.print_puzzle_cpp();
+//    if(! s1.is_solved()) s1.print_puzzle_raw();
+//    s1.print_blanks();
+// }
 
 int main(int argc, char **argv) {
    testing::InitGoogleTest(&argc, argv);
