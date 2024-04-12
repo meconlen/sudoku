@@ -41,7 +41,8 @@ public:
    void solve_cell(uint_fast8_t row, uint_fast8_t column, uint_fast8_t value); // this solves the cell with the value and removes the value from the candidate list for the houses 
    void solve_single_candidates(); // this solves where there's only a single candidate in a cell
    void solve_hidden_singles(); // this solves where there's only one cell in a house for a candidate 
-   void find_hidden_pairs(); // this will also find naked pairs
+   void find_hidden_pairs(); // this finds a hidden pair and removes candidates from those cells
+   void reduce_naked_pairs(); // this finds naked pairs and removes candidates from the rest of the house
    void solve_puzzle();
 
    bool is_solved();

@@ -347,6 +347,44 @@ void sudoku::find_hidden_pairs()
    return;
 }
 
+// We need this for a row for p06
+// currently only handles a row (since that's all we have a test for)
+
+void sudoku::reduce_naked_pairs()
+{
+   for(value_t i = 0; i < 9; i++) {
+      for(value_t j = 0; j < 9; j++) {
+         if(puzzle[i][j].second.size() == 2) {
+            // we have a pair
+            // find the same pair after the current candidate 
+            for(value_t k = j+1; k < 9; k++) {
+               if(puzzle[i][j].second == puzzle[i][k].second) {
+                  // we have the pair and that pair should only be candidates in [i][j] and [i][k]
+                  for(value_t m = 0; m < 9; m++) {
+                     // we skip the cells with the naked pair
+                     if(m == j || m == k) continue;
+                     for(const auto& candidate : puzzle[i][j].second) { puzzle[i][m].second.erase(candidate); }
+                  }
+               }
+            }
+         }
+      }
+   }
+   return;
+}
+
+// this finds a pair (or triple) that is only in one row or column in a box. If so remove it from the row/column outside the box
+// we currently only have a test case for a row 
+
+// for each block
+// look at each row(column)
+// if there is a candidate which is only in a single row(column)
+//    remove the candidate from the rest of the row 
+
+void reduce_pointing_pairs()
+{
+   return;
+}
 
 void sudoku::solve_puzzle()
 {
@@ -355,6 +393,8 @@ void sudoku::solve_puzzle()
       solve_single_candidates();
       solve_hidden_singles();
       find_hidden_pairs();
+      reduce_naked_pairs();
+      reduce_pointing_pairs();
       if(puzzle == current_puzzle) break; // we didn't update the puzzle this iteration. 
    }
    return;
@@ -419,19 +459,6 @@ void sudoku::print_blanks() const
       }
    }
 }
-
-   // sudoku::puzzle_input_data_t p2 {{
-   //    {4,6,2,8,3,1,9,5,7},
-   //    {7,9,5,4,2,6,1,8,3},
-   //    {3,8,1,7,9,5,4,2,6},
-   //    {1,7,3,9,8,4,2,6,5},
-   //    {6,5,9,3,1,2,7,4,8},
-   //    {2,4,8,5,6,7,3,1,9},
-   //    {9,2,6,1,7,8,5,3,4},
-   //    {8,3,4,2,5,9,6,7,1},
-   //    {5,1,7,6,4,3,8,9,2},
-   // }};
-
 
 void sudoku::print_puzzle_cpp() const
 {
