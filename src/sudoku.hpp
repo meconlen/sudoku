@@ -64,6 +64,7 @@ public:
 
 private:
 
+   static value_t get_block_number(value_t row, value_t column); 
    static std::pair<value_t, value_t> get_block_start(value_t block);
 
    std::set<uint_fast8_t> get_row(uint_fast8_t r);

@@ -39,6 +39,31 @@ std::string sudoku::to_string() const
    }
    return os.str();
 }
+sudoku::value_t sudoku::get_block_number(value_t row, value_t column)
+{
+            value_t block = 0;
+            if(row < 3 && column < 3) {
+               block = 1;
+            } else if (row < 3 && (column >=3 && column < 6)) {
+               block = 2;
+            } else if (row < 3 && column >= 6) {
+               block = 3;
+            } else if ( (row >= 3 && row < 6) && column < 3) {
+               block = 4;
+            } else if ( (row >= 3 && row < 6) && (column >= 3 && column < 6)) {
+               block = 5;
+            } else if ( (row >= 3 && row < 6) && column >= 6) {
+               block = 6;
+            } else if (row >= 6 && column < 3) {
+               block = 7;
+            } else if (row >= 6 && (column >= 3 && column < 6) ) {
+               block = 8;
+            } else if (row >= 6 && column >= 6) {
+               block = 9;
+            }
+            return block;
+
+}
 
 void sudoku::set_candidates()
 {
@@ -236,34 +261,64 @@ void sudoku::solve_hidden_singles()
 // now we need to handle naked_pairs 
 void sudoku::find_hidden_pairs()
 {
-   // our first test case with this is p05
-   // the hidden pair is found in a block 
-   for(auto block = 0; block < 9; block++) {
-      std::array<std::set<std::pair<value_t, value_t>>, 9> candidate_cells;
-      auto start = get_block_start(block);
-      uint_fast8_t first_row = start.first;
-      uint_fast8_t first_column = start.second;
-      // fill out the candidate list 
-      for(value_t row = first_row; row < first_row + 3; row++) {
-         for(value_t column = first_column; column < first_column + 3; column++) {
-            for(const auto& candidate : puzzle[row][column].second) {
-               candidate_cells[candidate - 1].insert({row, column});
-            }
+   // // our first test case with this is p05
+   // // the hidden pair is found in a block 
+   // for(auto block = 0; block < 9; block++) {
+   //    std::array<std::set<std::pair<value_t, value_t>>, 9> candidate_cells;
+   //    auto start = get_block_start(block);
+   //    uint_fast8_t first_row = start.first;
+   //    uint_fast8_t first_column = start.second;
+   //    // fill out the candidate list 
+   //    for(value_t row = first_row; row < first_row + 3; row++) {
+   //       for(value_t column = first_column; column < first_column + 3; column++) {
+   //          for(const auto& candidate : puzzle[row][column].second) {
+   //             candidate_cells[candidate - 1].insert({row, column});
+   //          }
+   //       }
+   //    }
+   //    // loop over the candidates to find ones with two cells 
+   //    for(auto candidate = 1; candidate < 10; candidate++) {
+   //       if(candidate_cells[candidate - 1].size() == 2) {
+   //          // find another candidate with the same cell list 
+   //          for(auto second_candidate = candidate + 1; second_candidate < 10; second_candidate++) {
+   //             if(candidate_cells[candidate - 1] == candidate_cells[second_candidate - 1]) {
+   //                // we have a match, create a candidate set with the two candidates 
+   //                puzzle_candidate_t candidate_set;
+   //                candidate_set.insert(candidate);
+   //                candidate_set.insert(second_candidate);
+   //                // for each cell in candidate_cells[candidate - 1] set the puzzle[][].second to candidate_set
+   //                for(const auto& cell : candidate_cells[candidate - 1]) {
+   //                   puzzle[cell.first][cell.second].second = candidate_set;
+   //                }
+   //             }
+   //          }
+   //       }
+   //    }
+   // }
+
+   // for each column
+   //    get the row set for each candidate 
+   for(value_t j = 0; j < 9; j++) {
+      std::array<std::set<value_t>, 9> candidate_cells;
+      // generate the candidate set
+      for(value_t i = 0; i < 9; i++) {
+         for(const auto& candidate : puzzle[i][j].second) {
+            candidate_cells[candidate-1].insert(i);
          }
       }
-      // loop over the candidates to find ones with two cells 
-      for(auto candidate = 1; candidate < 10; candidate++) {
-         if(candidate_cells[candidate - 1].size() == 2) {
-            // find another candidate with the same cell list 
-            for(auto second_candidate = candidate + 1; second_candidate < 10; second_candidate++) {
-               if(candidate_cells[candidate - 1] == candidate_cells[second_candidate - 1]) {
-                  // we have a match, create a candidate set with the two candidates 
-                  puzzle_candidate_t candidate_set;
-                  candidate_set.insert(candidate);
-                  candidate_set.insert(second_candidate);
-                  // for each cell in candidate_cells[candidate - 1] set the puzzle[][].second to candidate_set
-                  for(const auto& cell : candidate_cells[candidate - 1]) {
-                     puzzle[cell.first][cell.second].second = candidate_set;
+      // for each candidate, 
+      //    if the candidate is in two cells
+      //       find another identitical pair 
+
+      for(value_t candidate = 1; candidate < 10; candidate++) {
+         if(candidate_cells[candidate-1].size() == 2) {
+            for(value_t second_candidate = candidate + 1; second_candidate < 10; second_candidate++) {
+               if(candidate_cells[candidate-1] == candidate_cells[second_candidate-1]) {
+                  // we have a match
+                  // for puzzle[row][j] in candidate_cells[candidate] 
+                  // set .second to {candidate, second_candidate}
+                  for(const auto& row : candidate_cells[candidate-1]) {
+                     puzzle[row][j].second = {candidate, second_candidate};
                   }
                }
             }
@@ -272,9 +327,6 @@ void sudoku::find_hidden_pairs()
    }
    return;
 }
-
-// We need this for a row for p06
-// currently only handles a row (since that's all we have a test for)
 
 void sudoku::reduce_naked_pairs()
 {
@@ -296,6 +348,46 @@ void sudoku::reduce_naked_pairs()
          }
       }
    }
+   for(value_t i = 0; i < 9; i++) {
+      for(value_t j = 0; j < 9; j++) {
+         if(puzzle[i][j].second.size() == 2) {
+            for(value_t k = i+1; k < 9; k++) {
+               if(puzzle[i][j].second == puzzle[k][j].second) {
+                  for(value_t m = 0; m < 9; m++) {
+                     if(m == i || m == k) continue;
+                     for(const auto& candidate : puzzle[i][j].second) { puzzle[m][j].second.erase(candidate); }
+                  }
+               }
+            }
+         }
+      }
+   }
+   for(value_t i = 0; i < 9; i++) {
+      for(value_t j = 0; j < 9; j++) {
+         if(puzzle[i][j].second.size() == 2) {
+            value_t block = get_block_number(i, j);
+            auto start = get_block_start(block);
+            for(value_t m = start.first; m < start.first + 3; m++) {
+               for(value_t n = start.second; n < start.second + 3; n++) {
+                  // we are looping over the block, we might hit [i][j]
+                  if( (m == i && n == j)) continue; 
+                  if(puzzle[i][j].second == puzzle[m][n].second) {
+                     // we have a pair in a block, lets remove the candidates from other cells
+                     for(value_t row = start.first; row < start.first + 3; row++) {
+                        for(value_t column = start.second; column < start.second + 3; column++) {
+                           // we skip [i][j] and [m][n]
+                           if( (row == i && column == j) || (row == m && column == n)) continue;
+                           for(const auto& candidate : puzzle[i][j].second) {
+                              puzzle[row][column].second.erase(candidate);
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }   
    return;
 }
 
@@ -448,7 +540,7 @@ void sudoku::print_puzzle_raw() const
 
 void sudoku::print_puzzle_candidates_cpp() const 
 {
-   std::cout << "sudoku::puzzle_input_data_t p00 {{ // puzzle" << std::endl;
+   std::cout << "sudoku::puzzle_data_t p00 {{ // puzzle" << std::endl;
    for(auto i = 0; i < 9; i++) {
       std::cout << "   {{ // row " << i+1 << std::endl;;
       for(auto j = 0; j < 9; j++) {
