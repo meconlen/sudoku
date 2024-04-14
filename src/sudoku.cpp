@@ -480,22 +480,51 @@ void sudoku::reduce_x_wing()
          for(const auto& candidate : puzzle[i][j].second) {
             candidate_columns[candidate-1].insert(j);
          }
-         for(value_t candidate = 1; candidate < 10; candidate++) {
-            if(candidate_columns[candidate-1].size() == 2) {
-               for(value_t k = i+1; k < 9; k++) {
-                  std::array<std::set<value_t>, 9> k_candidate_columns;
-                  for(value_t l = 0; l < 9; l++) {
-                     for(const auto& candidate : puzzle[k][l].second) {
-                        k_candidate_columns[candidate-1].insert(l);
-                     }
+      }
+      for(value_t candidate = 1; candidate < 10; candidate++) {
+         if(candidate_columns[candidate-1].size() == 2) {
+            for(value_t k = i+1; k < 9; k++) {
+               std::array<std::set<value_t>, 9> k_candidate_columns;
+               for(value_t l = 0; l < 9; l++) {
+                  for(const auto& candidate : puzzle[k][l].second) {
+                     k_candidate_columns[candidate-1].insert(l);
                   }
-                  if(candidate_columns[candidate-1] == k_candidate_columns[candidate-1]) {
-                     for(value_t m = 0; m < 9; m++) {
-                        if(m == i || m == k) continue;
-                        for(const auto& column : candidate_columns[candidate-1]) {
-                           puzzle[m][column].second.erase(candidate);
-                        }
-                     }   
+               }
+               if(candidate_columns[candidate-1] == k_candidate_columns[candidate-1]) {
+                  for(value_t m = 0; m < 9; m++) {
+                     if(m == i || m == k) continue;
+                     for(const auto& column : candidate_columns[candidate-1]) {
+                        puzzle[m][column].second.erase(candidate);
+                     }
+                  }   
+               }
+            }
+         }
+      }
+   }
+
+   for(value_t j = 0; j < 9; j++) {
+      std::array<std::set<value_t>, 9> candidate_rows;
+      for(value_t i = 0; i < 9; i++) {
+         for(const auto& candidate : puzzle[i][j].second) {
+            candidate_rows[candidate-1].insert(i);
+         }
+      }
+      for(value_t candidate = 1; candidate < 10; candidate++) {
+         if(candidate_rows[candidate-1].size() == 2) {
+            for(value_t l = j+1; l < 9; l++) {
+               std::array<std::set<value_t>, 9> l_candidate_rows;
+               for(value_t k = 0; k < 9; k++) {
+                  for(const auto& candidate : puzzle[k][l].second) {
+                     l_candidate_rows[candidate-1].insert(k);
+                  }
+               }
+               if(candidate_rows[candidate-1] == l_candidate_rows[candidate-1]) {
+                  for(value_t n = 0; n < 9; n++) {
+                     if(n == j || n == l) continue;
+                     for(const auto& row : candidate_rows[candidate-1]) {
+                        puzzle[row][n].second.erase(candidate);
+                     }
                   }
                }
             }
@@ -510,11 +539,18 @@ void sudoku::solve_puzzle()
    while(true) {
       sudoku current_puzzle = puzzle;
       solve_single_candidates();
+      if(is_solved()) break;
       solve_hidden_singles();
+      if(is_solved()) break;
       find_hidden_pairs();
+      if(is_solved()) break;
       reduce_naked_pairs();
+      if(is_solved()) break;
       reduce_pointing_pairs();
+      if(is_solved()) break;
       reduce_box_line();
+      if(is_solved()) break;
+      reduce_x_wing();
       if(puzzle == current_puzzle) break; // we didn't update the puzzle this iteration. 
    }
    return;
