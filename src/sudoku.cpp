@@ -204,7 +204,7 @@ void sudoku::solve_hidden_singles()
 // we need an example for a block
 // this only solves a hidden pair in a row and column
 
-void sudoku::find_hidden_pairs(puzzle_data_p puzzle) 
+inline void sudoku::find_hidden_pairs(puzzle_data_p puzzle) 
 {
    for(value_t i = 0; i < 9; i++) {
       std::array<std::set<value_t>, 9> candidate_cells;
@@ -234,7 +234,7 @@ void sudoku::find_hidden_pairs()
    return;
 }
 
-void sudoku::reduce_naked_pairs(puzzle_data_p puzzle)
+inline void sudoku::reduce_naked_pairs(puzzle_data_p puzzle)
 {
    for(value_t i = 0; i < 9; i++) {
       for(value_t j = 0; j < 9; j++) {
@@ -271,7 +271,7 @@ void sudoku::reduce_naked_pairs()
 // if there is a candidate which is only in a single row(column)
 //    remove the candidate from the rest of the row 
 
-void sudoku::reduce_pointing_pairs(puzzle_data_p puzzle, value_t block)
+inline void sudoku::reduce_pointing_pairs(puzzle_data_p puzzle, value_t block)
 {
    auto start = get_block_start(block);
    // for each candidate get a list of rows
@@ -312,7 +312,7 @@ void sudoku::reduce_pointing_pairs()
    return;
 }
 
-void sudoku::reduce_box_line(puzzle_data_p puzzle)
+inline void sudoku::reduce_box_line(puzzle_data_p puzzle)
 {
    // for each row/column
    // record which block a candidate is in 
@@ -354,7 +354,7 @@ void sudoku::reduce_box_line()
 // find another row with that candidate in the same columns 
 // if we find a match remove the candidate from those columns in other rows
 
-void sudoku::reduce_x_wing(puzzle_data_p puzzle)
+inline void sudoku::reduce_x_wing(puzzle_data_p puzzle)
 {
    for(value_t i = 0; i < 9; i++) {
       std::array<std::set<value_t>, 9> candidate_columns;

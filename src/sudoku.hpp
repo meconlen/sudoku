@@ -77,11 +77,11 @@ private:
 
    // private versions of algorithms 
 
-   void find_hidden_pairs(puzzle_data_p puzzle);
-   void reduce_naked_pairs(puzzle_data_p puzzle);
-   void reduce_pointing_pairs(puzzle_data_p puzzle, value_t block);
-   void reduce_box_line(puzzle_data_p puzzle);
-   void reduce_x_wing(puzzle_data_p puzzle);
+   inline void find_hidden_pairs(puzzle_data_p puzzle);
+   inline void reduce_naked_pairs(puzzle_data_p puzzle);
+   inline void reduce_pointing_pairs(puzzle_data_p puzzle, value_t block);
+   inline void reduce_box_line(puzzle_data_p puzzle);
+   inline void reduce_x_wing(puzzle_data_p puzzle);
 
    // utilities 
 
