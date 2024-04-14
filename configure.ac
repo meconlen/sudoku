@@ -1,14 +1,17 @@
-AC_PREREQ(2.61)
-AC_INIT([programName], [0.1], [mike@conlen.org])
+AC_PREREQ([2.71])
+AC_INIT([sudoku],[0.1],[mike@conlen.org])
 AC_CONFIG_SRCDIR([src/test.cpp])
 AC_CONFIG_HEADERS([config.h])
-AM_INIT_AUTOMAKE([-Wall -Werror])
-LT_INIT
+AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
 AC_PROG_CXX([g++])
-AC_HEADER_STDC
+#AC_CHECK_INCLUDES_DEFAULT
+#AC_PROG_EGREP
 
-CXXFLAGS="$CXXFLAGS --std=c++0y"
+CXXFLAGS="$CXXFLAGS --std=c++20"
 LDFLAGS="$LDFLAGS"
+AM_PROG_AR
+LT_INIT
+
 AC_CHECK_HEADERS([stdio.h])
 AC_CHECK_HEADERS([stdlib.h])
 AC_CHECK_HEADERS([malloc.h])
