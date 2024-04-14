@@ -53,33 +53,6 @@ std::string sudoku::to_string_transposed() const
    return os.str();
 }
 
-
-sudoku::value_t sudoku::get_block_number(value_t row, value_t column)
-{
-            value_t block = 0;
-            if(row < 3 && column < 3) {
-               block = 1;
-            } else if (row < 3 && (column >=3 && column < 6)) {
-               block = 2;
-            } else if (row < 3 && column >= 6) {
-               block = 3;
-            } else if ( (row >= 3 && row < 6) && column < 3) {
-               block = 4;
-            } else if ( (row >= 3 && row < 6) && (column >= 3 && column < 6)) {
-               block = 5;
-            } else if ( (row >= 3 && row < 6) && column >= 6) {
-               block = 6;
-            } else if (row >= 6 && column < 3) {
-               block = 7;
-            } else if (row >= 6 && (column >= 3 && column < 6) ) {
-               block = 8;
-            } else if (row >= 6 && column >= 6) {
-               block = 9;
-            }
-            return block;
-
-}
-
 void sudoku::set_candidates()
 {
    for(auto i = 0; i < 9; i++) {
@@ -418,63 +391,6 @@ void sudoku::reduce_x_wing()
 {
    reduce_x_wing(puzzle);
    reduce_x_wing(transposed_puzzle);
-   // for(value_t i = 0; i < 9; i++) {
-   //    std::array<std::set<value_t>, 9> candidate_columns;
-   //    for(value_t j = 0; j < 9; j++) {
-   //       for(const auto& candidate : puzzle[i][j]->second) {
-   //          candidate_columns[candidate-1].insert(j);
-   //       }
-   //    }
-   //    for(value_t candidate = 1; candidate < 10; candidate++) {
-   //       if(candidate_columns[candidate-1].size() == 2) {
-   //          for(value_t k = i+1; k < 9; k++) {
-   //             std::array<std::set<value_t>, 9> k_candidate_columns;
-   //             for(value_t l = 0; l < 9; l++) {
-   //                for(const auto& candidate : puzzle[k][l]->second) {
-   //                   k_candidate_columns[candidate-1].insert(l);
-   //                }
-   //             }
-   //             if(candidate_columns[candidate-1] == k_candidate_columns[candidate-1]) {
-   //                for(value_t m = 0; m < 9; m++) {
-   //                   if(m == i || m == k) continue;
-   //                   for(const auto& column : candidate_columns[candidate-1]) {
-   //                      puzzle[m][column]->second.erase(candidate);
-   //                   }
-   //                }   
-   //             }
-   //          }
-   //       }
-   //    }
-   // }
-
-   // for(value_t j = 0; j < 9; j++) {
-   //    std::array<std::set<value_t>, 9> candidate_rows;
-   //    for(value_t i = 0; i < 9; i++) {
-   //       for(const auto& candidate : puzzle[i][j]->second) {
-   //          candidate_rows[candidate-1].insert(i);
-   //       }
-   //    }
-   //    for(value_t candidate = 1; candidate < 10; candidate++) {
-   //       if(candidate_rows[candidate-1].size() == 2) {
-   //          for(value_t l = j+1; l < 9; l++) {
-   //             std::array<std::set<value_t>, 9> l_candidate_rows;
-   //             for(value_t k = 0; k < 9; k++) {
-   //                for(const auto& candidate : puzzle[k][l]->second) {
-   //                   l_candidate_rows[candidate-1].insert(k);
-   //                }
-   //             }
-   //             if(candidate_rows[candidate-1] == l_candidate_rows[candidate-1]) {
-   //                for(value_t n = 0; n < 9; n++) {
-   //                   if(n == j || n == l) continue;
-   //                   for(const auto& row : candidate_rows[candidate-1]) {
-   //                      puzzle[row][n]->second.erase(candidate);
-   //                   }
-   //                }
-   //             }
-   //          }
-   //       }
-   //    }
-   // }
    return;
 }
 
@@ -631,6 +547,32 @@ void sudoku::print_puzzle_candidates_cpp(std::string var_name) const
       std::cout << std::endl;
    }
    std::cout << "   }};" << std::endl;
+}
+
+sudoku::value_t sudoku::get_block_number(value_t row, value_t column)
+{
+            value_t block = 0;
+            if(row < 3 && column < 3) {
+               block = 1;
+            } else if (row < 3 && (column >=3 && column < 6)) {
+               block = 2;
+            } else if (row < 3 && column >= 6) {
+               block = 3;
+            } else if ( (row >= 3 && row < 6) && column < 3) {
+               block = 4;
+            } else if ( (row >= 3 && row < 6) && (column >= 3 && column < 6)) {
+               block = 5;
+            } else if ( (row >= 3 && row < 6) && column >= 6) {
+               block = 6;
+            } else if (row >= 6 && column < 3) {
+               block = 7;
+            } else if (row >= 6 && (column >= 3 && column < 6) ) {
+               block = 8;
+            } else if (row >= 6 && column >= 6) {
+               block = 9;
+            }
+            return block;
+
 }
 
 std::pair<sudoku::value_t, sudoku::value_t> sudoku::get_block_start(value_t block)
