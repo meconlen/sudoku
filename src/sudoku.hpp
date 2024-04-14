@@ -75,6 +75,16 @@ public:
 
 private:
 
+   // private versions of algorithms 
+
+   void find_hidden_pairs(puzzle_data_p puzzle);
+   void reduce_naked_pairs(puzzle_data_p puzzle);
+   void reduce_pointing_pairs(puzzle_data_p puzzle, value_t block);
+   void reduce_box_line(puzzle_data_p puzzle);
+   void reduce_x_wing(puzzle_data_p puzzle);
+
+   // utilities 
+
    static value_t get_block_number(value_t row, value_t column); 
    static std::pair<value_t, value_t> get_block_start(value_t block);
 
