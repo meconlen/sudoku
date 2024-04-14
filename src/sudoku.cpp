@@ -399,16 +399,22 @@ void sudoku::solve_puzzle()
    while(true) {
       puzzle_data_t current_puzzle_data = puzzle_data;
       solve_single_candidates();
+      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
       solve_hidden_singles();
+      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
       find_hidden_pairs();
+      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
       reduce_naked_pairs();
+      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
       reduce_pointing_pairs();
+      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
       reduce_box_line();
+      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
       reduce_x_wing();
       if(puzzle_data == current_puzzle_data) break; // we didn't update the puzzle this iteration. 

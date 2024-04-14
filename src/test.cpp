@@ -2235,27 +2235,55 @@ TEST(sudoku, p07)
    } 
 }
 
-TEST(sudoku, transposed_puzzle)
+TEST(sudoku, p08)
 {
-   sudoku::puzzle_input_data_t p {{
-      {0,0,3,0,2,0,6,0,0},
-      {9,0,0,3,0,5,0,0,1},
-      {0,0,1,8,0,6,4,0,0},
-      {0,0,8,1,0,2,9,0,0},
-      {7,0,0,0,0,0,0,0,8},
-      {0,0,6,7,0,8,2,0,0},
-      {0,0,2,6,0,9,5,0,0},
-      {8,0,0,2,0,3,0,0,9},
-      {0,0,5,0,1,0,3,0,0}
+   sudoku s1(p08);
+   s1.set_candidates();
+   s1.solve_puzzle();
+   sudoku::puzzle_input_data_t p2 {{
+      {4,8,7,1,5,6,9,3,2},
+      {3,6,2,4,9,8,7,5,1},
+      {9,1,5,3,7,2,8,6,4},
+      {8,4,6,5,1,9,2,7,3},
+      {5,9,3,7,2,4,1,8,6},
+      {2,7,1,8,6,3,5,4,9},
+      {1,2,4,6,8,5,3,9,7},
+      {7,3,8,9,4,1,6,2,5},
+      {6,5,9,2,3,7,4,1,8}
    }};
-   sudoku s(p);
-   std::cout << std::endl;
-   s.print();
-   std::cout << std::endl;
-   s.print_transposed();
 
+   sudoku s2(p2);
+   EXPECT_EQ(s1, s2);
+   if(!(s1 == s2)) {
+      s1.print_puzzle_cpp("p1");
+      s1.print_puzzle_candidates_cpp("p1");
+   } 
 }
 
+TEST(sudoku, p09)
+{
+   sudoku s1(p09);
+   s1.set_candidates();
+   s1.solve_puzzle();
+   sudoku::puzzle_input_data_t p2 {{
+      {8,1,4,9,7,6,5,3,2},
+      {6,5,9,1,2,3,4,7,8},
+      {7,3,2,8,5,4,1,6,9},
+      {9,4,8,2,6,5,3,1,7},
+      {2,7,5,3,4,1,8,9,6},
+      {1,6,3,7,9,8,2,4,5},
+      {3,9,1,6,8,2,7,5,4},
+      {5,8,7,4,3,9,6,2,1},
+      {4,2,6,5,1,7,9,8,3}
+   }};
+
+   sudoku s2(p2);
+   EXPECT_EQ(s1, s2);
+   if(!(s1 == s2)) {
+      s1.print_puzzle_cpp("p1");
+      s1.print_puzzle_candidates_cpp("p1");
+   } 
+}
 int main(int argc, char **argv) {
    testing::InitGoogleTest(&argc, argv);
    return RUN_ALL_TESTS();
