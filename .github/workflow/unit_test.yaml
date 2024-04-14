@@ -6,10 +6,10 @@ jobs:
     runs-on: debian-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run configure
-        run: |
-          autoconf -vfi
-          ./configure
+      - name: autoconf
+        run: autoconf -vfi
+      - name: configure
+        run: ./configure
       - name: build
         run: make
       - name: test
