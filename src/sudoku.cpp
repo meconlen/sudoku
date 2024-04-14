@@ -392,6 +392,7 @@ void sudoku::reduce_pointing_pairs()
             }
          }
       }
+
       std::array<std::set<value_t>, 9> candidate_columns;
       for(value_t candidate = 1; candidate < 10; candidate++) {
          for(value_t i = start.first; i < start.first + 3; i++) {
@@ -416,15 +417,140 @@ void sudoku::reduce_pointing_pairs()
    return;
 }
 
+void sudoku::reduce_box_line()
+{
+   // for each row/column
+   // record which block a candidate is in 
+   // if the candidate is only in one box for that row/column
+   // remove the candidate from other rows/columns in that box
+   for(value_t i = 0; i < 9; i++) {
+      std::array<std::set<value_t>, 9> candidate_block;
+      for(value_t j = 0; j < 9; j++) {
+         value_t block = get_block_number(i, j);
+         for(const auto& candidate : puzzle[i][j].second) {
+            candidate_block[candidate-1].insert(block);
+         }
+      }
+      for(value_t candidate = 1; candidate < 10; candidate++) {
+         if(candidate_block[candidate-1].size() == 1) {
+            auto start = get_block_start(*(candidate_block[candidate-1].begin()));
+            for(value_t m = start.first; m < start.first + 3; m++) {
+               for(value_t n = start.second; n < start.second + 3; n++) {
+                  if(m == i) continue;
+                  puzzle[m][n].second.erase(candidate);
+               }
+            }
+         }
+      }
+   }
+   for(value_t j = 0; j < 9; j++) {
+      std::array<std::set<value_t>, 9> candidate_block;
+      for(value_t i = 0; i < 9; i++) {
+         value_t block = get_block_number(i, j);
+         for(const auto& candidate : puzzle[i][j].second) {
+            candidate_block[candidate-1].insert(block);
+         }
+      }
+      for(value_t candidate = 1; candidate < 10; candidate++) {
+         if(candidate_block[candidate-1].size() == 1) {
+            auto start = get_block_start(*(candidate_block[candidate-1].begin()));
+            for(value_t m = start.first; m < start.first + 3; m++) {
+               for(value_t n = start.second; n < start.second + 3; n++) {
+                  if(n == j) continue; 
+                  puzzle[m][n].second.erase(candidate);
+               }
+            }
+         }
+      }
+   }
+   return;
+}
+
+// for each row 
+// collect the columns for each candidate
+// if there is a candidate in two columns 
+// find another row with that candidate in the same columns 
+// if we find a match remove the candidate from those columns in other rows
+
+void sudoku::reduce_x_wing()
+{
+   for(value_t i = 0; i < 9; i++) {
+      std::array<std::set<value_t>, 9> candidate_columns;
+      for(value_t j = 0; j < 9; j++) {
+         for(const auto& candidate : puzzle[i][j].second) {
+            candidate_columns[candidate-1].insert(j);
+         }
+      }
+      for(value_t candidate = 1; candidate < 10; candidate++) {
+         if(candidate_columns[candidate-1].size() == 2) {
+            for(value_t k = i+1; k < 9; k++) {
+               std::array<std::set<value_t>, 9> k_candidate_columns;
+               for(value_t l = 0; l < 9; l++) {
+                  for(const auto& candidate : puzzle[k][l].second) {
+                     k_candidate_columns[candidate-1].insert(l);
+                  }
+               }
+               if(candidate_columns[candidate-1] == k_candidate_columns[candidate-1]) {
+                  for(value_t m = 0; m < 9; m++) {
+                     if(m == i || m == k) continue;
+                     for(const auto& column : candidate_columns[candidate-1]) {
+                        puzzle[m][column].second.erase(candidate);
+                     }
+                  }   
+               }
+            }
+         }
+      }
+   }
+
+   for(value_t j = 0; j < 9; j++) {
+      std::array<std::set<value_t>, 9> candidate_rows;
+      for(value_t i = 0; i < 9; i++) {
+         for(const auto& candidate : puzzle[i][j].second) {
+            candidate_rows[candidate-1].insert(i);
+         }
+      }
+      for(value_t candidate = 1; candidate < 10; candidate++) {
+         if(candidate_rows[candidate-1].size() == 2) {
+            for(value_t l = j+1; l < 9; l++) {
+               std::array<std::set<value_t>, 9> l_candidate_rows;
+               for(value_t k = 0; k < 9; k++) {
+                  for(const auto& candidate : puzzle[k][l].second) {
+                     l_candidate_rows[candidate-1].insert(k);
+                  }
+               }
+               if(candidate_rows[candidate-1] == l_candidate_rows[candidate-1]) {
+                  for(value_t n = 0; n < 9; n++) {
+                     if(n == j || n == l) continue;
+                     for(const auto& row : candidate_rows[candidate-1]) {
+                        puzzle[row][n].second.erase(candidate);
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+   return;
+}
+
 void sudoku::solve_puzzle()
 {
    while(true) {
       sudoku current_puzzle = puzzle;
       solve_single_candidates();
+      if(is_solved()) break;
       solve_hidden_singles();
+      if(is_solved()) break;
       find_hidden_pairs();
+      if(is_solved()) break;
       reduce_naked_pairs();
+      if(is_solved()) break;
       reduce_pointing_pairs();
+      if(is_solved()) break;
+      reduce_box_line();
+      if(is_solved()) break;
+      reduce_x_wing();
       if(puzzle == current_puzzle) break; // we didn't update the puzzle this iteration. 
    }
    return;
@@ -490,11 +616,11 @@ void sudoku::print_blanks() const
    }
 }
 
-void sudoku::print_puzzle_cpp() const
+void sudoku::print_puzzle_cpp(std::string var_name) const
 {
-   std::cout << "sudoku::puzzle_input_data_t p00 {{" << std::endl;
+   std::cout << "   sudoku::puzzle_input_data_t " << var_name << " {{" << std::endl;
    for(auto i = 0; i < 9; i++) {
-      std::cout << "   {";
+      std::cout << "      {";
       for(auto j = 0; j < 9; j++) {
          std::cout << static_cast<unsigned>(puzzle[i][j].first);
          if(j < 8) {
@@ -507,7 +633,7 @@ void sudoku::print_puzzle_cpp() const
       }
       std::cout << std::endl;
    }
-   std::cout << "}};" << std::endl;
+   std::cout << "   }};" << std::endl;
 }
 
 void sudoku::print_puzzle_raw() const
@@ -520,13 +646,13 @@ void sudoku::print_puzzle_raw() const
    }
 }
 
-void sudoku::print_puzzle_candidates_cpp() const 
+void sudoku::print_puzzle_candidates_cpp(std::string var_name) const 
 {
-   std::cout << "sudoku::puzzle_data_t p00 {{ // puzzle" << std::endl;
+   std::cout << "   sudoku::puzzle_data_t " << var_name << " {{ // puzzle" << std::endl;
    for(auto i = 0; i < 9; i++) {
-      std::cout << "   {{ // row " << i+1 << std::endl;;
+      std::cout << "      {{ // row " << i+1 << std::endl;;
       for(auto j = 0; j < 9; j++) {
-         std::cout << "      { " << static_cast<unsigned>(puzzle[i][j].first) << ", ";
+         std::cout << "         { " << static_cast<unsigned>(puzzle[i][j].first) << ", ";
          if(puzzle[i][j].second.size() > 0) {
             std::cout << "{{ ";
             for(auto it = puzzle[i][j].second.begin(); it != puzzle[i][j].second.end(); it++) {
@@ -544,13 +670,13 @@ void sudoku::print_puzzle_candidates_cpp() const
          }
          std::cout << std::endl;
       }      
-      std::cout << "   }}";
+      std::cout << "      }}";
       if(i < 8) {
          std::cout << ",";
       }
       std::cout << std::endl;
    }
-   std::cout << "}};" << std::endl;
+   std::cout << "   }};" << std::endl;
 }
 
 std::pair<sudoku::value_t, sudoku::value_t> sudoku::get_block_start(value_t block)

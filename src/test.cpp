@@ -1396,10 +1396,661 @@ TEST(sudoku, pointing_pair)
 
 }
 
+// example from: https://www.sudokuwiki.org/Intersection_Removal#LBR
+
+TEST(sudoku, reduce_box_line_row)
+{
+   sudoku::puzzle_data_t p1 {{ // puzzle
+      {{ // row 1
+         { 0, {{ 4, 5 }} },
+         { 1,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 0, {{ 2, 4, 5 }} },
+         { 0, {{ 2, 4, 5, 9 }} },
+         { 7,  sudoku::default_candidates },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 4, 9 }} },
+         { 3,  sudoku::default_candidates }
+      }},
+      {{ // row 2
+         { 0, {{ 3, 4, 5 }} },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 2, 3, 5 }} },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 2, 3, 4, 5, 6 }} },
+         { 0, {{ 3, 4, 5, 6 }} },
+         { 0, {{ 1, 2, 4, 7 }} },
+         { 0, {{ 4, 7 }} },
+         { 0, {{ 1, 4, 5, 7 }} }
+      }},
+      {{ // row 3
+         { 8,  sudoku::default_candidates },
+         { 7,  sudoku::default_candidates },
+         { 0, {{ 2, 3, 5 }} },
+         { 0, {{ 2, 3, 4, 5 }} },
+         { 0, {{ 2, 3, 4, 5, 9 }} },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 2, 4 }} },
+         { 6,  sudoku::default_candidates },
+         { 0, {{ 4, 5, 9 }} }
+      }},
+      {{ // row 4
+         { 0, {{ 1, 2, 7 }} },
+         { 4,  sudoku::default_candidates },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 1, 2, 5, 7 }} },
+         { 0, {{ 1, 2, 5, 6, 7 }} },
+         { 0, {{ 5, 6 }} },
+         { 3,  sudoku::default_candidates },
+         { 0, {{ 7, 9 }} },
+         { 0, {{ 1, 7, 9 }} }
+      }},
+      {{ // row 5
+         { 6,  sudoku::default_candidates },
+         { 5,  sudoku::default_candidates },
+         { 0, {{ 1, 7 }} },
+         { 0, {{ 1, 3, 4, 7 }} },
+         { 0, {{ 1, 3, 4, 7 }} },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 1, 4, 7 }} },
+         { 8,  sudoku::default_candidates },
+         { 2,  sudoku::default_candidates }
+      }},
+      {{ // row 6
+         { 0, {{ 1, 2, 7 }} },
+         { 3,  sudoku::default_candidates },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 1, 2, 4, 7 }} },
+         { 0, {{ 1, 2, 4, 7, 8 }} },
+         { 0, {{ 4, 8 }} },
+         { 6,  sudoku::default_candidates },
+         { 5,  sudoku::default_candidates },
+         { 0, {{ 1, 4, 7 }} }
+      }},
+      {{ // row 7
+         { 0, {{ 1, 3, 5, 7 }} },
+         { 6,  sudoku::default_candidates },
+         { 0, {{ 1, 3, 5, 7 }} },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 1, 5, 7, 8 }} },
+         { 0, {{ 5, 8 }} },
+         { 0, {{ 4, 7 }} },
+         { 2,  sudoku::default_candidates },
+         { 0, {{ 4, 7, 8 }} }
+      }},
+      {{ // row 8
+         { 0, {{ 1, 5, 7 }} },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 1, 5, 7 }} },
+         { 0, {{ 1, 4, 5, 7 }} },
+         { 0, {{ 1, 4, 5, 7 }} },
+         { 2,  sudoku::default_candidates },
+         { 9,  sudoku::default_candidates },
+         { 3,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates }
+      }},
+      {{ // row 9
+         { 9,  sudoku::default_candidates },
+         { 2,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 0, {{ 3, 7, 8 }} },
+         { 0, {{ 3, 8 }} },
+         { 5,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 7, 8 }} }
+      }}
+   }};
+
+   sudoku s1(p1);
+   s1.reduce_box_line();
+
+   sudoku::puzzle_data_t p2 {{ // puzzle
+      {{ // row 1
+         { 0, {{ 4, 5 }} },
+         { 1,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 0, {{ 2, 4, 5 }} },
+         { 0, {{ 2, 4, 5, 9 }} },
+         { 7,  sudoku::default_candidates },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 4, 9 }} },
+         { 3,  sudoku::default_candidates }
+      }},
+      {{ // row 2
+         { 0, {{ 3, 4, 5 }} },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 2, 3, 5 }} },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 3, 4, 5, 6 }} },
+         { 0, {{ 3, 4, 5, 6 }} },
+         { 0, {{ 1, 2, 7 }} },
+         { 0, {{ 4, 7 }} },
+         { 0, {{ 1, 5, 7 }} }
+      }},
+      {{ // row 3
+         { 8,  sudoku::default_candidates },
+         { 7,  sudoku::default_candidates },
+         { 0, {{ 2, 3, 5 }} },
+         { 0, {{ 3, 4, 5 }} },
+         { 0, {{ 3, 4, 5, 9 }} },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 2 }} },
+         { 6,  sudoku::default_candidates },
+         { 0, {{ 5, 9 }} }
+      }},
+      {{ // row 4
+         { 0, {{ 1, 2, 7 }} },
+         { 4,  sudoku::default_candidates },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 1, 2, 5, 7 }} },
+         { 0, {{ 1, 2, 5, 6, 7 }} },
+         { 0, {{ 5, 6 }} },
+         { 3,  sudoku::default_candidates },
+         { 0, {{ 7, 9 }} },
+         { 0, {{ 1, 7, 9 }} }
+      }},
+      {{ // row 5
+         { 6,  sudoku::default_candidates },
+         { 5,  sudoku::default_candidates },
+         { 0, {{ 1, 7 }} },
+         { 0, {{ 1, 3, 4, 7 }} },
+         { 0, {{ 1, 3, 4, 7 }} },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 1, 4, 7 }} },
+         { 8,  sudoku::default_candidates },
+         { 2,  sudoku::default_candidates }
+      }},
+      {{ // row 6
+         { 0, {{ 1, 2, 7 }} },
+         { 3,  sudoku::default_candidates },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 1, 2, 4, 7 }} },
+         { 0, {{ 1, 2, 4, 7, 8 }} },
+         { 0, {{ 4, 8 }} },
+         { 6,  sudoku::default_candidates },
+         { 5,  sudoku::default_candidates },
+         { 0, {{ 1, 4, 7 }} }
+      }},
+      {{ // row 7
+         { 0, {{ 1, 3, 5, 7 }} },
+         { 6,  sudoku::default_candidates },
+         { 0, {{ 1, 3, 5, 7 }} },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 1, 5, 7, 8 }} },
+         { 0, {{ 5, 8 }} },
+         { 0, {{ 4, 7 }} },
+         { 2,  sudoku::default_candidates },
+         { 0, {{ 4, 7, 8 }} }
+      }},
+      {{ // row 8
+         { 0, {{ 1, 5, 7 }} },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 1, 5, 7 }} },
+         { 0, {{ 1, 4, 5, 7 }} },
+         { 0, {{ 1, 4, 5, 7 }} },
+         { 2,  sudoku::default_candidates },
+         { 9,  sudoku::default_candidates },
+         { 3,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates }
+      }},
+      {{ // row 9
+         { 9,  sudoku::default_candidates },
+         { 2,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 0, {{ 3, 7, 8 }} },
+         { 0, {{ 3, 8 }} },
+         { 5,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 7, 8 }} }
+      }}
+   }};   
+   sudoku s2(p2);
+   EXPECT_EQ(s1, s2);
+
+   if(!(s1 == s2)) {
+      s1.print_puzzle_cpp();
+      s1.print_puzzle_candidates_cpp();
+   }
+}
+
+// example from https://www.sudokuwiki.org/X_Wing_Strategy
+
+TEST(sudoku, x_wing_column)
+{
+   sudoku::puzzle_data_t p1 {{ // puzzle
+      {{ // row 1
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 3, 7, 8 }} },
+         { 0, {{ 3, 7 }} },
+         { 0, {{ 2, 3, 4, 7, 8 }} },
+         { 0, {{ 2, 7, 8 }} },
+         { 0, {{ 2, 3, 4, 7, 8 }} },
+         { 5,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 9,  sudoku::default_candidates }
+      }},
+      {{ // row 2
+         { 4,  sudoku::default_candidates },
+         { 9,  sudoku::default_candidates },
+         { 2,  sudoku::default_candidates },
+         { 0, {{ 3, 7 }} },
+         { 5,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 3, 7 }} },
+         { 8,  sudoku::default_candidates }
+      }},
+      {{ // row 3
+         { 0, {{ 3, 7, 8 }} },
+         { 5,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 7, 8 }} },
+         { 9,  sudoku::default_candidates },
+         { 2,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates },
+         { 0, {{ 3, 7 }} }
+      }},
+      {{ // row 4
+         { 0, {{ 3, 5, 7 }} },
+         { 0, {{ 3, 7 }} },
+         { 9,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates },
+         { 0, {{ 2, 7 }} },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 2, 5 }} },
+         { 1,  sudoku::default_candidates }
+      }},
+      {{ // row 5
+         { 0, {{ 5, 7 }} },
+         { 6,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates },
+         { 0, {{ 2, 7, 8, 9 }} },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 2, 7, 8 }} },
+         { 0, {{ 3, 7, 9 }} },
+         { 0, {{ 2, 5 }} },
+         { 0, {{ 3, 7 }} }
+      }},
+      {{ // row 6
+         { 2,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 7, 9 }} },
+         { 3,  sudoku::default_candidates },
+         { 5,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 0, {{ 7, 9 }} },
+         { 4,  sudoku::default_candidates }
+      }},
+      {{ // row 7
+         { 0, {{ 3, 7, 8 }} },
+         { 4,  sudoku::default_candidates },
+         { 0, {{ 3, 7 }} },
+         { 5,  sudoku::default_candidates },
+         { 0, {{ 2, 7, 8, 9 }} },
+         { 0, {{ 2, 3, 7, 8 }} },
+         { 0, {{ 3, 7, 9 }} },
+         { 1,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates }
+      }},
+      {{ // row 8
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 3, 7, 8 }} },
+         { 5,  sudoku::default_candidates },
+         { 0, {{ 3, 7, 8 }} },
+         { 6,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates },
+         { 0, {{ 3, 7, 8 }} },
+         { 2,  sudoku::default_candidates }
+      }},
+      {{ // row 9
+         { 6,  sudoku::default_candidates },
+         { 2,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 3, 4, 7, 8 }} },
+         { 0, {{ 7, 8, 9 }} },
+         { 0, {{ 3, 4, 7, 8 }} },
+         { 0, {{ 3, 7, 9 }} },
+         { 0, {{ 3, 7, 8, 9 }} },
+         { 5,  sudoku::default_candidates }
+      }}
+   }};
+
+   sudoku s1(p1);
+   s1.reduce_x_wing();
+
+   sudoku::puzzle_data_t p2 {{ // puzzle
+      {{ // row 1
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 3, 7, 8 }} },
+         { 0, {{ 3, 7 }} },
+         { 0, {{ 2, 3, 4, 8 }} },
+         { 0, {{ 2, 7, 8 }} },
+         { 0, {{ 2, 3, 4, 7, 8 }} },
+         { 5,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 9,  sudoku::default_candidates }
+      }},
+      {{ // row 2
+         { 4,  sudoku::default_candidates },
+         { 9,  sudoku::default_candidates },
+         { 2,  sudoku::default_candidates },
+         { 0, {{ 3, 7 }} },
+         { 5,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 3, 7 }} },
+         { 8,  sudoku::default_candidates }
+      }},
+      {{ // row 3
+         { 0, {{ 3, 7, 8 }} },
+         { 5,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 7, 8 }} },
+         { 9,  sudoku::default_candidates },
+         { 2,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates },
+         { 0, {{ 3, 7 }} }
+      }},
+      {{ // row 4
+         { 0, {{ 3, 5, 7 }} },
+         { 0, {{ 3, 7 }} },
+         { 9,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates },
+         { 0, {{ 2, 7 }} },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 2, 5 }} },
+         { 1,  sudoku::default_candidates }
+      }},
+      {{ // row 5
+         { 0, {{ 5, 7 }} },
+         { 6,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates },
+         { 0, {{ 2, 8, 9 }} },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 2, 7, 8 }} },
+         { 0, {{ 3, 7, 9 }} },
+         { 0, {{ 2, 5 }} },
+         { 0, {{ 3, 7 }} }
+      }},
+      {{ // row 6
+         { 2,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 7, 9 }} },
+         { 3,  sudoku::default_candidates },
+         { 5,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 0, {{ 7, 9 }} },
+         { 4,  sudoku::default_candidates }
+      }},
+      {{ // row 7
+         { 0, {{ 3, 7, 8 }} },
+         { 4,  sudoku::default_candidates },
+         { 0, {{ 3, 7 }} },
+         { 5,  sudoku::default_candidates },
+         { 0, {{ 2, 7, 8, 9 }} },
+         { 0, {{ 2, 3, 7, 8 }} },
+         { 0, {{ 3, 7, 9 }} },
+         { 1,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates }
+      }},
+      {{ // row 8
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 3, 7, 8 }} },
+         { 5,  sudoku::default_candidates },
+         { 0, {{ 3, 8 }} },
+         { 6,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates },
+         { 0, {{ 3, 8 }} },
+         { 2,  sudoku::default_candidates }
+      }},
+      {{ // row 9
+         { 6,  sudoku::default_candidates },
+         { 2,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 3, 4, 8 }} },
+         { 0, {{ 7, 8, 9 }} },
+         { 0, {{ 3, 4, 7, 8 }} },
+         { 0, {{ 3, 7, 9 }} },
+         { 0, {{ 3, 8, 9 }} },
+         { 5,  sudoku::default_candidates }
+      }}
+   }};
+   sudoku s2(p2);
+   EXPECT_EQ(s1, s2);
+   if(!(s1 == s2)) {
+      s1.print_puzzle_cpp();
+      s1.print_puzzle_candidates_cpp("p1");
+   } 
+}
+
+TEST(sudoku, reduce_x_wing_row)
+{
+   sudoku::puzzle_data_t p1 {{ // puzzle
+      {{ // row 1
+         { 0, {{ 1, 3, 5, 8 }} },
+         { 0, {{ 2, 3, 5 }} },
+         { 0, {{ 1, 3, 5, 8 }} },
+         { 0, {{ 3, 5, 6, 8 }} },
+         { 0, {{ 6, 7, 8 }} },
+         { 0, {{ 3, 5, 6, 7, 8 }} },
+         { 0, {{ 6, 7 }} },
+         { 9,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates }
+      }},
+      {{ // row 2
+         { 7,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 0, {{ 4, 8 }} },
+         { 9,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 4, 8 }} },
+         { 0, {{ 2, 3 }} },
+         { 5,  sudoku::default_candidates },
+         { 0, {{ 2, 3 }} }
+      }},
+      {{ // row 3
+         { 0, {{ 3, 4, 5 }} },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 3, 4, 5 }} },
+         { 0, {{ 3, 4, 5, 6 }} },
+         { 0, {{ 4, 6, 7 }} },
+         { 2,  sudoku::default_candidates },
+         { 0, {{ 6, 7 }} },
+         { 8,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates }
+      }},
+      {{ // row 4
+         { 0, {{ 3, 4, 6 }} },
+         { 7,  sudoku::default_candidates },
+         { 0, {{ 2, 3, 4, 6, 9 }} },
+         { 0, {{ 2, 4, 6, 8 }} },
+         { 5,  sudoku::default_candidates },
+         { 0, {{ 4, 6, 8 }} },
+         { 0, {{ 2, 3, 4, 8, 9 }} },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 2, 3, 8, 9 }} }
+      }},
+      {{ // row 5
+         { 0, {{ 1, 3, 4, 5, 6 }} },
+         { 0, {{ 2, 3, 5 }} },
+         { 0, {{ 1, 2, 3, 4, 5, 6 }} },
+         { 7,  sudoku::default_candidates },
+         { 0, {{ 2, 4, 6, 8 }} },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 2, 3, 4, 5, 8 }} },
+         { 0, {{ 2, 3 }} },
+         { 0, {{ 2, 3, 8 }} }
+      }},
+      {{ // row 6
+         { 0, {{ 4, 5 }} },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 2, 4, 5, 9 }} },
+         { 0, {{ 2, 4 }} },
+         { 3,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 2, 4, 5, 9 }} },
+         { 6,  sudoku::default_candidates },
+         { 7,  sudoku::default_candidates }
+      }},
+      {{ // row 7
+         { 2,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates },
+         { 0, {{ 3, 5, 6, 8 }} },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 6, 8 }} },
+         { 0, {{ 3, 5, 6, 8 }} },
+         { 0, {{ 3, 8, 9 }} },
+         { 7,  sudoku::default_candidates },
+         { 0, {{ 3, 6, 8, 9 }} }
+      }},
+      {{ // row 8
+         { 0, {{ 3, 6, 8 }} },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 3, 6, 7, 8 }} },
+         { 0, {{ 2, 3, 6, 8 }} },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 3, 6, 7, 8 }} },
+         { 0, {{ 2, 3, 8 }} },
+         { 4,  sudoku::default_candidates },
+         { 5,  sudoku::default_candidates }
+      }},
+      {{ // row 9
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 3, 5 }} },
+         { 0, {{ 3, 5, 6, 7, 8 }} },
+         { 0, {{ 2, 3, 4, 5, 6, 8 }} },
+         { 0, {{ 2, 4, 6, 7, 8 }} },
+         { 0, {{ 3, 4, 5, 6, 7, 8 }} },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 2, 3 }} },
+         { 0, {{ 2, 3, 6, 8 }} }
+      }}
+   }};
+   sudoku s1(p1);
+   s1.reduce_x_wing();
+   sudoku::puzzle_data_t p2 {{ // puzzle
+      {{ // row 1
+         { 0, {{ 1, 3, 5, 8 }} },
+         { 0, {{ 2, 3, 5 }} },
+         { 0, {{ 1, 3, 5, 8 }} },
+         { 0, {{ 3, 5, 6, 8 }} },
+         { 0, {{ 6, 7, 8 }} },
+         { 0, {{ 3, 5, 6, 7, 8 }} },
+         { 0, {{ 6, 7 }} },
+         { 9,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates }
+      }},
+      {{ // row 2
+         { 7,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 0, {{ 4, 8 }} },
+         { 9,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 4, 8 }} },
+         { 0, {{ 2, 3 }} },
+         { 5,  sudoku::default_candidates },
+         { 0, {{ 2, 3 }} }
+      }},
+      {{ // row 3
+         { 0, {{ 3, 4, 5 }} },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 3, 4, 5 }} },
+         { 0, {{ 3, 4, 5, 6 }} },
+         { 0, {{ 4, 6, 7 }} },
+         { 2,  sudoku::default_candidates },
+         { 0, {{ 6, 7 }} },
+         { 8,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates }
+      }},
+      {{ // row 4
+         { 0, {{ 3, 4, 6 }} },
+         { 7,  sudoku::default_candidates },
+         { 0, {{ 2, 3, 4, 6, 9 }} },
+         { 0, {{ 2, 4, 6, 8 }} },
+         { 5,  sudoku::default_candidates },
+         { 0, {{ 4, 6, 8 }} },
+         { 0, {{ 2, 3, 4, 8, 9 }} },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 2, 3, 8, 9 }} }
+      }},
+      {{ // row 5
+         { 0, {{ 1, 3, 4, 5, 6 }} },
+         { 0, {{ 3, 5 }} },
+         { 0, {{ 1, 3, 4, 5, 6 }} },
+         { 7,  sudoku::default_candidates },
+         { 0, {{ 2, 4, 6, 8 }} },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 3, 4, 5, 8 }} },
+         { 0, {{ 2, 3 }} },
+         { 0, {{ 3, 8 }} }
+      }},
+      {{ // row 6
+         { 0, {{ 4, 5 }} },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 2, 4, 5, 9 }} },
+         { 0, {{ 2, 4 }} },
+         { 3,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 2, 4, 5, 9 }} },
+         { 6,  sudoku::default_candidates },
+         { 7,  sudoku::default_candidates }
+      }},
+      {{ // row 7
+         { 2,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates },
+         { 0, {{ 3, 5, 6, 8 }} },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 6, 8 }} },
+         { 0, {{ 3, 5, 6, 8 }} },
+         { 0, {{ 3, 8, 9 }} },
+         { 7,  sudoku::default_candidates },
+         { 0, {{ 3, 6, 8, 9 }} }
+      }},
+      {{ // row 8
+         { 0, {{ 3, 6, 8 }} },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 3, 6, 7, 8 }} },
+         { 0, {{ 2, 3, 6, 8 }} },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 3, 6, 7, 8 }} },
+         { 0, {{ 2, 3, 8 }} },
+         { 4,  sudoku::default_candidates },
+         { 5,  sudoku::default_candidates }
+      }},
+      {{ // row 9
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 3, 5 }} },
+         { 0, {{ 3, 5, 6, 7, 8 }} },
+         { 0, {{ 3, 4, 5, 6, 8 }} },
+         { 0, {{ 2, 4, 6, 7, 8 }} },
+         { 0, {{ 3, 4, 5, 6, 7, 8 }} },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 2, 3 }} },
+         { 0, {{ 3, 6, 8 }} }
+      }}
+   }};
+   sudoku s2(p2);
+   EXPECT_EQ(s1, s2);
+   if(!(s1 == s2)) {
+      s1.print_puzzle_cpp();
+      s1.print_puzzle_candidates_cpp("p1");
+   }   
+}
+
 // solve_single_candidates
 TEST(sudoku, p01) 
 {
-    sudoku s1(p01);
+   sudoku s1(p01);
    s1.set_candidates();
    s1.solve_puzzle();
 
@@ -1417,9 +2068,10 @@ TEST(sudoku, p01)
 
    sudoku s2(p2);
    EXPECT_EQ(s1.get_puzzle(), s2.get_puzzle());
-   if(s1.get_puzzle() != s2.get_puzzle()) {
-      s1.print();
-   }
+   if(!(s1 == s2)) {
+      s1.print_puzzle_cpp();
+      s1.print_puzzle_candidates_cpp("p1");
+   } 
 }
 
 // solve_unique_candidates
@@ -1442,11 +2094,11 @@ TEST(sudoku, p02)
    }};
 
    sudoku s2(p2);
-   EXPECT_EQ(s1.get_puzzle(), s2.get_puzzle());
-
-   if(s1.get_puzzle() != s2.get_puzzle()) {
-      s1.print_differences(s2);
-   }
+   EXPECT_EQ(s1, s2);
+   if(!(s1 == s2)) {
+      s1.print_puzzle_cpp();
+      s1.print_puzzle_candidates_cpp("p1");
+   } 
 }
 
 // solve_unique_candidates
@@ -1469,8 +2121,10 @@ TEST(sudoku, p03)
    }};
 
    sudoku s2(p2);
-   EXPECT_EQ(s1.get_puzzle(), s2.get_puzzle());
-}
+   if(!(s1 == s2)) {
+      s1.print_puzzle_cpp();
+      s1.print_puzzle_candidates_cpp("p1");
+   } }
 
 TEST(sudoku, p04) 
 {
@@ -1492,7 +2146,10 @@ TEST(sudoku, p04)
 
    sudoku s2(p2);
    EXPECT_EQ(s1, s2);
-   if(!(s1 == s2)) s1.print_puzzle_cpp();
+   if(!(s1 == s2)) {
+      s1.print_puzzle_cpp();
+      s1.print_puzzle_candidates_cpp("p1");
+   } 
 }
 
 // naked pairs 
@@ -1516,7 +2173,10 @@ TEST(sudoku, p05)
 
    sudoku s2(p2);
    EXPECT_EQ(s1, s2);
-   if(!(s1 == s2)) s1.print_puzzle_cpp();
+   if(!(s1 == s2)) {
+      s1.print_puzzle_cpp();
+      s1.print_puzzle_candidates_cpp("p1");
+   } 
 }
 
 TEST(sudoku, p06) 
@@ -1539,37 +2199,39 @@ TEST(sudoku, p06)
 
    sudoku s2(p2);
    EXPECT_EQ(s1, s2);
-   if(!(s1 == s2)) s1.print_puzzle_cpp();
-   if(! s1.is_solved()) s1.print_puzzle_raw();
-   s1.print_blanks();
+   if(!(s1 == s2)) {
+      s1.print_puzzle_cpp();
+      s1.print_puzzle_candidates_cpp("p1");
+   } 
 }
 
-// TEST(sudoku, p07) 
-// {
-//    sudoku s1(p07);
-//    s1.set_candidates();
-//    s1.solve_puzzle();
+// we need the X-wing next 
 
-//    sudoku::puzzle_input_data_t p2 {{
-//       {1,7,6,9,2,3,5,8,4},
-//       {5,2,4,8,1,7,6,3,9},
-//       {8,9,3,6,5,4,2,7,1},
-//       {9,5,7,3,4,8,1,6,2},
-//       {6,3,8,1,9,2,4,5,7},
-//       {4,1,2,7,6,5,3,9,8},
-//       {2,6,5,4,8,9,7,1,3},
-//       {7,8,1,2,3,6,9,4,5},
-//       {3,4,9,5,7,1,8,2,6}
-//    }};
+TEST(sudoku, p07) 
+{
+   sudoku s1(p07);
+   s1.set_candidates();
+   s1.solve_puzzle();
 
-//    sudoku s2(p2);
-//    EXPECT_EQ(s1, s2);
-//    if(!(s1 == s2)) {
-//       s1.print_puzzle_cpp();
-//       s1.print_blanks();
-//       s1.print_puzzle_candidates_cpp();
-//    }
-// }
+   sudoku::puzzle_input_data_t p2 {{
+      {1,4,3,9,8,6,2,5,7},
+      {6,7,9,4,2,5,3,8,1},
+      {2,8,5,7,3,1,6,9,4},
+      {9,6,2,3,5,4,1,7,8},
+      {3,5,7,6,1,8,9,4,2},
+      {4,1,8,2,7,9,5,6,3},
+      {8,2,1,5,6,7,4,3,9},
+      {7,9,6,1,4,3,8,2,5},
+      {5,3,4,8,9,2,7,1,6}
+   }};
+
+   sudoku s2(p2);
+   EXPECT_EQ(s1, s2);
+   if(!(s1 == s2)) {
+      s1.print_puzzle_cpp();
+      s1.print_puzzle_candidates_cpp("p1");
+   } 
+}
 
 int main(int argc, char **argv) {
    testing::InitGoogleTest(&argc, argv);
