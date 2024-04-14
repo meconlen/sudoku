@@ -49,6 +49,9 @@ public:
    void find_hidden_pairs(); // this finds a hidden pair and removes candidates from those cells
    void reduce_naked_pairs(); // this finds naked pairs and removes candidates from the rest of the house
    void reduce_pointing_pairs(); // this finds a pair (or triple) that is only in one row or column in a box. If so remove it from the row/column outside the box
+   void reduce_box_line(); // if there is a box with a candidate in a row/column and that is the only
+                           // box with that candidate in the row/column then we remove the candidate
+                           // from the rest of the box
    void solve_puzzle();
 
    bool is_solved();

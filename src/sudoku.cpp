@@ -392,6 +392,7 @@ void sudoku::reduce_pointing_pairs()
             }
          }
       }
+
       std::array<std::set<value_t>, 9> candidate_columns;
       for(value_t candidate = 1; candidate < 10; candidate++) {
          for(value_t i = start.first; i < start.first + 3; i++) {
@@ -416,6 +417,55 @@ void sudoku::reduce_pointing_pairs()
    return;
 }
 
+void sudoku::reduce_box_line()
+{
+   // for each row/column
+   // record which block a candidate is in 
+   // if the candidate is only in one box for that row/column
+   // remove the candidate from other rows/columns in that box
+   for(value_t i = 0; i < 9; i++) {
+      std::array<std::set<value_t>, 9> candidate_block;
+      for(value_t j = 0; j < 9; j++) {
+         value_t block = get_block_number(i, j);
+         for(const auto& candidate : puzzle[i][j].second) {
+            candidate_block[candidate-1].insert(block);
+         }
+      }
+      for(value_t candidate = 1; candidate < 10; candidate++) {
+         if(candidate_block[candidate-1].size() == 1) {
+            auto start = get_block_start(*(candidate_block[candidate-1].begin()));
+            for(value_t m = start.first; m < start.first + 3; m++) {
+               for(value_t n = start.second; n < start.second + 3; n++) {
+                  if(m == i) continue;
+                  puzzle[m][n].second.erase(candidate);
+               }
+            }
+         }
+      }
+   }
+   for(value_t j = 0; j < 9; j++) {
+      std::array<std::set<value_t>, 9> candidate_block;
+      for(value_t i = 0; i < 9; i++) {
+         value_t block = get_block_number(i, j);
+         for(const auto& candidate : puzzle[i][j].second) {
+            candidate_block[candidate-1].insert(block);
+         }
+      }
+      for(value_t candidate = 1; candidate < 10; candidate++) {
+         if(candidate_block[candidate-1].size() == 1) {
+            auto start = get_block_start(*(candidate_block[candidate-1].begin()));
+            for(value_t m = start.first; m < start.first + 3; m++) {
+               for(value_t n = start.second; n < start.second + 3; n++) {
+                  if(n == j) continue; 
+                  puzzle[m][n].second.erase(candidate);
+               }
+            }
+         }
+      }
+   }
+   return;
+}
+
 void sudoku::solve_puzzle()
 {
    while(true) {
@@ -425,6 +475,7 @@ void sudoku::solve_puzzle()
       find_hidden_pairs();
       reduce_naked_pairs();
       reduce_pointing_pairs();
+      reduce_box_line();
       if(puzzle == current_puzzle) break; // we didn't update the puzzle this iteration. 
    }
    return;
