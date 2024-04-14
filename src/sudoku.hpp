@@ -116,9 +116,9 @@ private:
       {{ &puzzle_data[3][0], &puzzle_data[3][1], &puzzle_data[3][2], &puzzle_data[4][0], &puzzle_data[4][1], &puzzle_data[4][2], &puzzle_data[5][0], &puzzle_data[5][1], &puzzle_data[5][2] }},
       {{ &puzzle_data[3][3], &puzzle_data[3][4], &puzzle_data[3][5], &puzzle_data[4][3], &puzzle_data[4][4], &puzzle_data[4][5], &puzzle_data[5][3], &puzzle_data[5][4], &puzzle_data[5][5] }},
       {{ &puzzle_data[3][6], &puzzle_data[3][7], &puzzle_data[3][8], &puzzle_data[4][6], &puzzle_data[4][7], &puzzle_data[4][8], &puzzle_data[5][6], &puzzle_data[5][7], &puzzle_data[5][8] }},
-      {{ &puzzle_data[6][0], &puzzle_data[6][1], &puzzle_data[6][2], &puzzle_data[7][0], &puzzle_data[7][1], &puzzle_data[7][2], &puzzle_data[3][0], &puzzle_data[3][1], &puzzle_data[3][2] }},
-      {{ &puzzle_data[6][3], &puzzle_data[6][4], &puzzle_data[6][5], &puzzle_data[7][3], &puzzle_data[7][4], &puzzle_data[7][5], &puzzle_data[3][3], &puzzle_data[3][4], &puzzle_data[3][5] }},
-      {{ &puzzle_data[6][6], &puzzle_data[6][7], &puzzle_data[6][8], &puzzle_data[7][6], &puzzle_data[7][7], &puzzle_data[7][8], &puzzle_data[3][6], &puzzle_data[3][7], &puzzle_data[3][8] }}
+      {{ &puzzle_data[6][0], &puzzle_data[6][1], &puzzle_data[6][2], &puzzle_data[7][0], &puzzle_data[7][1], &puzzle_data[7][2], &puzzle_data[8][0], &puzzle_data[8][1], &puzzle_data[8][2] }},
+      {{ &puzzle_data[6][3], &puzzle_data[6][4], &puzzle_data[6][5], &puzzle_data[7][3], &puzzle_data[7][4], &puzzle_data[7][5], &puzzle_data[8][3], &puzzle_data[8][4], &puzzle_data[8][5] }},
+      {{ &puzzle_data[6][6], &puzzle_data[6][7], &puzzle_data[6][8], &puzzle_data[7][6], &puzzle_data[7][7], &puzzle_data[7][8], &puzzle_data[8][6], &puzzle_data[8][7], &puzzle_data[8][8] }}
    }};
 
    friend std::ostream& operator<<(std::ostream& os, const sudoku& s);

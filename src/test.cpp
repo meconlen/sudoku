@@ -285,11 +285,10 @@ TEST(sudoku, set_candidates)
    s1.set_candidates();
    sudoku s2(p2);
 
+   EXPECT_EQ(s1, s2);
    if(! (s1 == s2) ) {
       s1.print_differences(s2);
    }
-
-   EXPECT_EQ(s1, s2);
 }
 
 // test using this example to find hidden singles 

@@ -85,30 +85,11 @@ void sudoku::set_candidates()
    for(auto i = 0; i < 9; i++) {
       for(auto j = 0; j < 9; j++) {
          if(puzzle[i][j]->first == 0) {
-            std::set<uint_fast8_t> row_set, column_set, block_set;
+            std::set<value_t> row_set, column_set, block_set;
             row_set = get_row(i);
             column_set = get_column(j);
-            
-            if(i < 3 && j < 3) {
-               block_set = get_block(1);
-            } else if (i < 3 && (j >=3 && j < 6)) {
-               block_set = get_block(2);
-            } else if (i < 3 && j >= 6) {
-               block_set = get_block(3);
-            } else if ( (i >= 3 && i < 6) && j < 3) {
-               block_set = get_block(4);
-            } else if ( (i >= 3 && i < 6) && (j >= 3 && j < 6)) {
-               block_set = get_block(5);
-            } else if ( (i >= 3 && i < 6) && j >= 6) {
-               block_set = get_block(6);
-            } else if (i >= 6 && j < 3) {
-               block_set = get_block(7);
-            } else if (i >= 6 && (j >= 3 && j < 6) ) {
-               block_set = get_block(8);
-            } else if (i >= 6 && j >= 6) {
-               block_set = get_block(9);
-            }
-
+            value_t block_number = get_block_number(i, j);
+            block_set = get_block(block_number);
             puzzle[i][j]->second = all_candidates;
             for(auto& x : row_set) {
                puzzle[i][j]->second.erase(x);
@@ -148,16 +129,7 @@ void sudoku::solve_cell(uint_fast8_t row, uint_fast8_t column, uint_fast8_t valu
    return;
 }
 
-void sudoku::print() const
-{
-   std::cout << to_string() << std::endl;
-}
-
-void sudoku::print_transposed() const
-{
-   std::cout << to_string_transposed() << std::endl;
-}
-
+// get all the saved values in the row
 std::set<uint_fast8_t> sudoku::get_row(uint_fast8_t r)
 {
    std::set<uint_fast8_t> rv;
@@ -168,6 +140,7 @@ std::set<uint_fast8_t> sudoku::get_row(uint_fast8_t r)
    return rv;
 }
 
+// get all the saved values in the column
 std::set<uint_fast8_t> sudoku::get_column(uint_fast8_t c)
 {
    std::set<uint_fast8_t> rv;
@@ -181,17 +154,11 @@ std::set<uint_fast8_t> sudoku::get_column(uint_fast8_t c)
 std::set<uint_fast8_t> sudoku::get_block(uint_fast8_t block)
 {
    std::set<uint_fast8_t> rv;
-   auto start = get_block_start(block);
-   uint_fast8_t first_row = start.first;
-   uint_fast8_t first_column = start.second;
-   for(auto i = first_row; i < first_row + 3; i++) {
-      for(auto j = first_column; j < first_column +3; j++) {
-         rv.insert(puzzle[i][j]->first);
-      }
+   for(auto i = 0; i < 9; i++) {
+      rv.insert(block_puzzle[block-1][i]->first);
    }
    rv.erase(0);
    return rv;
-
 }
 
 sudoku::puzzle_input_data_t sudoku::get_puzzle() const
@@ -601,7 +568,7 @@ void sudoku::print_differences(const sudoku& other) const
 {
    for(auto i = 0; i < 9; i++) {
       for(auto j = 0; j < 9; j++) {
-         if(puzzle[i][j] != other.puzzle[i][j]) {
+         if(puzzle_data[i][j] != other.puzzle_data[i][j]) {
             std::cout << "puzzle[" << i << "][" << j << "] = {" << static_cast<unsigned>(puzzle[i][j]->first) << ", {";
             for(auto it = puzzle[i][j]->second.begin(); it != puzzle[i][j]->second.end(); it++) {
                std::cout << static_cast<unsigned>(*it); 
@@ -654,6 +621,16 @@ void sudoku::print_puzzle_cpp(std::string var_name) const
       std::cout << std::endl;
    }
    std::cout << "   }};" << std::endl;
+}
+
+void sudoku::print() const
+{
+   std::cout << to_string() << std::endl;
+}
+
+void sudoku::print_transposed() const
+{
+   std::cout << to_string_transposed() << std::endl;
 }
 
 void sudoku::print_puzzle_raw() const
