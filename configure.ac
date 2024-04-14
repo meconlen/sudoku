@@ -23,8 +23,4 @@ AC_CHECK_FUNCS([fstat])
 AC_CONFIG_FILES([Makefile
 	src/Makefile
 ])
-AC_CONFIG_SUBDIRS([
-	googletest/googletest
-	googletest/googlemock
-])
 AC_OUTPUT
