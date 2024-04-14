@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: checkout module
+        run: git submodule update --init --recursive
       - name: autoreconf
         run: autoreconf -vfi
       - name: configure
