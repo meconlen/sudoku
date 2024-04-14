@@ -356,8 +356,6 @@ void sudoku::reduce_naked_pairs()
 }
 
 // this finds a pair (or triple) that is only in one row or column in a box. If so remove it from the row/column outside the box
-// we currently only have a test case for a row 
-
 // for each block
 // look at each row(column)
 // if there is a candidate which is only in a single row(column)
@@ -367,9 +365,9 @@ void sudoku::reduce_pointing_pairs()
 {
    // for each block
    for(value_t block = 1; block < 10; block++) {
+      auto start = get_block_start(block);
       // for each candidate get a list of rows
       std::array<std::set<value_t>, 9> candidate_rows;
-      auto start = get_block_start(block);
       for(value_t candidate = 1; candidate < 10; candidate++) {
          for(value_t i = start.first; i < start.first + 3; i++) {
             for(value_t j = start.second; j < start.second + 3; j++) {
@@ -388,6 +386,26 @@ void sudoku::reduce_pointing_pairs()
                for(value_t j = 0; j < 9; j++) {
                   if(j < start.second || j >= start.second + 3) {
                      // remove the candidate if we are outside the block
+                     puzzle[i][j].second.erase(candidate);
+                  }
+               }
+            }
+         }
+      }
+      std::array<std::set<value_t>, 9> candidate_columns;
+      for(value_t candidate = 1; candidate < 10; candidate++) {
+         for(value_t i = start.first; i < start.first + 3; i++) {
+            for(value_t j = start.second; j < start.second + 3; j++) {
+               for(const auto& candidate : puzzle[i][j].second) {
+                  candidate_columns[candidate-1].insert(j);
+               }
+            }
+         }
+         for(value_t candidate = 1; candidate < 10; candidate++) {
+            if(candidate_columns[candidate-1].size() == 1) {
+               value_t j = *(candidate_columns[candidate-1].begin());
+               for(value_t i = 0; i < 9; i++) {
+                  if(i < start.first || i >= start.first + 3) {
                      puzzle[i][j].second.erase(candidate);
                   }
                }
