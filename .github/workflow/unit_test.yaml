@@ -1,0 +1,16 @@
+name: unit-tests
+run-name: Unit Test Action
+on: [push]
+jobs:
+  run-unit-test:
+    runs-on: debian-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run configure
+        run: |
+          autoconf -vfi
+          ./configure
+      - name: build
+        run: make
+      - name: test
+        run: src/test
