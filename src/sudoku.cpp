@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <iterator>
+#include <regex>
 #include <string>
 #include <sstream>
 #include <utility>
@@ -19,6 +20,19 @@ sudoku::sudoku(const puzzle_input_data_t& p)
    for(auto i = 0; i < 9; i++) {
       for(auto j = 0; j < 9; j++) {
          *puzzle[i][j] = puzzle_entry_t(p[i][j], default_candidates);
+      }
+   }
+}
+
+sudoku::sudoku(const std::string& p)
+{
+   if(p.length() != 81) return;
+   std::regex nums("[0-9]*");
+   if(! std::regex_match(p, nums)) return;
+   auto it = p.begin();
+   for(value_t i = 0; i < 9; i++) {
+      for(value_t j = 0; j < 9; j++) {
+         puzzle_data[i][j].first = *it++ - '0';
       }
    }
 }
@@ -396,7 +410,8 @@ void sudoku::reduce_x_wing()
 
 void sudoku::solve_puzzle()
 {
-   while(true) {
+      set_candidates();
+      while(true) {
       puzzle_data_t current_puzzle_data = puzzle_data;
       solve_single_candidates();
       if(puzzle_data != current_puzzle_data) continue;

@@ -37,6 +37,7 @@ public:
    sudoku() = default;
    sudoku(const puzzle_input_data_t& p);
    sudoku(const puzzle_data_t& p) : puzzle_data(p) {}
+   sudoku(const std::string& p);
    ~sudoku() = default;
    sudoku(const sudoku& other) = default;
    sudoku(sudoku&& other) = default;
