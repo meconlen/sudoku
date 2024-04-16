@@ -423,5 +423,4 @@ static void BM_PUZZLE_BACKTRACK_HARD(benchmark::State& state) {
 }
 BENCHMARK(BM_PUZZLE_BACKTRACK_HARD);
 
-
 BENCHMARK_MAIN();

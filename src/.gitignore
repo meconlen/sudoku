@@ -6,3 +6,5 @@ test.trs
 
 bench
 solver
+perf.data
+perf.data.old
