@@ -186,7 +186,7 @@ void sudoku::solve_hidden_singles()
             uint_fast8_t house_count = 0;
             // row i
             for(auto k = 0; k < 9; k++) {
-               if(puzzle[i][k]->second.contains(candidate)) { house_count++; }
+               if(puzzle_data[i][k].second.contains(candidate)) { house_count++; }
             }
             if(house_count == 1) { 
                solve_cell(i, j, candidate); 
@@ -194,7 +194,7 @@ void sudoku::solve_hidden_singles()
             }
             house_count = 0;
             for(auto k = 0; k < 9; k++) {
-               if(puzzle[k][j]->second.contains(candidate)) { house_count++; }
+               if(puzzle_data[k][j].second.contains(candidate)) { house_count++; }
             }
             if(house_count == 1) {
                solve_cell(i, j, candidate); 
@@ -437,11 +437,102 @@ void sudoku::solve_puzzle()
    return;
 }
 
+std::pair<sudoku::value_t, sudoku::value_t> sudoku::first_unsolved()
+{
+   for(value_t i = 0; i < 9; i++) {
+      for(value_t j = 0; j < 9; j++) {
+         if(puzzle[i][j]->first == 0) return {i, j};
+      }
+   }
+   return {10, 10};
+}
+
+void sudoku::solve_backtrack()
+{
+// std::cout << to_string() << std::endl;
+   auto unsolved = first_unsolved();
+   if(unsolved.first == 10 || unsolved.second == 10) return;
+   for(value_t candidate_value = 1; candidate_value < 10; candidate_value++) {
+      puzzle_data[unsolved.first][unsolved.second].first = candidate_value;
+      if(is_valid()) solve_backtrack();
+      if(is_solved() && is_valid()) return;
+   }
+   puzzle_data[unsolved.first][unsolved.second].first = 0;
+   return;
+}
+
 bool sudoku::is_solved()
 {
    for(auto i = 0; i < 9; i++) {
       for(auto j = 0; j < 9; j++) {
-         if(puzzle[i][j]->first == 0) return false;
+         if(puzzle_data[i][j].first == 0) return false;
+      }
+   }
+   return true;
+}
+
+// accessing the puzzle_data directly here instead of using the helpers 
+// creates a significant improvement
+
+bool sudoku::are_houses_valid(puzzle_data_p puzzle)
+{
+   for(value_t i = 0; i < 9; i++) {
+      std::array<bool, 9> values {false, false, false, false, false, false, false, false, false};
+      for(value_t j = 0; j < 9; j++) {
+         if(puzzle[i][j]->first != 0) 
+            if(values[puzzle[i][j]->first - 1]) {
+               return false;
+            } else {
+               values[puzzle[i][j]->first -1] = true;
+            }
+      }
+   }
+   return true;
+}
+
+bool sudoku::is_valid()
+{
+   bool valid = false;
+   // valid = are_houses_valid(puzzle);
+   // if(! valid) return valid;
+   for(value_t i = 0; i < 9; i++) {
+      std::array<bool, 9> values {false, false, false, false, false, false, false, false, false};
+      for(value_t j = 0; j < 9; j++) {
+         if(puzzle_data[i][j].first != 0)
+            if(values[puzzle_data[i][j].first - 1]) {
+               return false;
+            } else {
+               values[puzzle_data[i][j].first-1] = true;
+            }
+      }
+   }
+   // valid = are_houses_valid(transposed_puzzle);
+   // if(! valid) return valid;
+   for(value_t j = 0; j < 9; j++) {
+      std::array<bool, 9> values {false, false, false, false, false, false, false, false, false};
+      for(value_t i = 0; i < 9; i++) {
+         if(puzzle_data[i][j].first != 0)
+            if(values[puzzle_data[i][j].first - 1]) {
+               return false;
+            } else {
+               values[puzzle_data[i][j].first-1] = true;
+            }
+      }
+   }
+   // valid = are_houses_valid(block_puzzle);
+   // if(! valid) return valid;
+   for(value_t block = 0; block < 9; block++) {
+      std::array<bool, 9> values {false, false, false, false, false, false, false, false, false};
+      auto start = get_block_start(block);
+      for(value_t i = start.first; i < start.first + 3; i++) {
+         for(value_t j = start.second; j < start.second + 3; j++) {
+            if(puzzle_data[i][j].first != 0)
+               if(values[puzzle_data[i][j].first - 1]) {
+                  return false;
+               } else {
+                  values[puzzle_data[i][j].first-1] = true;
+               }
+         }
       }
    }
    return true;

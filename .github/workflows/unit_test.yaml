@@ -1,6 +1,9 @@
 name: unit-tests
 run-name: Unit Test Action
 on: [push]
+  branches:
+    - master
+    - dev
 jobs:
   run-unit-test:
     runs-on: ubuntu-latest

@@ -5,7 +5,7 @@ libgtest_la_LDFLAGS = -pthread
 
 noinst_PROGRAMS = test bench
 
-test_SOURCES = test.cpp sudoku.cpp
+test_SOURCES = test.cpp euler.cpp sudoku.cpp
 test_CPPFLAGS = -I ${top_srcdir}/googletest/googletest/include/
 test_LDADD = libgtest.la
 test_LDFLAGS = -pthread -lm

@@ -64,7 +64,13 @@ public:
    void solve_puzzle();
 
    bool is_solved();
+   bool is_valid(); // this will determine if a partially filled out puzzle contains any obvious
+                     // contradictions in a row, column or box
+
    puzzle_input_data_t get_puzzle() const;
+
+   // DFS 
+   void solve_backtrack();
 
    // utilities 
    void print_candidate(uint_fast8_t row, uint_fast8_t column) const;
@@ -92,7 +98,9 @@ private:
    std::set<uint_fast8_t> get_row(uint_fast8_t r);
    std::set<uint_fast8_t> get_column(uint_fast8_t c);
    std::set<uint_fast8_t> get_block(uint_fast8_t block);
- 
+   bool are_houses_valid(puzzle_data_p puzzle);
+   std::pair<value_t, value_t> first_unsolved();
+
 
    puzzle_data_t puzzle_data{ empty_puzzle };
 

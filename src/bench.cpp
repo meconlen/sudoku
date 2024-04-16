@@ -407,4 +407,21 @@ static void BM_PUZZLE_50(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_50);
 
 
+static void BM_PUZZLE_BACKTRACK(benchmark::State& state) {
+   for (auto _ : state) {
+      sudoku s1("300200000000107000706030500070009080900020004010800050009040301000702000000008006");
+      s1.solve_backtrack();
+   }
+}
+BENCHMARK(BM_PUZZLE_BACKTRACK);
+
+static void BM_PUZZLE_BACKTRACK_HARD(benchmark::State& state) {
+   for (auto _ : state) {
+      sudoku s1("000000000000003085001020000000507000004000100090000000500000073002010000000040009");
+      s1.solve_backtrack();
+   }
+}
+BENCHMARK(BM_PUZZLE_BACKTRACK_HARD);
+
+
 BENCHMARK_MAIN();
