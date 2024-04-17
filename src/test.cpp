@@ -966,6 +966,7 @@ TEST(sudoku, find_hidden_pairs_column)
    EXPECT_EQ(s1, s2);
 
    if(!(s1 == s2)) {
+      s1.print_differences(s2);
       s1.print_puzzle_cpp();
       s1.print_puzzle_candidates_cpp();
    }
@@ -1411,6 +1412,7 @@ TEST(sudoku, pointing_pair)
    EXPECT_EQ(s1, s2);
 
    if(!(s1 == s2)) {
+      s1.print_differences(s2);
       s1.print_puzzle_cpp();
       s1.print_puzzle_candidates_cpp();
    }

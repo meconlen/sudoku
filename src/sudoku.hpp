@@ -7,16 +7,13 @@
 #include <string>
 #include <utility>
 
-// open issues
-// find_hidden_pairs for row and column. Currently only does this for a block (careful here, the example is actually a row, we need a test case for a block)
-// reduce_naked_pairs for a column and block
-// reduce_pointing_pairs for a column
+#include "sudoku_set.hpp"
 
 class sudoku 
 {
 public:
    using value_t = uint_fast8_t;
-   using puzzle_candidate_t = std::set<uint_fast8_t>;
+   using puzzle_candidate_t = sudoku_set;
    using puzzle_entry_t = std::pair<uint_fast8_t, puzzle_candidate_t>;
    using puzzle_row_t = std::array<puzzle_entry_t, 9>;
    using puzzle_data_t = std::array<puzzle_row_t, 9>;
@@ -95,9 +92,9 @@ private:
    static value_t get_block_number(value_t row, value_t column); 
    static std::pair<value_t, value_t> get_block_start(value_t block);
 
-   std::set<uint_fast8_t> get_row(uint_fast8_t r);
-   std::set<uint_fast8_t> get_column(uint_fast8_t c);
-   std::set<uint_fast8_t> get_block(uint_fast8_t block);
+   sudoku_set get_row(uint_fast8_t r);
+   sudoku_set get_column(uint_fast8_t c);
+   sudoku_set get_block(uint_fast8_t block);
    bool are_houses_valid(puzzle_data_p puzzle);
    std::pair<value_t, value_t> first_unsolved();
 

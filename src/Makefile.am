@@ -5,16 +5,16 @@ libgtest_la_LDFLAGS = -pthread
 
 noinst_PROGRAMS = test bench
 
-test_SOURCES = test.cpp euler.cpp sudoku.cpp
+test_SOURCES = test.cpp euler.cpp sudoku.cpp sudoku_set.cpp
 test_CPPFLAGS = -I ${top_srcdir}/googletest/googletest/include/
 test_LDADD = libgtest.la
 test_LDFLAGS = -pthread -lm
 
-bench_SOURCES = bench.cpp sudoku.cpp
+bench_SOURCES = bench.cpp sudoku.cpp sudoku_set.cpp
 bench_LDFLAGS = -lbenchmark -pthread -lm
 
 bin_PROGRAMS = test bench solver
 
-solver_SOURCES = solver.cpp sudoku.cpp
+solver_SOURCES = solver.cpp sudoku.cpp sudoku_set.cpp
 
 TESTS = test
