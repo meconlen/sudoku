@@ -1,0 +1,280 @@
+# std::set
+
+2024-04-16T15:58:57+00:00
+Running ./bench
+Run on (4 X 2000 MHz CPU s)
+CPU Caches:
+  L1 Data 64 KiB (x4)
+  L1 Instruction 64 KiB (x4)
+  L2 Unified 512 KiB (x4)
+  L3 Unified 16384 KiB (x1)
+Load Average: 0.62, 0.25, 0.09
+***WARNING*** Library was built as DEBUG. Timings may be affected.
+-------------------------------------------------------------------
+Benchmark                         Time             CPU   Iterations
+-------------------------------------------------------------------
+BM_PUZZLE_1                   58759 ns        58757 ns       118340
+BM_PUZZLE_2                   78304 ns        78301 ns        88744
+BM_PUZZLE_3                  101637 ns       101634 ns        70149
+BM_PUZZLE_4                   77147 ns        77145 ns        89763
+BM_PUZZLE_5                   55866 ns        55863 ns       126373
+BM_PUZZLE_6                  165881 ns       165876 ns        42766
+BM_PUZZLE_7                  568403 ns       568384 ns        12173
+BM_PUZZLE_8                   56603 ns        56601 ns       124931
+BM_PUZZLE_9                   99616 ns        99612 ns        71083
+BM_PUZZLE_10                 146723 ns       146718 ns        47394
+BM_PUZZLE_11                  99208 ns        99205 ns        71094
+BM_PUZZLE_12                  59134 ns        59132 ns       117892
+BM_PUZZLE_13                  89841 ns        89838 ns        78154
+BM_PUZZLE_14                  80444 ns        80441 ns        87013
+BM_PUZZLE_15                  79969 ns        79966 ns        88203
+BM_PUZZLE_16                  55522 ns        55520 ns       126611
+BM_PUZZLE_17                  56604 ns        56603 ns       123592
+BM_PUZZLE_18                  77781 ns        77778 ns        90145
+BM_PUZZLE_19                  58922 ns        58921 ns       119466
+BM_PUZZLE_20                  56789 ns        56787 ns       124532
+BM_PUZZLE_21                  93473 ns        93470 ns        75429
+BM_PUZZLE_22                  88291 ns        88288 ns        79012
+BM_PUZZLE_23                  76359 ns        76357 ns        91166
+BM_PUZZLE_24                  76783 ns        76780 ns        93200
+BM_PUZZLE_25                 135603 ns       135598 ns        51831
+BM_PUZZLE_26                 121025 ns       121022 ns        56923
+BM_PUZZLE_27                  87176 ns        87174 ns        79649
+BM_PUZZLE_28                  92714 ns        92709 ns        74456
+BM_PUZZLE_29                 120975 ns       120971 ns        57577
+BM_PUZZLE_30                  85454 ns        85452 ns        81953
+BM_PUZZLE_31                 107784 ns       107780 ns        65652
+BM_PUZZLE_32                 103323 ns       103320 ns        67767
+BM_PUZZLE_33                  70134 ns        70132 ns       100880
+BM_PUZZLE_34                  59859 ns        59857 ns       116139
+BM_PUZZLE_35                  76075 ns        76072 ns        92787
+BM_PUZZLE_36                  58428 ns        58427 ns       121348
+BM_PUZZLE_37                  71311 ns        71310 ns       100011
+BM_PUZZLE_38                  60682 ns        60681 ns       115720
+BM_PUZZLE_39                  72603 ns        72602 ns        96014
+BM_PUZZLE_40                  58585 ns        58585 ns       120225
+BM_PUZZLE_41                  99013 ns        99012 ns        71442
+BM_PUZZLE_42                 358893 ns       358875 ns        19416
+BM_PUZZLE_43                 164471 ns       164466 ns        42937
+BM_PUZZLE_44                 126942 ns       126937 ns        55856
+BM_PUZZLE_45                 121432 ns       121429 ns        58305
+BM_PUZZLE_46                 137662 ns       137651 ns        50945
+BM_PUZZLE_47                 210413 ns       210407 ns        33450
+BM_PUZZLE_48                 253627 ns       253620 ns        27354
+BM_PUZZLE_49                 244512 ns       244498 ns        28603
+BM_PUZZLE_50                 174570 ns       174564 ns        40053
+BM_PUZZLE_BACKTRACK         9738026 ns      9737675 ns          715
+BM_PUZZLE_BACKTRACK_HARD 4.7503e+10 ns   4.7502e+10 ns            1
+
+# Using sudoku::set with a std::array<bool, ...>
+
+
+root@localhost:~/src/sudoku/src# ./bench --benchmark_min_time=5
+2024-04-17T15:29:32+00:00
+Running ./bench
+Run on (4 X 2000 MHz CPU s)
+CPU Caches:
+  L1 Data 64 KiB (x4)
+  L1 Instruction 64 KiB (x4)
+  L2 Unified 512 KiB (x4)
+  L3 Unified 16384 KiB (x1)
+Load Average: 1.90, 1.11, 0.55
+***WARNING*** Library was built as DEBUG. Timings may be affected.
+-------------------------------------------------------------------
+Benchmark                         Time             CPU   Iterations
+-------------------------------------------------------------------
+BM_PUZZLE_1                    4403 ns         4403 ns      1588247
+BM_PUZZLE_2                    6452 ns         6452 ns      1071361
+BM_PUZZLE_3                   10396 ns        10395 ns       666577
+BM_PUZZLE_4                    6783 ns         6783 ns      1033496
+BM_PUZZLE_5                    3875 ns         3874 ns      1808744
+BM_PUZZLE_6                   26723 ns        26722 ns       257529
+BM_PUZZLE_7                   99019 ns        99016 ns        70194
+BM_PUZZLE_8                    3871 ns         3871 ns      1813286
+BM_PUZZLE_9                    9881 ns         9881 ns       700444
+BM_PUZZLE_10                  17019 ns        17019 ns       409593
+BM_PUZZLE_11                  10008 ns        10008 ns       705342
+BM_PUZZLE_12                   4830 ns         4830 ns      1445086
+BM_PUZZLE_13                   9464 ns         9464 ns       738824
+BM_PUZZLE_14                   7327 ns         7327 ns       946450
+BM_PUZZLE_15                   7643 ns         7643 ns       886196
+BM_PUZZLE_16                   3796 ns         3796 ns      1834030
+BM_PUZZLE_17                   3782 ns         3782 ns      1857034
+BM_PUZZLE_18                   6809 ns         6809 ns      1043594
+BM_PUZZLE_19                   4483 ns         4483 ns      1566879
+BM_PUZZLE_20                   4537 ns         4537 ns      1530958
+BM_PUZZLE_21                   8746 ns         8746 ns       800912
+BM_PUZZLE_22                   8789 ns         8789 ns       803022
+BM_PUZZLE_23                   6921 ns         6921 ns      1001856
+BM_PUZZLE_24                   7401 ns         7401 ns       948768
+BM_PUZZLE_25                  14919 ns        14918 ns       466121
+BM_PUZZLE_26                  12437 ns        12436 ns       564627
+BM_PUZZLE_27                   7972 ns         7972 ns       872846
+BM_PUZZLE_28                   9510 ns         9510 ns       742695
+BM_PUZZLE_29                  12186 ns        12186 ns       567346
+BM_PUZZLE_30                   7342 ns         7342 ns       947850
+BM_PUZZLE_31                  10233 ns        10232 ns       682948
+BM_PUZZLE_32                  10720 ns        10720 ns       659693
+BM_PUZZLE_33                   5953 ns         5952 ns      1170933
+BM_PUZZLE_34                   4216 ns         4216 ns      1661151
+BM_PUZZLE_35                   6446 ns         6446 ns      1094547
+BM_PUZZLE_36                   4252 ns         4252 ns      1670124
+BM_PUZZLE_37                   5985 ns         5985 ns      1186336
+BM_PUZZLE_38                   4528 ns         4528 ns      1550394
+BM_PUZZLE_39                   6207 ns         6206 ns      1132216
+BM_PUZZLE_40                   4306 ns         4306 ns      1623383
+BM_PUZZLE_41                   9879 ns         9878 ns       709034
+BM_PUZZLE_42                  57513 ns        57512 ns       121502
+BM_PUZZLE_43                  18687 ns        18687 ns       371882
+BM_PUZZLE_44                  12911 ns        12911 ns       546010
+BM_PUZZLE_45                  12371 ns        12370 ns       562201
+BM_PUZZLE_46                  13746 ns        13746 ns       491145
+BM_PUZZLE_47                  22178 ns        22177 ns       309217
+BM_PUZZLE_48                  52758 ns        52757 ns       136494
+BM_PUZZLE_49                  24281 ns        24280 ns       280004
+BM_PUZZLE_50                  21146 ns        21145 ns       329908
+BM_PUZZLE_BACKTRACK         9974960 ns      9974683 ns          708
+BM_PUZZLE_BACKTRACK_HARD 4.9366e+10 ns   4.9364e+10 ns            1
+
+# Using a bit array for sudoku_set 
+# this is faster on some functions but 
+# when we need a popcount without -march=native we incur a function call 
+# to call popcountdi2() 
+
+root@localhost:~/src/sudoku/src# ./bench --benchmark_min_time=5
+2024-04-18T16:45:58+00:00
+Running ./bench
+Run on (4 X 2000 MHz CPU s)
+CPU Caches:
+  L1 Data 64 KiB (x4)
+  L1 Instruction 64 KiB (x4)
+  L2 Unified 512 KiB (x4)
+  L3 Unified 16384 KiB (x1)
+Load Average: 0.87, 0.64, 0.75
+***WARNING*** Library was built as DEBUG. Timings may be affected.
+-------------------------------------------------------------------
+Benchmark                         Time             CPU   Iterations
+-------------------------------------------------------------------
+BM_PUZZLE_1                    3809 ns         3809 ns      1828118
+BM_PUZZLE_2                    6515 ns         6515 ns      1091163
+BM_PUZZLE_3                   10730 ns        10729 ns       623069
+BM_PUZZLE_4                    6882 ns         6881 ns      1002832
+BM_PUZZLE_5                    3115 ns         3114 ns      2244935
+BM_PUZZLE_6                   29753 ns        29747 ns       241265
+BM_PUZZLE_7                  105310 ns       105295 ns        63129
+BM_PUZZLE_8                    3160 ns         3160 ns      2246401
+BM_PUZZLE_9                   10350 ns        10348 ns       665064
+BM_PUZZLE_10                  17906 ns        17904 ns       392310
+BM_PUZZLE_11                  10256 ns        10254 ns       622963
+BM_PUZZLE_12                   4560 ns         4559 ns      1532507
+BM_PUZZLE_13                   9680 ns         9679 ns       725586
+BM_PUZZLE_14                   7215 ns         7214 ns       967295
+BM_PUZZLE_15                   7428 ns         7427 ns       949722
+BM_PUZZLE_16                   3125 ns         3124 ns      2241165
+BM_PUZZLE_17                   3000 ns         2999 ns      2314330
+BM_PUZZLE_18                   6663 ns         6662 ns      1042416
+BM_PUZZLE_19                   4049 ns         4049 ns      1729919
+BM_PUZZLE_20                   4095 ns         4094 ns      1699431
+BM_PUZZLE_21                   8800 ns         8799 ns       798618
+BM_PUZZLE_22                   8706 ns         8705 ns       794862
+BM_PUZZLE_23                   7230 ns         7229 ns       959763
+BM_PUZZLE_24                   7057 ns         7055 ns       973301
+BM_PUZZLE_25                  15768 ns        15765 ns       443619
+BM_PUZZLE_26                  13123 ns        13115 ns       534771
+BM_PUZZLE_27                   8138 ns         8136 ns       851033
+BM_PUZZLE_28                   9951 ns         9949 ns       697487
+BM_PUZZLE_29                  12672 ns        12670 ns       558039
+BM_PUZZLE_30                   7298 ns         7297 ns       947723
+BM_PUZZLE_31                  10927 ns        10925 ns       641803
+BM_PUZZLE_32                  10795 ns        10793 ns       649925
+BM_PUZZLE_33                   5465 ns         5464 ns      1266160
+BM_PUZZLE_34                   3683 ns         3682 ns      1906856
+BM_PUZZLE_35                   6258 ns         6257 ns      1131874
+BM_PUZZLE_36                   3522 ns         3522 ns      1959784
+BM_PUZZLE_37                   5745 ns         5744 ns      1215284
+BM_PUZZLE_38                   3697 ns         3697 ns      1905501
+BM_PUZZLE_39                   5718 ns         5717 ns      1228457
+BM_PUZZLE_40                   3675 ns         3675 ns      1894793
+BM_PUZZLE_41                  10386 ns        10384 ns       671961
+BM_PUZZLE_42                  60178 ns        60171 ns       116151
+BM_PUZZLE_43                  19603 ns        19601 ns       358463
+BM_PUZZLE_44                  13535 ns        13534 ns       513782
+BM_PUZZLE_45                  13044 ns        13042 ns       528028
+BM_PUZZLE_46                  14723 ns        14722 ns       477409
+BM_PUZZLE_47                  24188 ns        24186 ns       286577
+BM_PUZZLE_48                  53789 ns        53784 ns       130809
+BM_PUZZLE_49                  26179 ns        26178 ns       267096
+BM_PUZZLE_50                  21768 ns        21767 ns       322831
+BM_PUZZLE_BACKTRACK         9958894 ns      9958405 ns          705
+BM_PUZZLE_BACKTRACK_HARD 4.8910e+10 ns   4.8907e+10 ns            1
+BM_EULER                    2689630 ns      2689507 ns         2615
+root@localhost:~/src/sudoku/src#
+
+# using a lookup table for popcount without native is pretty much as fast as -march=native
+root@localhost:~/src/sudoku/src# ./bench --benchmark_min_time=5
+2024-04-18T17:09:47+00:00
+Running ./bench
+Run on (4 X 2000 MHz CPU s)
+CPU Caches:
+  L1 Data 64 KiB (x4)
+  L1 Instruction 64 KiB (x4)
+  L2 Unified 512 KiB (x4)
+  L3 Unified 16384 KiB (x1)
+Load Average: 0.46, 0.41, 0.56
+***WARNING*** Library was built as DEBUG. Timings may be affected.
+-------------------------------------------------------------------
+Benchmark                         Time             CPU   Iterations
+-------------------------------------------------------------------
+BM_PUZZLE_1                    3096 ns         3096 ns      2313176
+BM_PUZZLE_2                    5560 ns         5559 ns      1171972
+BM_PUZZLE_3                    8920 ns         8918 ns       807205
+BM_PUZZLE_4                    5690 ns         5689 ns      1241881
+BM_PUZZLE_5                    2697 ns         2697 ns      2576328
+BM_PUZZLE_6                   21557 ns        21553 ns       321166
+BM_PUZZLE_7                   79990 ns        79979 ns        88275
+BM_PUZZLE_8                    2709 ns         2709 ns      2586236
+BM_PUZZLE_9                    8426 ns         8425 ns       835314
+BM_PUZZLE_10                  15011 ns        15010 ns       469768
+BM_PUZZLE_11                   8400 ns         8399 ns       829200
+BM_PUZZLE_12                   3319 ns         3318 ns      2091733
+BM_PUZZLE_13                   7505 ns         7504 ns       940767
+BM_PUZZLE_14                   6008 ns         6007 ns      1168917
+BM_PUZZLE_15                   6201 ns         6200 ns      1126490
+BM_PUZZLE_16                   2651 ns         2650 ns      2646688
+BM_PUZZLE_17                   2649 ns         2648 ns      2654493
+BM_PUZZLE_18                   5385 ns         5385 ns      1301645
+BM_PUZZLE_19                   3153 ns         3153 ns      2206032
+BM_PUZZLE_20                   3125 ns         3125 ns      2249811
+BM_PUZZLE_21                   7505 ns         7504 ns       921254
+BM_PUZZLE_22                   7387 ns         7387 ns       948077
+BM_PUZZLE_23                   5514 ns         5513 ns      1264330
+BM_PUZZLE_24                   5432 ns         5432 ns      1297356
+BM_PUZZLE_25                  13580 ns        13579 ns       519234
+BM_PUZZLE_26                  10896 ns        10895 ns       642276
+BM_PUZZLE_27                   6690 ns         6690 ns      1047392
+BM_PUZZLE_28                   7722 ns         7721 ns       905027
+BM_PUZZLE_29                  11252 ns        11251 ns       625720
+BM_PUZZLE_30                   5995 ns         5995 ns      1180359
+BM_PUZZLE_31                   8963 ns         8963 ns       785812
+BM_PUZZLE_32                   8988 ns         8987 ns       785766
+BM_PUZZLE_33                   4809 ns         4808 ns      1460330
+BM_PUZZLE_34                   3113 ns         3113 ns      2310507
+BM_PUZZLE_35                   5085 ns         5085 ns      1377027
+BM_PUZZLE_36                   2910 ns         2909 ns      2384033
+BM_PUZZLE_37                   4981 ns         4980 ns      1411561
+BM_PUZZLE_38                   2998 ns         2998 ns      2349812
+BM_PUZZLE_39                   4727 ns         4727 ns      1477662
+BM_PUZZLE_40                   2949 ns         2949 ns      2358500
+BM_PUZZLE_41                   8423 ns         8423 ns       830050
+BM_PUZZLE_42                  47637 ns        47635 ns       146789
+BM_PUZZLE_43                  16749 ns        16748 ns       419363
+BM_PUZZLE_44                  11729 ns        11729 ns       595885
+BM_PUZZLE_45                  10597 ns        10596 ns       659000
+BM_PUZZLE_46                  12805 ns        12804 ns       543858
+BM_PUZZLE_47                  21505 ns        21504 ns       328481
+BM_PUZZLE_48                  40706 ns        40704 ns       174080
+BM_PUZZLE_49                  23528 ns        23527 ns       294184
+BM_PUZZLE_50                  18803 ns        18802 ns       375072
+BM_PUZZLE_BACKTRACK         9825685 ns      9825208 ns          707
+BM_PUZZLE_BACKTRACK_HARD 4.7980e+10 ns   4.7977e+10 ns            1
+BM_EULER                    2583904 ns      2583782 ns         2674
