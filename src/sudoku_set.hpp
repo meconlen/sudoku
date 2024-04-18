@@ -21,6 +21,24 @@ private:
    // static const std::array<set_t, 10> set_values;
    set_t value_set = 0;
    static constexpr std::array<sudoku_set::set_t, 10> set_values { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 };
+   static constexpr std::array<std::size_t, 256> pop_count { 
+      0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4,
+      1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
+      1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
+      2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6,
+      1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
+      2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6,
+      2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6,
+      3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
+      1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
+      2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6,
+      2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6,
+      3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
+      2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6,
+      3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
+      3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
+      4, 5, 5, 6, 5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8
+   };
 
 public:
 
@@ -155,7 +173,10 @@ public:
    void clear() { value_set = 0; }
    bool contains(value_t n) { return (value_set & set_values[n]) == set_values[n]; }
 
-   std::size_t size() { return std::popcount(value_set); }
+   // std::size_t size() { return std::popcount(value_set); }
+   std::size_t size() { 
+      return pop_count[value_set & 0xFF] + pop_count[value_set >> 8];
+   }
 
    bool operator==(const sudoku_set& other) const { return value_set == other.value_set; }
    bool operator!=(const sudoku_set& other) const {  return value_set != other.value_set; }
