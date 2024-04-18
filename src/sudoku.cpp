@@ -555,7 +555,7 @@ void sudoku::print_differences(const sudoku& other) const
    for(auto i = 0; i < 9; i++) {
       for(auto j = 0; j < 9; j++) {
          if(puzzle_data[i][j] != other.puzzle_data[i][j]) {
-            std::cout << "puzzle[" << i << "][" << j << "] = {" << static_cast<unsigned>(puzzle[i][j]->first) << ", {";
+            std::cout << "puzzle[" << i << "][" << j << "] = {" << static_cast<unsigned>(puzzle[i][j]->first) << ", " << puzzle[i][j]->second.get_value() << " = {";
             for(auto it = puzzle[i][j]->second.cbegin(); it != puzzle[i][j]->second.cend(); it++) {
                std::cout << static_cast<unsigned>(*it); 
                if(std::next(it) != puzzle[i][j]->second.cend()) {
@@ -563,7 +563,7 @@ void sudoku::print_differences(const sudoku& other) const
                }
             }
             std::cout << "} }" << std::endl;
-            std::cout << "other.puzzle[" << i << "][" << j << "] = {" << static_cast<unsigned>(other.puzzle[i][j]->first) << ", {";
+            std::cout << "other.puzzle[" << i << "][" << j << "] = {" << static_cast<unsigned>(other.puzzle[i][j]->first) << ", " << other.puzzle[i][j]->second.get_value() << " = " << ", {";
             for(auto it = other.puzzle[i][j]->second.cbegin(); it != other.puzzle[i][j]->second.cend(); it++) {
                std::cout << static_cast<unsigned>(*it); 
                if(std::next(it) != other.puzzle[i][j]->second.cend()) {

@@ -3,6 +3,12 @@
 #include "sudoku.hpp"
 // #include "puzzles.hpp"
 
+TEST(sudoku_set, brace_initializer) {
+   sudoku_set s0 {};
+   EXPECT_EQ(s0.get_value(), 0);
+   sudoku_set s1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+   EXPECT_EQ(s1.get_value(), 0b01111111110);
+}
 
 TEST(sudoku, string_constructor) {
    sudoku s1("814976532659123478732854169948265317275341896163798245391682754587439621426517983");
@@ -524,6 +530,7 @@ TEST(sudoku, hidden_singles)
    EXPECT_EQ(s1, s2);
 
    if(!(s1 == s2)) {
+      s1.print_differences(s2);
       s1.print_puzzle_cpp();
       s1.print_puzzle_candidates_cpp();
    }   
