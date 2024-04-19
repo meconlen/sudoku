@@ -183,7 +183,7 @@ void sudoku::solve_hidden_singles()
    // for each cell, for each candidate, check each house, if it is unique in any house then it's the solution for the cell
    for(auto i = 0; i < 9; i++) {
       for(auto j = 0; j < 9; j++) {
-         for(const auto& candidate : puzzle[i][j]->second) {
+         for(const auto& candidate : puzzle_data[i][j].second) {
             uint_fast8_t house_count = 0;
             // row i
             for(auto k = 0; k < 9; k++) {
@@ -442,7 +442,7 @@ std::pair<sudoku::value_t, sudoku::value_t> sudoku::first_unsolved()
 {
    for(value_t i = 0; i < 9; i++) {
       for(value_t j = 0; j < 9; j++) {
-         if(puzzle[i][j]->first == 0) return {i, j};
+         if(puzzle_data[i][j].first == 0) return {i, j};
       }
    }
    return {10, 10};
@@ -542,9 +542,9 @@ bool sudoku::is_valid()
 void sudoku::print_candidate(uint_fast8_t row, uint_fast8_t column) const
 {
  
-   for(auto it = puzzle[row][column]->second.begin(); it != puzzle[row][column]->second.end(); it++) {
+   for(auto it = puzzle_data[row][column].second.cbegin(); it != puzzle_data[row][column].second.cend(); it++) {
       std::cout << static_cast<unsigned>(*it);
-      if(std::next(it) != puzzle[row][column]->second.end()) {
+      if(std::next(it) != puzzle_data[row][column].second.cend()) {
          std::cout << ", ";
       }
    }
@@ -662,7 +662,7 @@ void sudoku::print_puzzle_candidates_cpp(std::string var_name) const
    std::cout << "   }};" << std::endl;
 }
 
-sudoku::value_t sudoku::get_block_number(value_t row, value_t column)
+constexpr sudoku::value_t sudoku::get_block_number(value_t row, value_t column)
 {
             value_t block = 0;
             if(row < 3 && column < 3) {
@@ -685,10 +685,9 @@ sudoku::value_t sudoku::get_block_number(value_t row, value_t column)
                block = 9;
             }
             return block;
-
 }
 
-std::pair<sudoku::value_t, sudoku::value_t> sudoku::get_block_start(value_t block)
+constexpr std::pair<sudoku::value_t, sudoku::value_t> sudoku::get_block_start(value_t block)
 {
    std::pair<value_t, value_t> start;
    switch(block) {

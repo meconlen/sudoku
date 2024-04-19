@@ -9,15 +9,19 @@
 #include <string>
 #include <sstream>
 
-
-
 class sudoku_set
 {
-public:
+
+
    using set_t = uint_fast16_t; 
    using value_t = uint_fast8_t;
 
 private:
+   template<typename T>
+   class set_iterator;
+   using iterator = set_iterator<value_t>;
+   using const_iterator = set_iterator<const value_t>;
+
    // static const std::array<set_t, 10> set_values;
    set_t value_set = 0;
    static constexpr std::array<sudoku_set::set_t, 10> set_values { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 };
@@ -42,115 +46,7 @@ private:
 
 public:
 
-   class iterator {
-   static constexpr std::array<uint_fast8_t, 10> values {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-   public:
-      using iterator_category = std::bidirectional_iterator_tag;
-      using value_type = uint_fast8_t;
-      using difference_type = std::ptrdiff_t;
-      using pointer = const value_type*;
-      using reference = const value_type&;
-
-      iterator(set_t& d, std::size_t pos) : current(pos), data(d) {
-         while((current != 10) && ((data & set_values[current]) != set_values[current])) { ++current; }
-      }
-      iterator(const iterator&) = default;
-      iterator& operator=(const iterator&) = default;
-      ~iterator() = default;
-
-      reference operator*() const { return values[current]; }
-      pointer operator->() const {return &(values[current]); }
-
-      iterator& operator++() 
-      {
-         ++current; 
-         while( (current != 10) && ((data & set_values[current]) != set_values[current])) { ++current; }
-         return *this;
-      }
-
-      iterator operator++(int n)
-      {
-         iterator tmp(*this); 
-         ++(*this); 
-         return tmp;
-      }
-
-      iterator& operator--()
-      {
-         --current;
-         while( ( current != 0) && ((data & set_values[current]) != set_values[current])) { --current; }
-         return *this;
-      }
-      iterator operator--(int n)
-      {
-         iterator tmp(*this); 
-         --(*this); 
-         return tmp;
-      }
-
-      bool operator==(const iterator& other) const { return current == other.current; }
-      bool operator!=(const iterator& other) const { return !(*this == other); }
-
-
-   private:
-      std::size_t current {0};
-      uint_fast16_t& data;
-   };
-
-   class const_iterator {
-   static constexpr std::array<uint_fast8_t, 10> values {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-   public:
-      using iterator_category = std::bidirectional_iterator_tag;
-      using value_type = const uint_fast8_t;
-      using difference_type = std::ptrdiff_t;
-      using pointer = const value_type*;
-      using reference = const value_type&;
-
-      const_iterator(const set_t& d, std::size_t pos) : current(pos), data(d) {
-                  while((current != 10) && ((data & set_values[current]) != set_values[current])) { ++current; }
-      }
-      const_iterator(const const_iterator&) = default;
-      const_iterator& operator=(const const_iterator&) = default;
-      ~const_iterator() = default;
-
-      reference operator*() const { return values[current]; }
-      pointer operator->() const {return &(values[current]); }
-
-      const_iterator& operator++() 
-      {
-         ++current; 
-         while( (current != 10) && ((data & set_values[current]) != set_values[current])) { ++current; }
-         return *this;
-      }
-
-      const_iterator operator++(int n)
-      {
-         const_iterator tmp(*this); 
-         ++(*this); 
-         return tmp;
-      }
-
-      const_iterator& operator--()
-      {
-         --current;
-         while( ( current != 0) && ((data & set_values[current]) != set_values[current])) { --current; }
-         return *this;
-      }
-      const_iterator operator--(int n)
-      {
-         const_iterator tmp(*this); 
-         --(*this); 
-         return tmp;
-      }
-
-      bool operator==(const const_iterator& other) const { return current == other.current; }
-      bool operator!=(const const_iterator& other) const { return !(*this == other); }
-
-   private:
-      std::size_t current {0};
-      const uint_fast16_t& data;
-   };
 
    sudoku_set() = default;
    sudoku_set(const sudoku_set& other) = default;
@@ -200,6 +96,75 @@ public:
 
    set_t get_value() { return value_set; }
 
+private:
+   template<typename T>
+   class set_iterator {
+   static constexpr std::array<T, 10> values {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+   public:
+      using iterator_category = std::bidirectional_iterator_tag;
+      using value_type = T;
+      using difference_type = std::ptrdiff_t;
+      using pointer = const value_type*;
+      using reference = const value_type&;
+
+      // we need to know the type of set_t we get, whether it's const or not. 
+
+      using set_t_t = std::conditional_t<std::is_const_v<T>, const set_t&, set_t&>;
+      // using set_type = std::conditional_t<std::is_const_v<T>, const float, float>;
+
+      set_iterator(set_t_t d, std::size_t pos) : current(pos), data(d) {
+         while((current != 10) && ((data & set_values[current]) != set_values[current])) { ++current; }
+      }
+      set_iterator(const set_iterator&) = default;
+      set_iterator& operator=(const set_iterator&) = default;
+      ~set_iterator() = default;
+
+      reference operator*() const { return values[current]; }
+      pointer operator->() const {return &(values[current]); }
+
+      set_iterator& operator++() 
+      {
+         ++current; 
+         while( (current != 10) && ((data & set_values[current]) != set_values[current])) { ++current; }
+         return *this;
+      }
+
+      set_iterator operator++(int n)
+      {
+         set_iterator tmp(*this); 
+         ++(*this); 
+         return tmp;
+      }
+
+      set_iterator& operator--()
+      {
+         --current;
+         while( ( current != 0) && ((data & set_values[current]) != set_values[current])) { --current; }
+         return *this;
+      }
+      set_iterator operator--(int n)
+      {
+         set_iterator tmp(*this); 
+         --(*this); 
+         return tmp;
+      }
+
+      bool operator==(const set_iterator& other) const { return current == other.current; }
+      bool operator!=(const set_iterator& other) const { return !(*this == other); }
+
+
+   private:
+      std::size_t current {0};
+      set_t_t data;
+   };
+
 };
 
-std::ostream& operator<<(std::ostream& os, const sudoku_set& set);
+// std::ostream& operator<<(std::ostream& os, const sudoku_set& set);
+
+inline std::ostream& operator<<(std::ostream& os, const sudoku_set& set)
+{
+   os << set.to_string(); 
+   return os;
+}

@@ -89,8 +89,8 @@ private:
 
    // utilities 
 
-   static value_t get_block_number(value_t row, value_t column); 
-   static std::pair<value_t, value_t> get_block_start(value_t block);
+   static constexpr value_t get_block_number(value_t row, value_t column); 
+   static constexpr std::pair<value_t, value_t> get_block_start(value_t block);
 
    sudoku_set get_row(uint_fast8_t r);
    sudoku_set get_column(uint_fast8_t c);
