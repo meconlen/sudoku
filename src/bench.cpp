@@ -486,7 +486,118 @@ static void BM_EULER(benchmark::State& state) {
       }
    }
 }
-
 BENCHMARK(BM_EULER);
+
+static void BM_PUZZLE_NAKED_TRIPLE(benchmark::State& state) {
+   sudoku::puzzle_data_t p1 {{ // puzzle
+      {{ // row 1
+         { 0, {{ 3, 6 }} },
+         { 7,  sudoku::default_candidates },
+         { 0, {{ 1, 6 }} },
+         { 4,  sudoku::default_candidates },
+         { 0, {{ 1, 3, 5 }} },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 1, 3, 5 }} },
+         { 2,  sudoku::default_candidates },
+         { 9,  sudoku::default_candidates }
+      }},
+      {{ // row 2
+         { 0, {{ 3, 6, 9 }} },
+         { 0, {{ 1, 6, 9 }} },
+         { 2,  sudoku::default_candidates },
+         { 0, {{ 1, 5, 7, 9 }} },
+         { 0, {{ 1, 3, 5 }} },
+         { 0, {{ 5, 6, 7, 9 }} },
+         { 0, {{ 1, 3, 5, 8 }} },
+         { 0, {{ 3, 5, 6, 8 }} },
+         { 4,  sudoku::default_candidates }
+      }},
+      {{ // row 3
+         { 8,  sudoku::default_candidates },
+         { 5,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates },
+         { 0, {{ 1, 9 }} },
+         { 2,  sudoku::default_candidates },
+         { 0, {{ 6, 9 }} },
+         { 0, {{ 1, 3 }} },
+         { 0, {{ 3, 6 }} },
+         { 7,  sudoku::default_candidates }
+      }},
+      {{ // row 4
+         { 0, {{ 5, 6, 9 }} },
+         { 0, {{ 1, 6, 9 }} },
+         { 8,  sudoku::default_candidates },
+         { 3,  sudoku::default_candidates },
+         { 7,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates },
+         { 2,  sudoku::default_candidates },
+         { 0, {{ 5, 9 }} },
+         { 0, {{ 1, 6 }} }
+      }},
+      {{ // row 5
+         { 0, {{ 4, 5, 6, 7, 9 }} },
+         { 2,  sudoku::default_candidates },
+         { 0, {{ 1, 5, 6, 7, 9 }} },
+         { 0, {{ 5, 8, 9 }} },
+         { 0, {{ 5, 8 }} },
+         { 0, {{ 5, 9 }} },
+         { 0, {{ 3, 5, 8, 9 }} },
+         { 0, {{ 3, 4, 5, 8, 9 }} },
+         { 0, {{ 1, 6 }} }
+      }},
+      {{ // row 6
+         { 0, {{ 4, 5, 9 }} },
+         { 0, {{ 4, 9 }} },
+         { 3,  sudoku::default_candidates },
+         { 2,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 7,  sudoku::default_candidates },
+         { 0, {{ 4, 5, 8, 9 }} },
+         { 0, {{ 5, 8 }} }
+      }},
+      {{ // row 7
+         { 0, {{ 4, 5, 7 }} },
+         { 0, {{ 4, 8 }} },
+         { 0, {{ 5, 7 }} },
+         { 0, {{ 5, 7, 8 }} },
+         { 9,  sudoku::default_candidates },
+         { 3,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 2,  sudoku::default_candidates }
+      }},
+      {{ // row 8
+         { 2,  sudoku::default_candidates },
+         { 0, {{ 6, 8, 9 }} },
+         { 0, {{ 5, 6, 7, 9 }} },
+         { 0, {{ 1, 5, 7, 8 }} },
+         { 0, {{ 1, 5, 8 }} },
+         { 0, {{ 5, 7 }} },
+         { 4,  sudoku::default_candidates },
+         { 0, {{ 5, 8, 9 }} },
+         { 3,  sudoku::default_candidates }
+      }},
+      {{ // row 9
+         { 1,  sudoku::default_candidates },
+         { 3,  sudoku::default_candidates },
+         { 0, {{ 5, 9 }} },
+         { 6,  sudoku::default_candidates },
+         { 4,  sudoku::default_candidates },
+         { 2,  sudoku::default_candidates },
+         { 0, {{ 5, 8, 9 }} },
+         { 7,  sudoku::default_candidates },
+         { 0, {{ 5, 8 }} }
+      }}
+   }};
+   for (auto _ : state) {
+      sudoku s1(p1);
+      s1.reduce_naked_triple();
+   }
+}
+BENCHMARK(BM_PUZZLE_NAKED_TRIPLE);
+
+
+
 
 BENCHMARK_MAIN();

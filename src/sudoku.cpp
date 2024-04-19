@@ -409,6 +409,64 @@ void sudoku::reduce_x_wing()
    return;
 }
 
+std::array<sudoku_set, 9> sudoku::get_candidate_columns(puzzle_data_p puzzle, value_t row)
+{
+   std::array<sudoku_set, 9> candidate_columns;
+   for(auto j = 0; j < 9; j++) {
+      for(auto candidate : puzzle[row][j]->second) {
+         candidate_columns[candidate-1].insert(j);
+      }      
+   }
+   return candidate_columns;
+}
+
+void sudoku::reduce_naked_triple(puzzle_data_p puzzle)
+{
+   for(value_t i = 0; i < 9; i++) {
+      std::array<sudoku_set, 9> candidate_columns = get_candidate_columns(puzzle, i);
+      for(value_t c1 = 1; c1 < 10; c1++) {
+         for(value_t c2 = c1; c2 < 10; c2++) {
+            for(value_t c3 = c2; c3 < 10; c3++) {
+               // we want three cells where these are the only candidates 
+               // so we need to know if a sudoku_set for the cell candidates is a subset 
+               // of {c1, c2, c3}
+               sudoku_set candidate_set { c1, c2, c3 };
+               sudoku_set candidate_set_columns;
+               for(value_t column = 0; column < 9; column++) {
+                  if(puzzle[i][column]->first == 0 && 
+                     std::includes(
+                        candidate_set.begin(), candidate_set.end(), 
+                        puzzle[i][column]->second.begin(), puzzle[i][column]->second.end())) {
+                           candidate_set_columns.insert(column);
+                  }
+               }
+               // we have three columns which are a subset of {c1, c2, c3}
+               if(candidate_set_columns.size() == 3) {
+                  for(value_t column = 0; column < 9; column++) {
+                     // skip c1, c2, c3
+                     if(candidate_set_columns.contains(column)) continue;
+                     for(const auto& candidate : candidate_set) {
+                        puzzle[i][column]->second.erase(candidate);
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+   return;
+}
+
+void sudoku::reduce_naked_triple()
+{
+   reduce_naked_triple(puzzle);
+   reduce_naked_triple(transposed_puzzle);
+   reduce_naked_triple(block_puzzle);
+   return;
+}
+
+
+
 void sudoku::solve_puzzle()
 {
       set_candidates();
