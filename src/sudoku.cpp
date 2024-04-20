@@ -263,7 +263,10 @@ void sudoku::reduce_naked_pairs(puzzle_data_p puzzle)
                   for(value_t m = 0; m < 9; m++) {
                      // we skip the cells with the naked pair
                      if(m == j || m == k) continue;
-                     for(const auto& candidate : puzzle[i][j]->second) { puzzle[i][m]->second.erase(candidate); }
+                     // for(const auto& candidate : puzzle[i][j]->second) { 
+                     //    puzzle[i][m]->second.erase(candidate); 
+                     // }
+                     puzzle[i][m]->second.remove(puzzle[i][j]->second);
                   }
                }
             }

@@ -644,7 +644,6 @@ TEST(sudoku, naked_pairs)
    }};
 
    sudoku s1(p1);
-   s1.set_candidates();
    s1.reduce_naked_pairs();
 
    sudoku::puzzle_data_t p2 {{ // puzzle
