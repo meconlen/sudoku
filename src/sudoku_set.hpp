@@ -83,6 +83,11 @@ public:
       return x;
    }
 
+   sudoku_set operator|(const sudoku_set& other) const {
+      sudoku_set x(value_set | other.value_set);
+      return x;
+   }
+
    iterator begin() { return iterator(value_set, 0); }
    iterator end() { return iterator(value_set, 10); }
    const_iterator cbegin() const { return const_iterator(value_set, 0); }

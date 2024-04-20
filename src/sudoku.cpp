@@ -479,34 +479,24 @@ void sudoku::find_hidden_triple(puzzle_data_p puzzle)
                   // we want to know if any element of candidate_set is in the cell 
                   // and all elements of the candidate_set must be found 
                   if(puzzle[i][column]->first == 0) {
-
                      sudoku_set intersection = candidate_set & puzzle[i][column]->second;
-
                      // if the intersection is non-null then we add the column to the 
                      // candidate_set_colums and mark which candidates we have found
                      if(intersection.size() > 0) {
-                        for(const auto& c : intersection) {
-                           candidates_found.insert(c);
-                        }
+                        // for(const auto& c : intersection) {
+                        //    candidates_found.insert(c);
+                        // }
+                        candidates_found = candidates_found | intersection;
                         candidate_set_columns.insert(column);
                      }
                   }
                }
-
                // we have three cells of which {c1, c2, c3} is a subset
                // and we have identified that all three candidates were found
-               
                if(candidate_set_columns.size() == 3 && candidates_found.size() == 3) {
                   // for each of the three columns in the candidate_set_columns
                   // we want to remove every candidate that isn't in the candidate_set
-
-                  // puzzle[i][column] = puzzle[i][column] & candidate_set
-
                   for(const auto& column : candidate_set_columns) {
-                     // for(const auto& candidate : puzzle[i][column]->second) {
-                     //    if(! candidate_set.contains(candidate)) puzzle[i][column]->second.erase(candidate);
-                     // }
-
                      puzzle[i][column]->second = puzzle[i][column]->second & candidate_set;
                   }
                }
