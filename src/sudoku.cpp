@@ -80,15 +80,6 @@ void sudoku::set_candidates()
             value_t block_number = get_block_number(i, j);
             block_set = get_block(block_number);
             puzzle[i][j]->second = all_candidates;
-            // for(auto& x : row_set) {
-            //    puzzle[i][j]->second.erase(x);
-            // }            
-            // for(auto& x : column_set) {
-            //    puzzle[i][j]->second.erase(x);
-            // }
-            // for(auto& x : block_set) {
-            //    puzzle[i][j]->second.erase(x);
-            // }
             puzzle[i][j]->second.remove(row_set | column_set | block_set);
 
          }
@@ -518,33 +509,33 @@ void sudoku::find_hidden_triple()
 
 void sudoku::solve_puzzle()
 {
-      set_candidates();
-      while(true) {
+   set_candidates();
+   while(true) {
       puzzle_data_t current_puzzle_data = puzzle_data;
       solve_single_candidates();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       solve_hidden_singles();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       find_hidden_pairs();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       reduce_naked_pairs();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       reduce_pointing_pairs();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       reduce_box_line();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       reduce_x_wing();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       reduce_naked_triple();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       find_hidden_triple();
       if(puzzle_data == current_puzzle_data) break; // we didn't update the puzzle this iteration. 
    }
