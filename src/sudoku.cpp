@@ -497,10 +497,17 @@ void sudoku::find_hidden_triple(puzzle_data_p puzzle)
                // and we have identified that all three candidates were found
                
                if(candidate_set_columns.size() == 3 && candidates_found.size() == 3) {
+                  // for each of the three columns in the candidate_set_columns
+                  // we want to remove every candidate that isn't in the candidate_set
+
+                  // puzzle[i][column] = puzzle[i][column] & candidate_set
+
                   for(const auto& column : candidate_set_columns) {
-                     for(const auto& candidate : puzzle[i][column]->second) {
-                        if(! candidate_set.contains(candidate)) puzzle[i][column]->second.erase(candidate);
-                     }
+                     // for(const auto& candidate : puzzle[i][column]->second) {
+                     //    if(! candidate_set.contains(candidate)) puzzle[i][column]->second.erase(candidate);
+                     // }
+
+                     puzzle[i][column]->second = puzzle[i][column]->second & candidate_set;
                   }
                }
             }
