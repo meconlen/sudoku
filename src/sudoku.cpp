@@ -429,36 +429,25 @@ void sudoku::reduce_naked_triple(puzzle_data_p puzzle)
          for(value_t c2 = c1 + 1; c2 < 10; c2++) {
             for(value_t c3 = c2 + 1; c3 < 10; c3++) {
                // we want three cells where these are the only candidates 
-               // so we need to know if a sudoku_set for the cell candidates is a subset 
+               // so we need to know if the cell candidates is a subset 
                // of {c1, c2, c3}
                sudoku_set candidate_set { c1, c2, c3 };
                sudoku_set candidate_set_columns;
                for(value_t column = 0; column < 9; column++) {
-                  if(puzzle[i][column]->first == 0 && 
-
-                     // includes(a, b) -> b is a subset of a
-                     // b subset a -> a & b == b
-
-                     // a.includes(b) -> b subset of a -> a & b == b
-                     
-                     // std::includes(
-                     //    candidate_set.begin(), candidate_set.end(), 
-                     //    puzzle[i][column]->second.begin(), puzzle[i][column]->second.end()) 
-
-                     // ((puzzle[i][column]->second & candidate_set) == puzzle[i][column]->second )
-                     candidate_set.includes(puzzle[i][column]->second)
-                  ) {
+                  if(puzzle[i][column]->first == 0 && candidate_set.includes(puzzle[i][column]->second)) {
                            candidate_set_columns.insert(column);
                   }
                }
-               // we have three columns which are a subset of {c1, c2, c3}
+               // if we have three columns which are a subset of {c1, c2, c3}
                if(candidate_set_columns.size() == 3) {
                   for(value_t column = 0; column < 9; column++) {
                      // skip c1, c2, c3
                      if(candidate_set_columns.contains(column)) continue;
-                     for(const auto& candidate : candidate_set) {
-                        puzzle[i][column]->second.erase(candidate);
-                     }
+
+                     // for(const auto& candidate : candidate_set) {
+                     //    puzzle[i][column]->second.erase(candidate);
+                     // }
+                     puzzle[i][column]->second.remove(candidate_set);
                   }
                }
             }
