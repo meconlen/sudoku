@@ -58,6 +58,8 @@ public:
                            // box with that candidate in the row/column then we remove the candidate
                            // from the rest of the box
    void reduce_x_wing();
+   void reduce_naked_triple();
+   void find_hidden_triple();
    void solve_puzzle();
 
    bool is_solved();
@@ -86,6 +88,8 @@ private:
    void reduce_pointing_pairs(puzzle_data_p puzzle, value_t block);
    void reduce_box_line(puzzle_data_p puzzle);
    void reduce_x_wing(puzzle_data_p puzzle);
+   void reduce_naked_triple(puzzle_data_p puzzle);
+   void find_hidden_triple(puzzle_data_p puzzle);
 
    // utilities 
 
@@ -97,6 +101,7 @@ private:
    sudoku_set get_block(uint_fast8_t block);
    bool are_houses_valid(puzzle_data_p puzzle);
    std::pair<value_t, value_t> first_unsolved();
+   std::array<sudoku_set, 9> get_candidate_columns(puzzle_data_p puzzle, value_t row);
 
 
    puzzle_data_t puzzle_data{ empty_puzzle };
