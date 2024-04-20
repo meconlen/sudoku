@@ -2341,6 +2341,13 @@ TEST(sudoku, naked_triple)
    }   
 }
 
+// from https://www.sudokuwiki.org/Hidden_Candidates#HP
+// note: after the row and column there's a triple in block 2 (0-indexed)
+// block:
+// row = 2
+// columns = { 5, 7, 8, }
+// candidates = { 7, 8, 9, }
+
 TEST(sudoku, find_hidden_triple)
 {
    sudoku::puzzle_data_t p1 {{ // puzzle
@@ -2466,7 +2473,7 @@ TEST(sudoku, find_hidden_triple)
          { 0, {{ 5, 7, 8 }} },
          { 0, {{ 4, 6 }} },
          { 0, {{ 5, 6 }} },
-         { 0, {{ 4, 7, 8 }} }
+         { 0, {{ 7, 8 }} }
       }},
       {{ // row 3
          { 0, {{ 4, 7, 8, 9 }} },
@@ -2476,8 +2483,8 @@ TEST(sudoku, find_hidden_triple)
          { 0, {{ 4, 7, 8 }} },
          { 3,  sudoku::default_candidates },
          { 1,  sudoku::default_candidates },
-         { 0, {{ 2, 8, 9 }} },
-         { 0, {{ 4, 7, 8 }} }
+         { 0, {{ 8, 9 }} },
+         { 0, {{ 7, 8 }} }
       }},
       {{ // row 4
          { 6,  sudoku::default_candidates },
@@ -2552,7 +2559,7 @@ TEST(sudoku, find_hidden_triple)
    if(!(s1 == s2)) {
       s1.print_puzzle_cpp();
       s1.print_puzzle_candidates_cpp("p1");
-   }   
+   }
 }
 
 int main(int argc, char **argv) {

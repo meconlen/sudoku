@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <utility>
+#include <vector>
 
 #include "sudoku.hpp"
 
@@ -425,8 +426,8 @@ void sudoku::reduce_naked_triple(puzzle_data_p puzzle)
    for(value_t i = 0; i < 9; i++) {
       std::array<sudoku_set, 9> candidate_columns = get_candidate_columns(puzzle, i);
       for(value_t c1 = 1; c1 < 10; c1++) {
-         for(value_t c2 = c1; c2 < 10; c2++) {
-            for(value_t c3 = c2; c3 < 10; c3++) {
+         for(value_t c2 = c1 + 1; c2 < 10; c2++) {
+            for(value_t c3 = c2 + 1; c3 < 10; c3++) {
                // we want three cells where these are the only candidates 
                // so we need to know if a sudoku_set for the cell candidates is a subset 
                // of {c1, c2, c3}
@@ -442,8 +443,6 @@ void sudoku::reduce_naked_triple(puzzle_data_p puzzle)
                }
                // we have three columns which are a subset of {c1, c2, c3}
                if(candidate_set_columns.size() == 3) {
-std::cout << "candidate_set = { " << static_cast<unsigned>(c1) << ", " << static_cast<unsigned>(c2) << ", " << static_cast<unsigned>(c3) << " }" << std::endl;
-std::cout << "columns = { " << static_cast<unsigned>(*candidate_set_columns.begin()) << ", " << static_cast<unsigned>(*((candidate_set_columns.begin())++)) << ", " << static_cast<unsigned>(*(((candidate_set_columns.begin())++)++)) << "}" << std::endl;
                   for(value_t column = 0; column < 9; column++) {
                      // skip c1, c2, c3
                      if(candidate_set_columns.contains(column)) continue;
@@ -462,8 +461,8 @@ std::cout << "columns = { " << static_cast<unsigned>(*candidate_set_columns.begi
 void sudoku::reduce_naked_triple()
 {
    reduce_naked_triple(puzzle);
-   // reduce_naked_triple(transposed_puzzle);
-   // reduce_naked_triple(block_puzzle);
+   reduce_naked_triple(transposed_puzzle);
+   reduce_naked_triple(block_puzzle);
    return;
 }
 
@@ -474,24 +473,48 @@ void sudoku::find_hidden_triple(puzzle_data_p puzzle)
       for(value_t c1 = 1; c1 < 10; c1++) {
          for(value_t c2 = c1 + 1; c2 < 10; c2++) {
             for(value_t c3 = c2 + 1; c3 < 10; c3++) {
-               // we want three cells where these are the only candidates 
-               // so we need to know if a sudoku_set for the cell candidates is a subset 
-               // of {c1, c2, c3}
+               // we want three cells where these are the only cells for the three candidates 
                sudoku_set candidate_set { c1, c2, c3 };
-               sudoku_set candidate_set_columns;
+               sudoku_set candidates_found, candidate_set_columns;
                for(value_t column = 0; column < 9; column++) {
-                  if(puzzle[i][column]->first == 0 && 
-                     std::includes(
-                        puzzle[i][column]->second.begin(), puzzle[i][column]->second.end(),
-                        candidate_set.begin(), candidate_set.end()
-                        )) {
-                           candidate_set_columns.insert(column);
+                  // we want to know if any element of candidate_set is in the cell 
+                  // and all elements of the candidate_set must be found 
+                  if(puzzle[i][column]->first == 0) {
+                     // we need an insert iterator for sudoku_set
+                     // to make an iterator an insert iterator we need 
+                     // iterator::operator=(const value_type&) 
+                     // iterator::operator=(const value_type&&)
+                     // then we can use sudoku_set instead of std::vector
+
+                     // we get the intersection of the candidate_set and the cell
+
+                     // std::set<value_t> intersection;
+                     // std::set_intersection(candidate_set.begin(), candidate_set.end(),
+                     //    puzzle[i][column]->second.begin(), puzzle[i][column]->second.end(),
+                     //    std::inserter(intersection, intersection.begin())
+                     // );
+
+                     sudoku_set intersection = candidate_set & puzzle[i][column]->second;
+
+                     // if the intersection is non-null then we add the column to the 
+                     // candidate_set_colums and mark which candidates we have found
+                     if(intersection.size() > 0) {
+                        for(const auto& c : intersection) {
+                           candidates_found.insert(c);
+                        }
+                        candidate_set_columns.insert(column);
+                     }
                   }
                }
+
                // we have three cells of which {c1, c2, c3} is a subset
-               if(candidate_set_columns.size() == 3) {
+               // and we have identified that all three candidates were found
+               
+               if(candidate_set_columns.size() == 3 && candidates_found.size() == 3) {
                   for(const auto& column : candidate_set_columns) {
-                     puzzle[i][column]->second = candidate_set;
+                     for(const auto& candidate : puzzle[i][column]->second) {
+                        if(! candidate_set.contains(candidate)) puzzle[i][column]->second.erase(candidate);
+                     }
                   }
                }
             }
@@ -504,8 +527,8 @@ void sudoku::find_hidden_triple(puzzle_data_p puzzle)
 void sudoku::find_hidden_triple()
 {
    find_hidden_triple(puzzle);
-   // find_hidden_triple(transposed_puzzle);
-   // find_hidden_triple(block_puzzle);
+   find_hidden_triple(transposed_puzzle);
+   find_hidden_triple(block_puzzle);
 }
 
 void sudoku::solve_puzzle()

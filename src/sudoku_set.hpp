@@ -11,8 +11,6 @@
 
 class sudoku_set
 {
-
-
    using set_t = uint_fast16_t; 
    using value_t = uint_fast8_t;
 
@@ -55,6 +53,8 @@ public:
    sudoku_set& operator=(sudoku_set&& other) = default;
    ~sudoku_set() = default;
 
+   sudoku_set(set_t v) : value_set(v) { }
+
    // initializer list constructor 
 
    sudoku_set(std::initializer_list<uint_fast8_t> list) {
@@ -76,6 +76,11 @@ public:
 
    bool operator==(const sudoku_set& other) const { return value_set == other.value_set; }
    bool operator!=(const sudoku_set& other) const {  return value_set != other.value_set; }
+   
+   sudoku_set operator&(const sudoku_set& other) const { 
+      sudoku_set x(value_set & other.value_set);
+      return x;
+   }
 
    iterator begin() { return iterator(value_set, 0); }
    iterator end() { return iterator(value_set, 10); }
@@ -118,6 +123,7 @@ private:
       }
       set_iterator(const set_iterator&) = default;
       set_iterator& operator=(const set_iterator&) = default;
+
       ~set_iterator() = default;
 
       reference operator*() const { return values[current]; }
@@ -158,7 +164,6 @@ private:
       std::size_t current {0};
       set_t_t data;
    };
-
 };
 
 // std::ostream& operator<<(std::ostream& os, const sudoku_set& set);
