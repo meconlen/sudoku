@@ -59,6 +59,7 @@ public:
                            // from the rest of the box
    void reduce_x_wing();
    void reduce_naked_triple();
+   void find_hidden_triple();
    void solve_puzzle();
 
    bool is_solved();
@@ -88,6 +89,7 @@ private:
    void reduce_box_line(puzzle_data_p puzzle);
    void reduce_x_wing(puzzle_data_p puzzle);
    void reduce_naked_triple(puzzle_data_p puzzle);
+   void find_hidden_triple(puzzle_data_p puzzle);
 
    // utilities 
 
