@@ -80,15 +80,17 @@ void sudoku::set_candidates()
             value_t block_number = get_block_number(i, j);
             block_set = get_block(block_number);
             puzzle[i][j]->second = all_candidates;
-            for(auto& x : row_set) {
-               puzzle[i][j]->second.erase(x);
-            }
-            for(auto& x : column_set) {
-               puzzle[i][j]->second.erase(x);
-            }
-            for(auto& x : block_set) {
-               puzzle[i][j]->second.erase(x);
-            }
+            // for(auto& x : row_set) {
+            //    puzzle[i][j]->second.erase(x);
+            // }            
+            // for(auto& x : column_set) {
+            //    puzzle[i][j]->second.erase(x);
+            // }
+            // for(auto& x : block_set) {
+            //    puzzle[i][j]->second.erase(x);
+            // }
+            puzzle[i][j]->second.remove(row_set | column_set | block_set);
+
          }
       }
    }
