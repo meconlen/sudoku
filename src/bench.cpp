@@ -488,7 +488,116 @@ static void BM_EULER(benchmark::State& state) {
 }
 BENCHMARK(BM_EULER);
 
+static void BM_SUDOKU_POINTING_PAIRS(benchmark::State& state) {
+   sudoku::puzzle_data_t p1 {{ // puzzle
+      {{ // row 1
+         { 0, {{ 7, 8, 9 }} },
+         { 3,  sudoku::default_candidates },
+         { 2,  sudoku::default_candidates },
+         { 0, {{ 4, 7, 8 }} },
+         { 0, {{ 4, 5, 7, 8 }} },
+         { 6,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 4, 5, 8, 9 }} },
+         { 0, {{ 7, 8 }} }
+      }},
+      {{ // row 2
+         { 4,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 5, 6, 8, 9 }} },
+         { 0, {{ 2, 3, 7, 8 }} },
+         { 0, {{ 3, 5, 7, 8 }} },
+         { 0, {{ 2, 3, 5, 7 }} },
+         { 0, {{ 2, 3, 6, 7, 9 }} },
+         { 0, {{ 2, 3, 5, 8, 9 }} },
+         { 0, {{ 2, 3, 6, 7, 8 }} }
+      }},
+      {{ // row 3
+         { 0, {{ 6, 7, 8 }} },
+         { 0, {{ 7, 8 }} },
+         { 0, {{ 5, 6, 8 }} },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 3, 4, 5, 7, 8 }} },
+         { 1,  sudoku::default_candidates },
+         { 0, {{ 2, 3, 4, 6, 7 }} },
+         { 0, {{ 2, 3, 4, 5, 8 }} },
+         { 0, {{ 2, 3, 6, 7, 8 }} }
+      }},
+      {{ // row 4
+         { 5,  sudoku::default_candidates },
+         { 0, {{ 2, 7, 8 }} },
+         { 0, {{ 1, 8 }} },
+         { 0, {{ 1, 6 }} },
+         { 9,  sudoku::default_candidates },
+         { 0, {{ 3, 7 }} },
+         { 0, {{ 2, 3, 6 }} },
+         { 0, {{ 2, 3, 8 }} },
+         { 4,  sudoku::default_candidates }
+      }},
+      {{ // row 5
+         { 0, {{ 2, 8, 9 }} },
+         { 6,  sudoku::default_candidates },
+         { 0, {{ 4, 8, 9 }} },
+         { 0, {{ 3, 4, 8 }} },
+         { 0, {{ 3, 4, 5, 8 }} },
+         { 0, {{ 3, 4, 5 }} },
+         { 0, {{ 2, 3, 9 }} },
+         { 7,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates }
+      }},
+      {{ // row 6
+         { 3,  sudoku::default_candidates },
+         { 0, {{ 4, 7, 8, 9 }} },
+         { 0, {{ 1, 4, 8, 9 }} },
+         { 0, {{ 1, 6 }} },
+         { 2,  sudoku::default_candidates },
+         { 0, {{ 4, 7 }} },
+         { 0, {{ 6, 9 }} },
+         { 0, {{ 8, 9 }} },
+         { 5,  sudoku::default_candidates }
+      }},
+      {{ // row 7
+         { 0, {{ 1, 2, 6, 9 }} },
+         { 0, {{ 2, 4, 9 }} },
+         { 0, {{ 1, 3, 4, 6, 9 }} },
+         { 5,  sudoku::default_candidates },
+         { 0, {{ 1, 3, 4, 6, 7 }} },
+         { 8,  sudoku::default_candidates },
+         { 0, {{ 2, 3, 4, 7 }} },
+         { 0, {{ 2, 3, 4 }} },
+         { 0, {{ 2, 3, 7 }} }
+      }},
+      {{ // row 8
+         { 0, {{ 2, 6, 8 }} },
+         { 0, {{ 2, 4, 8 }} },
+         { 0, {{ 3, 4, 6, 8 }} },
+         { 0, {{ 2, 3, 4, 6, 7 }} },
+         { 0, {{ 3, 4, 6, 7 }} },
+         { 0, {{ 2, 3, 4, 7 }} },
+         { 5,  sudoku::default_candidates },
+         { 1,  sudoku::default_candidates },
+         { 9,  sudoku::default_candidates }
+      }},
+      {{ // row 9
+         { 0, {{ 1, 2 }} },
+         { 5,  sudoku::default_candidates },
+         { 7,  sudoku::default_candidates },
+         { 0, {{ 2, 3, 4 }} },
+         { 0, {{ 1, 3, 4 }} },
+         { 9,  sudoku::default_candidates },
+         { 8,  sudoku::default_candidates },
+         { 6,  sudoku::default_candidates },
+         { 0, {{ 2, 3 }} }
+      }}
+   }};
+   for (auto _ : state) {
+   sudoku s1(p1);
+      s1.reduce_pointing_pairs();
+      s1.reduce_pointing_pairs();
+   }
+}
 
+BENCHMARK(BM_SUDOKU_POINTING_PAIRS);
 
 static void BM_SUDOKU_X_WING(benchmark::State& state) {
    sudoku::puzzle_data_t p1 {{ // puzzle
