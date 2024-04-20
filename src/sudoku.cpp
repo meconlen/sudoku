@@ -435,9 +435,19 @@ void sudoku::reduce_naked_triple(puzzle_data_p puzzle)
                sudoku_set candidate_set_columns;
                for(value_t column = 0; column < 9; column++) {
                   if(puzzle[i][column]->first == 0 && 
-                     std::includes(
-                        candidate_set.begin(), candidate_set.end(), 
-                        puzzle[i][column]->second.begin(), puzzle[i][column]->second.end())) {
+
+                     // includes(a, b) -> b is a subset of a
+                     // b subset a -> a & b == b
+
+                     // a.includes(b) -> b subset of a -> a & b == b
+                     
+                     // std::includes(
+                     //    candidate_set.begin(), candidate_set.end(), 
+                     //    puzzle[i][column]->second.begin(), puzzle[i][column]->second.end()) 
+
+                     // ((puzzle[i][column]->second & candidate_set) == puzzle[i][column]->second )
+                     candidate_set.includes(puzzle[i][column]->second)
+                  ) {
                            candidate_set_columns.insert(column);
                   }
                }
@@ -480,19 +490,6 @@ void sudoku::find_hidden_triple(puzzle_data_p puzzle)
                   // we want to know if any element of candidate_set is in the cell 
                   // and all elements of the candidate_set must be found 
                   if(puzzle[i][column]->first == 0) {
-                     // we need an insert iterator for sudoku_set
-                     // to make an iterator an insert iterator we need 
-                     // iterator::operator=(const value_type&) 
-                     // iterator::operator=(const value_type&&)
-                     // then we can use sudoku_set instead of std::vector
-
-                     // we get the intersection of the candidate_set and the cell
-
-                     // std::set<value_t> intersection;
-                     // std::set_intersection(candidate_set.begin(), candidate_set.end(),
-                     //    puzzle[i][column]->second.begin(), puzzle[i][column]->second.end(),
-                     //    std::inserter(intersection, intersection.begin())
-                     // );
 
                      sudoku_set intersection = candidate_set & puzzle[i][column]->second;
 
