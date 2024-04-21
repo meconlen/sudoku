@@ -5,6 +5,8 @@
 #include "sudoku.hpp"
 #include "puzzles.hpp"
 
+using namespace sudoku_puzzles::euler;
+
 // solve_single_candidates
 TEST(Euler, p01) 
 {
@@ -724,3 +726,4 @@ TEST(Euler, p50)
       s1.print_puzzle_candidates_cpp("p1");
    }    
 }
+
