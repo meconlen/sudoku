@@ -70,6 +70,7 @@ public:
    bool contains(value_t n) { return (value_set & set_values[n]) == set_values[n]; }
 
    // std::size_t size() { return std::popcount(value_set); }
+
    std::size_t size() { 
       return pop_count[value_set & 0xFF] + pop_count[value_set >> 8];
    }
@@ -79,6 +80,11 @@ public:
    
    sudoku_set operator&(const sudoku_set& other) const { 
       sudoku_set x(value_set & other.value_set);
+      return x;
+   }
+
+   sudoku_set operator|(const sudoku_set& other) const {
+      sudoku_set x(value_set | other.value_set);
       return x;
    }
 
@@ -99,7 +105,14 @@ public:
       return os.str();
    };
 
+   // Non-std::set methods 
+
    set_t get_value() { return value_set; }
+   bool includes(const sudoku_set& other) { return (value_set & other.value_set) == other.value_set; }
+   void remove(const sudoku_set& other) {
+      value_set = value_set & ~other.value_set;
+   }
+
 
 private:
    template<typename T>

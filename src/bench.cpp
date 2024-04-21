@@ -4,8 +4,12 @@
 
 #include "sudoku.hpp"
 #include "puzzles.hpp"
+#include "sudoku_puzzles.hpp"
+
+using namespace sudoku_puzzles;
 
 static void BM_PUZZLE_1(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p01);
       s1.solve_puzzle();
@@ -14,6 +18,7 @@ static void BM_PUZZLE_1(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_1);
 
 static void BM_PUZZLE_2(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p02);
       s1.solve_puzzle();
@@ -22,6 +27,7 @@ static void BM_PUZZLE_2(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_2);
 
 static void BM_PUZZLE_3(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p03);
       s1.solve_puzzle();
@@ -30,6 +36,7 @@ static void BM_PUZZLE_3(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_3);
 
 static void BM_PUZZLE_4(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p04);
       s1.solve_puzzle();
@@ -38,6 +45,7 @@ static void BM_PUZZLE_4(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_4);
 
 static void BM_PUZZLE_5(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p05);
       s1.solve_puzzle();
@@ -46,6 +54,7 @@ static void BM_PUZZLE_5(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_5);
 
 static void BM_PUZZLE_6(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p06);
       s1.solve_puzzle();
@@ -54,6 +63,7 @@ static void BM_PUZZLE_6(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_6);
 
 static void BM_PUZZLE_7(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p07);
       s1.solve_puzzle();
@@ -62,6 +72,7 @@ static void BM_PUZZLE_7(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_7);
 
 static void BM_PUZZLE_8(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p08);
       s1.solve_puzzle();
@@ -70,6 +81,7 @@ static void BM_PUZZLE_8(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_8);
 
 static void BM_PUZZLE_9(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p09);
       s1.solve_puzzle();
@@ -78,6 +90,7 @@ static void BM_PUZZLE_9(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_9);
 
 static void BM_PUZZLE_10(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p10);
       s1.solve_puzzle();
@@ -86,6 +99,7 @@ static void BM_PUZZLE_10(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_10);
 
 static void BM_PUZZLE_11(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p11);
       s1.solve_puzzle();
@@ -94,6 +108,7 @@ static void BM_PUZZLE_11(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_11);
 
 static void BM_PUZZLE_12(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p12);
       s1.solve_puzzle();
@@ -102,6 +117,7 @@ static void BM_PUZZLE_12(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_12);
 
 static void BM_PUZZLE_13(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p13);
       s1.solve_puzzle();
@@ -110,6 +126,7 @@ static void BM_PUZZLE_13(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_13);
 
 static void BM_PUZZLE_14(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p14);
       s1.solve_puzzle();
@@ -118,6 +135,7 @@ static void BM_PUZZLE_14(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_14);
 
 static void BM_PUZZLE_15(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p15);
       s1.solve_puzzle();
@@ -126,6 +144,7 @@ static void BM_PUZZLE_15(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_15);
 
 static void BM_PUZZLE_16(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p16);
       s1.solve_puzzle();
@@ -134,6 +153,7 @@ static void BM_PUZZLE_16(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_16);
 
 static void BM_PUZZLE_17(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p17);
       s1.solve_puzzle();
@@ -142,6 +162,7 @@ static void BM_PUZZLE_17(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_17);
 
 static void BM_PUZZLE_18(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p18);
       s1.solve_puzzle();
@@ -150,6 +171,7 @@ static void BM_PUZZLE_18(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_18);
 
 static void BM_PUZZLE_19(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p19);
       s1.solve_puzzle();
@@ -158,6 +180,7 @@ static void BM_PUZZLE_19(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_19);
 
 static void BM_PUZZLE_20(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p20);
       s1.solve_puzzle();
@@ -167,6 +190,7 @@ BENCHMARK(BM_PUZZLE_20);
 
 
 static void BM_PUZZLE_21(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p21);
       s1.solve_puzzle();
@@ -175,6 +199,7 @@ static void BM_PUZZLE_21(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_21);
 
 static void BM_PUZZLE_22(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p22);
       s1.solve_puzzle();
@@ -183,6 +208,7 @@ static void BM_PUZZLE_22(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_22);
 
 static void BM_PUZZLE_23(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p23);
       s1.solve_puzzle();
@@ -191,6 +217,7 @@ static void BM_PUZZLE_23(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_23);
 
 static void BM_PUZZLE_24(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p24);
       s1.solve_puzzle();
@@ -199,6 +226,7 @@ static void BM_PUZZLE_24(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_24);
 
 static void BM_PUZZLE_25(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p25);
       s1.solve_puzzle();
@@ -207,6 +235,7 @@ static void BM_PUZZLE_25(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_25);
 
 static void BM_PUZZLE_26(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p26);
       s1.solve_puzzle();
@@ -215,6 +244,7 @@ static void BM_PUZZLE_26(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_26);
 
 static void BM_PUZZLE_27(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p27);
       s1.solve_puzzle();
@@ -223,6 +253,7 @@ static void BM_PUZZLE_27(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_27);
 
 static void BM_PUZZLE_28(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p28);
       s1.solve_puzzle();
@@ -231,6 +262,7 @@ static void BM_PUZZLE_28(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_28);
 
 static void BM_PUZZLE_29(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p29);
       s1.solve_puzzle();
@@ -239,6 +271,7 @@ static void BM_PUZZLE_29(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_29);
 
 static void BM_PUZZLE_30(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p30);
       s1.solve_puzzle();
@@ -246,6 +279,7 @@ static void BM_PUZZLE_30(benchmark::State& state) {
 }
 BENCHMARK(BM_PUZZLE_30);
 static void BM_PUZZLE_31(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p31);
       s1.solve_puzzle();
@@ -254,6 +288,7 @@ static void BM_PUZZLE_31(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_31);
 
 static void BM_PUZZLE_32(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p32);
       s1.solve_puzzle();
@@ -262,6 +297,7 @@ static void BM_PUZZLE_32(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_32);
 
 static void BM_PUZZLE_33(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p33);
       s1.solve_puzzle();
@@ -270,6 +306,7 @@ static void BM_PUZZLE_33(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_33);
 
 static void BM_PUZZLE_34(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p34);
       s1.solve_puzzle();
@@ -278,6 +315,7 @@ static void BM_PUZZLE_34(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_34);
 
 static void BM_PUZZLE_35(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p35);
       s1.solve_puzzle();
@@ -286,6 +324,7 @@ static void BM_PUZZLE_35(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_35);
 
 static void BM_PUZZLE_36(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p36);
       s1.solve_puzzle();
@@ -294,6 +333,7 @@ static void BM_PUZZLE_36(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_36);
 
 static void BM_PUZZLE_37(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p37);
       s1.solve_puzzle();
@@ -302,6 +342,7 @@ static void BM_PUZZLE_37(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_37);
 
 static void BM_PUZZLE_38(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p38);
       s1.solve_puzzle();
@@ -310,6 +351,7 @@ static void BM_PUZZLE_38(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_38);
 
 static void BM_PUZZLE_39(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p39);
       s1.solve_puzzle();
@@ -318,6 +360,7 @@ static void BM_PUZZLE_39(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_39);
 
 static void BM_PUZZLE_40(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p40);
       s1.solve_puzzle();
@@ -327,6 +370,7 @@ BENCHMARK(BM_PUZZLE_40);
 
 
 static void BM_PUZZLE_41(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p41);
       s1.solve_puzzle();
@@ -335,6 +379,7 @@ static void BM_PUZZLE_41(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_41);
 
 static void BM_PUZZLE_42(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p42);
       s1.solve_puzzle();
@@ -343,6 +388,7 @@ static void BM_PUZZLE_42(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_42);
 
 static void BM_PUZZLE_43(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p43);
       s1.solve_puzzle();
@@ -351,6 +397,7 @@ static void BM_PUZZLE_43(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_43);
 
 static void BM_PUZZLE_44(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p44);
       s1.solve_puzzle();
@@ -359,6 +406,7 @@ static void BM_PUZZLE_44(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_44);
 
 static void BM_PUZZLE_45(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p45);
       s1.solve_puzzle();
@@ -367,6 +415,7 @@ static void BM_PUZZLE_45(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_45);
 
 static void BM_PUZZLE_46(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p46);
       s1.solve_puzzle();
@@ -375,6 +424,7 @@ static void BM_PUZZLE_46(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_46);
 
 static void BM_PUZZLE_47(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p47);
       s1.solve_puzzle();
@@ -383,6 +433,7 @@ static void BM_PUZZLE_47(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_47);
 
 static void BM_PUZZLE_48(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p48);
       s1.solve_puzzle();
@@ -391,6 +442,7 @@ static void BM_PUZZLE_48(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_48);
 
 static void BM_PUZZLE_49(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p49);
       s1.solve_puzzle();
@@ -399,6 +451,7 @@ static void BM_PUZZLE_49(benchmark::State& state) {
 BENCHMARK(BM_PUZZLE_49);
 
 static void BM_PUZZLE_50(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1(p50);
       s1.solve_puzzle();
@@ -408,6 +461,7 @@ BENCHMARK(BM_PUZZLE_50);
 
 
 static void BM_PUZZLE_BACKTRACK(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
    for (auto _ : state) {
       sudoku s1("300200000000107000706030500070009080900020004010800050009040301000702000000008006");
       s1.solve_backtrack();
@@ -415,13 +469,13 @@ static void BM_PUZZLE_BACKTRACK(benchmark::State& state) {
 }
 BENCHMARK(BM_PUZZLE_BACKTRACK);
 
-static void BM_PUZZLE_BACKTRACK_HARD(benchmark::State& state) {
-   for (auto _ : state) {
-      sudoku s1("000000000000003085001020000000507000004000100090000000500000073002010000000040009");
-      s1.solve_backtrack();
-   }
-}
-BENCHMARK(BM_PUZZLE_BACKTRACK_HARD);
+// static void BM_PUZZLE_BACKTRACK_HARD(benchmark::State& state) {
+//    for (auto _ : state) {
+//       sudoku s1("000000000000003085001020000000507000004000100090000000500000073002010000000040009");
+//       s1.solve_backtrack();
+//    }
+// }
+// BENCHMARK(BM_PUZZLE_BACKTRACK_HARD);
 
 static void BM_EULER(benchmark::State& state) {
    for (auto _ : state) {
@@ -488,220 +542,130 @@ static void BM_EULER(benchmark::State& state) {
 }
 BENCHMARK(BM_EULER);
 
+static void BM_SUDOKU_STRING_CONSTRUCTOR(benchmark::State& state) {
+   using namespace sudoku_puzzles::string_constructor;
 
-
-static void BM_SUDOKU_X_WING(benchmark::State& state) {
-   sudoku::puzzle_data_t p1 {{ // puzzle
-      {{ // row 1
-         { 0, {{ 1, 3, 5, 8 }} },
-         { 0, {{ 2, 3, 5 }} },
-         { 0, {{ 1, 3, 5, 8 }} },
-         { 0, {{ 3, 5, 6, 8 }} },
-         { 0, {{ 6, 7, 8 }} },
-         { 0, {{ 3, 5, 6, 7, 8 }} },
-         { 0, {{ 6, 7 }} },
-         { 9,  sudoku::default_candidates },
-         { 4,  sudoku::default_candidates }
-      }},
-      {{ // row 2
-         { 7,  sudoku::default_candidates },
-         { 6,  sudoku::default_candidates },
-         { 0, {{ 4, 8 }} },
-         { 9,  sudoku::default_candidates },
-         { 1,  sudoku::default_candidates },
-         { 0, {{ 4, 8 }} },
-         { 0, {{ 2, 3 }} },
-         { 5,  sudoku::default_candidates },
-         { 0, {{ 2, 3 }} }
-      }},
-      {{ // row 3
-         { 0, {{ 3, 4, 5 }} },
-         { 9,  sudoku::default_candidates },
-         { 0, {{ 3, 4, 5 }} },
-         { 0, {{ 3, 4, 5, 6 }} },
-         { 0, {{ 4, 6, 7 }} },
-         { 2,  sudoku::default_candidates },
-         { 0, {{ 6, 7 }} },
-         { 8,  sudoku::default_candidates },
-         { 1,  sudoku::default_candidates }
-      }},
-      {{ // row 4
-         { 0, {{ 3, 4, 6 }} },
-         { 7,  sudoku::default_candidates },
-         { 0, {{ 2, 3, 4, 6, 9 }} },
-         { 0, {{ 2, 4, 6, 8 }} },
-         { 5,  sudoku::default_candidates },
-         { 0, {{ 4, 6, 8 }} },
-         { 0, {{ 2, 3, 4, 8, 9 }} },
-         { 1,  sudoku::default_candidates },
-         { 0, {{ 2, 3, 8, 9 }} }
-      }},
-      {{ // row 5
-         { 0, {{ 1, 3, 4, 5, 6 }} },
-         { 0, {{ 2, 3, 5 }} },
-         { 0, {{ 1, 2, 3, 4, 5, 6 }} },
-         { 7,  sudoku::default_candidates },
-         { 0, {{ 2, 4, 6, 8 }} },
-         { 9,  sudoku::default_candidates },
-         { 0, {{ 2, 3, 4, 5, 8 }} },
-         { 0, {{ 2, 3 }} },
-         { 0, {{ 2, 3, 8 }} }
-      }},
-      {{ // row 6
-         { 0, {{ 4, 5 }} },
-         { 8,  sudoku::default_candidates },
-         { 0, {{ 2, 4, 5, 9 }} },
-         { 0, {{ 2, 4 }} },
-         { 3,  sudoku::default_candidates },
-         { 1,  sudoku::default_candidates },
-         { 0, {{ 2, 4, 5, 9 }} },
-         { 6,  sudoku::default_candidates },
-         { 7,  sudoku::default_candidates }
-      }},
-      {{ // row 7
-         { 2,  sudoku::default_candidates },
-         { 4,  sudoku::default_candidates },
-         { 0, {{ 3, 5, 6, 8 }} },
-         { 1,  sudoku::default_candidates },
-         { 0, {{ 6, 8 }} },
-         { 0, {{ 3, 5, 6, 8 }} },
-         { 0, {{ 3, 8, 9 }} },
-         { 7,  sudoku::default_candidates },
-         { 0, {{ 3, 6, 8, 9 }} }
-      }},
-      {{ // row 8
-         { 0, {{ 3, 6, 8 }} },
-         { 1,  sudoku::default_candidates },
-         { 0, {{ 3, 6, 7, 8 }} },
-         { 0, {{ 2, 3, 6, 8 }} },
-         { 9,  sudoku::default_candidates },
-         { 0, {{ 3, 6, 7, 8 }} },
-         { 0, {{ 2, 3, 8 }} },
-         { 4,  sudoku::default_candidates },
-         { 5,  sudoku::default_candidates }
-      }},
-      {{ // row 9
-         { 9,  sudoku::default_candidates },
-         { 0, {{ 3, 5 }} },
-         { 0, {{ 3, 5, 6, 7, 8 }} },
-         { 0, {{ 2, 3, 4, 5, 6, 8 }} },
-         { 0, {{ 2, 4, 6, 7, 8 }} },
-         { 0, {{ 3, 4, 5, 6, 7, 8 }} },
-         { 1,  sudoku::default_candidates },
-         { 0, {{ 2, 3 }} },
-         { 0, {{ 2, 3, 6, 8 }} }
-      }}
-   }};
    for (auto _ : state) {
-   sudoku s1(p1);
+      sudoku s(p1);
+   }
+}
+BENCHMARK(BM_SUDOKU_STRING_CONSTRUCTOR);
+
+static void BM_SUDOKU_OPERATOR_EQUAL(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
+      sudoku s1(p01);
+      sudoku s2(p01);
+
+   for (auto _ : state) {
+      benchmark::DoNotOptimize(s1 == s2);
+   }
+}
+BENCHMARK(BM_SUDOKU_OPERATOR_EQUAL);
+
+static void BM_SUDOKU_OPERATOR_NOT_EQUAL(benchmark::State& state) {
+   using namespace sudoku_puzzles::euler;
+      sudoku s1(p01);
+      sudoku s2(p01);
+
+   for (auto _ : state) {
+      benchmark::DoNotOptimize(s1 != s2);
+   }
+}
+BENCHMARK(BM_SUDOKU_OPERATOR_NOT_EQUAL);
+
+static void BM_SUDOKU_SET_CANDIDATES(benchmark::State& state) {
+   using namespace set_candidates;
+
+   for (auto _ : state) {
+      sudoku s1(p1);
+      s1.set_candidates();
+   }
+}
+BENCHMARK(BM_SUDOKU_SET_CANDIDATES);
+
+static void BM_SUDOKU_HIDDEN_SINGLES(benchmark::State& state) {
+   using namespace hidden_singles;
+
+   for (auto _ : state) {
+      sudoku s1(p1);
+      s1.solve_hidden_singles();
+   }
+}
+BENCHMARK(BM_SUDOKU_HIDDEN_SINGLES);
+
+static void BM_SUDOKU_NAKED_PAIRS(benchmark::State& state) {
+   using namespace naked_pairs;
+
+   for (auto _ : state) {
+      sudoku s1(p1);
+      s1.reduce_naked_pairs();
+   }
+}
+BENCHMARK(BM_SUDOKU_NAKED_PAIRS);
+
+static void BM_SUDOKU_HIDDEN_PAIRS_COLUMN(benchmark::State& state) {
+   using namespace hidden_pairs_column;
+
+   for (auto _ : state) {
+      sudoku s1(p1);
+      s1.find_hidden_pairs();
+   }
+}
+BENCHMARK(BM_SUDOKU_HIDDEN_PAIRS_COLUMN);
+
+static void BM_SUDOKU_HIDDEN_PAIRS_ROW(benchmark::State& state) {
+   using namespace hidden_pairs_row;
+
+   for (auto _ : state) {
+      sudoku s1(p1);
+      s1.find_hidden_pairs();
+   }
+}
+BENCHMARK(BM_SUDOKU_HIDDEN_PAIRS_ROW);
+
+static void BM_SUDOKU_POINTING_PAIR(benchmark::State& state) {
+   using namespace pointing_pair;
+
+   for (auto _ : state) {
+      sudoku s1(p1);
+      s1.reduce_pointing_pairs();
+      s1.reduce_pointing_pairs();
+   }
+}
+BENCHMARK(BM_SUDOKU_POINTING_PAIR);
+
+static void BM_SUDOKU_REDUCE_BOX_LINE_ROW(benchmark::State& state) {
+   using namespace reduce_box_line_row;
+
+   for (auto _ : state) {
+      sudoku s1(p1);
+      s1.reduce_box_line();
+   }
+}
+BENCHMARK(BM_SUDOKU_REDUCE_BOX_LINE_ROW);
+
+static void BM_SUDOKU_X_WING_COLUMN(benchmark::State& state) {
+   using namespace reduce_x_wing_column;
+
+   for (auto _ : state) {
+      sudoku s1(p1);
       s1.reduce_x_wing();
    }
 }
+BENCHMARK(BM_SUDOKU_X_WING_COLUMN);
 
-BENCHMARK(BM_SUDOKU_X_WING);
+static void BM_SUDOKU_X_WING_ROW(benchmark::State& state) {
+   using namespace reduce_x_wing_row;
+
+   for (auto _ : state) {
+      sudoku s1(p1);
+      s1.reduce_x_wing();
+   }
+}
+BENCHMARK(BM_SUDOKU_X_WING_ROW);
 
 static void BM_SUDOKU_NAKED_TRIPLE(benchmark::State& state) {
-   sudoku::puzzle_data_t p1 {{ // puzzle
-      {{ // row 1
-         { 0, {{ 3, 6 }} },
-         { 7,  sudoku::default_candidates },
-         { 0, {{ 1, 6 }} },
-         { 4,  sudoku::default_candidates },
-         { 0, {{ 1, 3, 5 }} },
-         { 8,  sudoku::default_candidates },
-         { 0, {{ 1, 3, 5 }} },
-         { 2,  sudoku::default_candidates },
-         { 9,  sudoku::default_candidates }
-      }},
-      {{ // row 2
-         { 0, {{ 3, 6, 9 }} },
-         { 0, {{ 1, 6, 9 }} },
-         { 2,  sudoku::default_candidates },
-         { 0, {{ 1, 5, 7, 9 }} },
-         { 0, {{ 1, 3, 5 }} },
-         { 0, {{ 5, 6, 7, 9 }} },
-         { 0, {{ 1, 3, 5, 8 }} },
-         { 0, {{ 3, 5, 6, 8 }} },
-         { 4,  sudoku::default_candidates }
-      }},
-      {{ // row 3
-         { 8,  sudoku::default_candidates },
-         { 5,  sudoku::default_candidates },
-         { 4,  sudoku::default_candidates },
-         { 0, {{ 1, 9 }} },
-         { 2,  sudoku::default_candidates },
-         { 0, {{ 6, 9 }} },
-         { 0, {{ 1, 3 }} },
-         { 0, {{ 3, 6 }} },
-         { 7,  sudoku::default_candidates }
-      }},
-      {{ // row 4
-         { 0, {{ 5, 6, 9 }} },
-         { 0, {{ 1, 6, 9 }} },
-         { 8,  sudoku::default_candidates },
-         { 3,  sudoku::default_candidates },
-         { 7,  sudoku::default_candidates },
-         { 4,  sudoku::default_candidates },
-         { 2,  sudoku::default_candidates },
-         { 0, {{ 5, 9 }} },
-         { 0, {{ 1, 6 }} }
-      }},
-      {{ // row 5
-         { 0, {{ 4, 5, 6, 7, 9 }} },
-         { 2,  sudoku::default_candidates },
-         { 0, {{ 1, 5, 6, 7, 9 }} },
-         { 0, {{ 5, 8, 9 }} },
-         { 0, {{ 5, 8 }} },
-         { 0, {{ 5, 9 }} },
-         { 0, {{ 3, 5, 8, 9 }} },
-         { 0, {{ 3, 4, 5, 8, 9 }} },
-         { 0, {{ 1, 6 }} }
-      }},
-      {{ // row 6
-         { 0, {{ 4, 5, 9 }} },
-         { 0, {{ 4, 9 }} },
-         { 3,  sudoku::default_candidates },
-         { 2,  sudoku::default_candidates },
-         { 6,  sudoku::default_candidates },
-         { 1,  sudoku::default_candidates },
-         { 7,  sudoku::default_candidates },
-         { 0, {{ 4, 5, 8, 9 }} },
-         { 0, {{ 5, 8 }} }
-      }},
-      {{ // row 7
-         { 0, {{ 4, 5, 7 }} },
-         { 0, {{ 4, 8 }} },
-         { 0, {{ 5, 7 }} },
-         { 0, {{ 5, 7, 8 }} },
-         { 9,  sudoku::default_candidates },
-         { 3,  sudoku::default_candidates },
-         { 6,  sudoku::default_candidates },
-         { 1,  sudoku::default_candidates },
-         { 2,  sudoku::default_candidates }
-      }},
-      {{ // row 8
-         { 2,  sudoku::default_candidates },
-         { 0, {{ 6, 8, 9 }} },
-         { 0, {{ 5, 6, 7, 9 }} },
-         { 0, {{ 1, 5, 7, 8 }} },
-         { 0, {{ 1, 5, 8 }} },
-         { 0, {{ 5, 7 }} },
-         { 4,  sudoku::default_candidates },
-         { 0, {{ 5, 8, 9 }} },
-         { 3,  sudoku::default_candidates }
-      }},
-      {{ // row 9
-         { 1,  sudoku::default_candidates },
-         { 3,  sudoku::default_candidates },
-         { 0, {{ 5, 9 }} },
-         { 6,  sudoku::default_candidates },
-         { 4,  sudoku::default_candidates },
-         { 2,  sudoku::default_candidates },
-         { 0, {{ 5, 8, 9 }} },
-         { 7,  sudoku::default_candidates },
-         { 0, {{ 5, 8 }} }
-      }}
-   }};
+   using namespace naked_triple;
    for (auto _ : state) {
       sudoku s1(p1);
       s1.reduce_naked_triple();
@@ -709,115 +673,14 @@ static void BM_SUDOKU_NAKED_TRIPLE(benchmark::State& state) {
 }
 BENCHMARK(BM_SUDOKU_NAKED_TRIPLE);
 
-
 static void BM_SUDOKU_HIDDEN_TRIPLE(benchmark::State& state) {
-   sudoku::puzzle_data_t p1 {{ // puzzle
-      {{ // row 1
-         { 0, {{ 4, 7, 8, 9 }} },
-         { 0, {{ 4, 8, 9 }} },
-         { 0, {{ 4, 7 }} },
-         { 0, {{ 2, 4, 5, 6, 7, 8 }} },
-         { 0, {{ 4, 7, 8 }} },
-         { 1,  sudoku::default_candidates },
-         { 0, {{ 2, 4, 6, 9 }} },
-         { 3,  sudoku::default_candidates },
-         { 0, {{ 2, 4, 5, 7, 8, 9 }} }
-      }},
-      {{ // row 2
-         { 2,  sudoku::default_candidates },
-         { 3,  sudoku::default_candidates },
-         { 1,  sudoku::default_candidates },
-         { 0, {{ 4, 5, 6, 7, 8 }} },
-         { 9,  sudoku::default_candidates },
-         { 0, {{ 5, 7, 8 }} },
-         { 0, {{ 4, 6 }} },
-         { 0, {{ 5, 6 }} },
-         { 0, {{ 4, 5, 7, 8 }} }
-      }},
-      {{ // row 3
-         { 0, {{ 4, 7, 8, 9 }} },
-         { 6,  sudoku::default_candidates },
-         { 5,  sudoku::default_candidates },
-         { 0, {{ 2, 4, 7, 8 }} },
-         { 0, {{ 4, 7, 8 }} },
-         { 3,  sudoku::default_candidates },
-         { 1,  sudoku::default_candidates },
-         { 0, {{ 2, 8, 9 }} },
-         { 0, {{ 2, 4, 7, 8, 9 }} }
-      }},
-      {{ // row 4
-         { 6,  sudoku::default_candidates },
-         { 7,  sudoku::default_candidates },
-         { 8,  sudoku::default_candidates },
-         { 9,  sudoku::default_candidates },
-         { 2,  sudoku::default_candidates },
-         { 4,  sudoku::default_candidates },
-         { 3,  sudoku::default_candidates },
-         { 0, {{ 1, 5 }} },
-         { 0, {{ 1, 5 }} }
-      }},
-      {{ // row 5
-         { 1,  sudoku::default_candidates },
-         { 0, {{ 2, 4, 9 }} },
-         { 3,  sudoku::default_candidates },
-         { 0, {{ 7, 8 }} },
-         { 5,  sudoku::default_candidates },
-         { 0, {{ 7, 8 }} },
-         { 0, {{ 2, 4, 9 }} },
-         { 0, {{ 2, 9 }} },
-         { 6,  sudoku::default_candidates }
-      }},
-      {{ // row 6
-         { 0, {{ 4, 5, 9 }} },
-         { 0, {{ 2, 4, 5, 9 }} },
-         { 0, {{ 2, 4 }} },
-         { 1,  sudoku::default_candidates },
-         { 3,  sudoku::default_candidates },
-         { 6,  sudoku::default_candidates },
-         { 7,  sudoku::default_candidates },
-         { 0, {{ 2, 8, 9 }} },
-         { 0, {{ 2, 4, 8, 9 }} }
-      }},
-      {{ // row 7
-         { 0, {{ 4, 8 }} },
-         { 0, {{ 1, 2, 4, 8 }} },
-         { 9,  sudoku::default_candidates },
-         { 3,  sudoku::default_candidates },
-         { 6,  sudoku::default_candidates },
-         { 0, {{ 2, 8 }} },
-         { 5,  sudoku::default_candidates },
-         { 7,  sudoku::default_candidates },
-         { 0, {{ 1, 2 }} }
-      }},
-      {{ // row 8
-         { 0, {{ 5, 7 }} },
-         { 0, {{ 2, 5 }} },
-         { 6,  sudoku::default_candidates },
-         { 0, {{ 2, 5, 7 }} },
-         { 1,  sudoku::default_candidates },
-         { 9,  sudoku::default_candidates },
-         { 8,  sudoku::default_candidates },
-         { 4,  sudoku::default_candidates },
-         { 3,  sudoku::default_candidates }
-      }},
-      {{ // row 9
-         { 3,  sudoku::default_candidates },
-         { 0, {{ 1, 2, 4, 5, 8 }} },
-         { 0, {{ 2, 4, 7 }} },
-         { 0, {{ 2, 4, 5, 7, 8 }} },
-         { 0, {{ 4, 7, 8 }} },
-         { 0, {{ 2, 5, 7, 8 }} },
-         { 0, {{ 2, 6, 9 }} },
-         { 0, {{ 1, 6 }} },
-         { 0, {{ 1, 2, 9 }} }
-      }}
-   }};
+   using namespace find_hidden_triple;
+ 
    for (auto _ : state) {
       sudoku s1(p1);
       s1.find_hidden_triple();
    }
 }
 BENCHMARK(BM_SUDOKU_HIDDEN_TRIPLE);
-
 
 BENCHMARK_MAIN();

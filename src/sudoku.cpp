@@ -80,15 +80,8 @@ void sudoku::set_candidates()
             value_t block_number = get_block_number(i, j);
             block_set = get_block(block_number);
             puzzle[i][j]->second = all_candidates;
-            for(auto& x : row_set) {
-               puzzle[i][j]->second.erase(x);
-            }
-            for(auto& x : column_set) {
-               puzzle[i][j]->second.erase(x);
-            }
-            for(auto& x : block_set) {
-               puzzle[i][j]->second.erase(x);
-            }
+            puzzle[i][j]->second.remove(row_set | column_set | block_set);
+
          }
       }
    }
@@ -263,7 +256,7 @@ void sudoku::reduce_naked_pairs(puzzle_data_p puzzle)
                   for(value_t m = 0; m < 9; m++) {
                      // we skip the cells with the naked pair
                      if(m == j || m == k) continue;
-                     for(const auto& candidate : puzzle[i][j]->second) { puzzle[i][m]->second.erase(candidate); }
+                     puzzle[i][m]->second.remove(puzzle[i][j]->second);
                   }
                }
             }
@@ -429,26 +422,25 @@ void sudoku::reduce_naked_triple(puzzle_data_p puzzle)
          for(value_t c2 = c1 + 1; c2 < 10; c2++) {
             for(value_t c3 = c2 + 1; c3 < 10; c3++) {
                // we want three cells where these are the only candidates 
-               // so we need to know if a sudoku_set for the cell candidates is a subset 
+               // so we need to know if the cell candidates is a subset 
                // of {c1, c2, c3}
                sudoku_set candidate_set { c1, c2, c3 };
                sudoku_set candidate_set_columns;
                for(value_t column = 0; column < 9; column++) {
-                  if(puzzle[i][column]->first == 0 && 
-                     std::includes(
-                        candidate_set.begin(), candidate_set.end(), 
-                        puzzle[i][column]->second.begin(), puzzle[i][column]->second.end())) {
+                  if(puzzle[i][column]->first == 0 && candidate_set.includes(puzzle[i][column]->second)) {
                            candidate_set_columns.insert(column);
                   }
                }
-               // we have three columns which are a subset of {c1, c2, c3}
+               // if we have three columns which are a subset of {c1, c2, c3}
                if(candidate_set_columns.size() == 3) {
                   for(value_t column = 0; column < 9; column++) {
                      // skip c1, c2, c3
                      if(candidate_set_columns.contains(column)) continue;
-                     for(const auto& candidate : candidate_set) {
-                        puzzle[i][column]->second.erase(candidate);
-                     }
+
+                     // for(const auto& candidate : candidate_set) {
+                     //    puzzle[i][column]->second.erase(candidate);
+                     // }
+                     puzzle[i][column]->second.remove(candidate_set);
                   }
                }
             }
@@ -480,41 +472,25 @@ void sudoku::find_hidden_triple(puzzle_data_p puzzle)
                   // we want to know if any element of candidate_set is in the cell 
                   // and all elements of the candidate_set must be found 
                   if(puzzle[i][column]->first == 0) {
-                     // we need an insert iterator for sudoku_set
-                     // to make an iterator an insert iterator we need 
-                     // iterator::operator=(const value_type&) 
-                     // iterator::operator=(const value_type&&)
-                     // then we can use sudoku_set instead of std::vector
-
-                     // we get the intersection of the candidate_set and the cell
-
-                     // std::set<value_t> intersection;
-                     // std::set_intersection(candidate_set.begin(), candidate_set.end(),
-                     //    puzzle[i][column]->second.begin(), puzzle[i][column]->second.end(),
-                     //    std::inserter(intersection, intersection.begin())
-                     // );
-
                      sudoku_set intersection = candidate_set & puzzle[i][column]->second;
-
                      // if the intersection is non-null then we add the column to the 
                      // candidate_set_colums and mark which candidates we have found
                      if(intersection.size() > 0) {
-                        for(const auto& c : intersection) {
-                           candidates_found.insert(c);
-                        }
+                        // for(const auto& c : intersection) {
+                        //    candidates_found.insert(c);
+                        // }
+                        candidates_found = candidates_found | intersection;
                         candidate_set_columns.insert(column);
                      }
                   }
                }
-
                // we have three cells of which {c1, c2, c3} is a subset
                // and we have identified that all three candidates were found
-               
                if(candidate_set_columns.size() == 3 && candidates_found.size() == 3) {
+                  // for each of the three columns in the candidate_set_columns
+                  // we want to remove every candidate that isn't in the candidate_set
                   for(const auto& column : candidate_set_columns) {
-                     for(const auto& candidate : puzzle[i][column]->second) {
-                        if(! candidate_set.contains(candidate)) puzzle[i][column]->second.erase(candidate);
-                     }
+                     puzzle[i][column]->second = puzzle[i][column]->second & candidate_set;
                   }
                }
             }
@@ -533,33 +509,33 @@ void sudoku::find_hidden_triple()
 
 void sudoku::solve_puzzle()
 {
-      set_candidates();
-      while(true) {
+   set_candidates();
+   while(true) {
       puzzle_data_t current_puzzle_data = puzzle_data;
       solve_single_candidates();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       solve_hidden_singles();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       find_hidden_pairs();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       reduce_naked_pairs();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       reduce_pointing_pairs();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       reduce_box_line();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       reduce_x_wing();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       reduce_naked_triple();
-      if(puzzle_data != current_puzzle_data) continue;
       if(is_solved()) break;
+      if(puzzle_data != current_puzzle_data) continue;
       find_hidden_triple();
       if(puzzle_data == current_puzzle_data) break; // we didn't update the puzzle this iteration. 
    }

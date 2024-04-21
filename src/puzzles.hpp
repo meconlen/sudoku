@@ -4,8 +4,10 @@
 // https://projecteuler.net/project/resources/p096_sudoku.txt
 
 #include "sudoku.hpp"
+namespace sudoku_puzzles {
+namespace euler {
 
-sudoku::puzzle_input_data_t p01 {{
+inline sudoku::puzzle_input_data_t p01 {{
    {0,0,3,0,2,0,6,0,0},
    {9,0,0,3,0,5,0,0,1},
    {0,0,1,8,0,6,4,0,0},
@@ -16,7 +18,7 @@ sudoku::puzzle_input_data_t p01 {{
    {8,0,0,2,0,3,0,0,9},
    {0,0,5,0,1,0,3,0,0}
 }};
-sudoku::puzzle_input_data_t p02 {{
+inline sudoku::puzzle_input_data_t p02 {{
    {2,0,0,0,8,0,3,0,0},
    {0,6,0,0,7,0,0,8,4},
    {0,3,0,5,0,0,2,0,9},
@@ -27,7 +29,7 @@ sudoku::puzzle_input_data_t p02 {{
    {7,2,0,0,4,0,0,6,0},
    {0,0,4,0,1,0,0,0,3}
 }};
-sudoku::puzzle_input_data_t p03 {{
+inline sudoku::puzzle_input_data_t p03 {{
    {0,0,0,0,0,0,9,0,7},
    {0,0,0,4,2,0,1,8,0},
    {0,0,0,7,0,5,0,2,6},
@@ -38,7 +40,7 @@ sudoku::puzzle_input_data_t p03 {{
    {0,3,4,0,5,9,0,0,0},
    {5,0,7,0,0,0,0,0,0}
 }};
-sudoku::puzzle_input_data_t p04 {{
+inline sudoku::puzzle_input_data_t p04 {{
    {0,3,0,0,5,0,0,4,0},
    {0,0,8,0,1,0,5,0,0},
    {4,6,0,0,0,0,0,1,2},
@@ -49,7 +51,7 @@ sudoku::puzzle_input_data_t p04 {{
    {0,0,1,0,2,0,6,0,0},
    {0,8,0,0,6,0,0,2,0}
 }};
-sudoku::puzzle_input_data_t p05 {{
+inline sudoku::puzzle_input_data_t p05 {{
    {0,2,0,8,1,0,7,4,0},
    {7,0,0,0,0,3,1,0,0},
    {0,9,0,0,0,2,8,0,5},
@@ -60,7 +62,7 @@ sudoku::puzzle_input_data_t p05 {{
    {0,0,5,6,0,0,0,0,8},
    {0,7,6,0,5,1,0,9,0}
 }};
-sudoku::puzzle_input_data_t p06 {{
+inline sudoku::puzzle_input_data_t p06 {{
    {1,0,0,9,2,0,0,0,0},
    {5,2,4,0,1,0,0,0,0},
    {0,0,0,0,0,0,0,7,0},
@@ -71,7 +73,7 @@ sudoku::puzzle_input_data_t p06 {{
    {0,0,0,0,3,0,9,4,5},
    {0,0,0,0,7,1,0,0,6}
 }};
-sudoku::puzzle_input_data_t p07 {{
+inline sudoku::puzzle_input_data_t p07 {{
    {0,4,3,0,8,0,2,5,0},
    {6,0,0,0,0,0,0,0,0},
    {0,0,0,0,0,1,0,9,4},
@@ -82,7 +84,7 @@ sudoku::puzzle_input_data_t p07 {{
    {0,0,0,0,0,0,0,0,5},
    {0,3,4,0,9,0,7,1,0}
 }};
-sudoku::puzzle_input_data_t p08 {{
+inline sudoku::puzzle_input_data_t p08 {{
    {4,8,0,0,0,6,9,0,2},
    {0,0,2,0,0,8,0,0,1},
    {9,0,0,3,7,0,0,6,0},
@@ -93,7 +95,7 @@ sudoku::puzzle_input_data_t p08 {{
    {7,0,0,9,0,0,6,0,0},
    {6,0,9,2,0,0,0,1,8}
 }};
-sudoku::puzzle_input_data_t p09 {{
+inline sudoku::puzzle_input_data_t p09 {{
    {0,0,0,9,0,0,0,0,2},
    {0,5,0,1,2,3,4,0,0},
    {0,3,0,0,0,0,1,6,0},
@@ -104,7 +106,7 @@ sudoku::puzzle_input_data_t p09 {{
    {0,0,7,4,3,9,0,2,0},
    {4,0,0,0,0,7,0,0,0}
 }};
-sudoku::puzzle_input_data_t p10 {{
+inline sudoku::puzzle_input_data_t p10 {{
    {0,0,1,9,0,0,0,0,3},
    {9,0,0,7,0,0,1,6,0},
    {0,3,0,0,0,5,0,0,7},
@@ -115,7 +117,7 @@ sudoku::puzzle_input_data_t p10 {{
    {0,4,2,0,0,7,0,0,6},
    {5,0,0,0,0,6,8,0,0}
 }};
-sudoku::puzzle_input_data_t p11 {{
+inline sudoku::puzzle_input_data_t p11 {{
    {0,0,0,1,2,5,4,0,0},
    {0,0,8,4,0,0,0,0,0},
    {4,2,0,8,0,0,0,0,0},
@@ -126,7 +128,7 @@ sudoku::puzzle_input_data_t p11 {{
    {0,0,0,0,0,7,2,0,0},
    {0,0,1,2,9,8,0,0,0}
 }};
-sudoku::puzzle_input_data_t p12 {{
+inline sudoku::puzzle_input_data_t p12 {{
    {0,6,2,3,4,0,7,5,0},
    {1,0,0,0,0,5,6,0,0},
    {5,7,0,0,0,0,0,4,0},
@@ -137,7 +139,7 @@ sudoku::puzzle_input_data_t p12 {{
    {0,0,6,4,0,0,0,0,7},
    {0,5,9,0,8,3,2,6,0}
 }};
-sudoku::puzzle_input_data_t p13 {{
+inline sudoku::puzzle_input_data_t p13 {{
    {3,0,0,0,0,0,0,0,0},
    {0,0,5,0,0,9,0,0,0},
    {2,0,0,5,0,4,0,0,0},
@@ -148,7 +150,7 @@ sudoku::puzzle_input_data_t p13 {{
    {0,0,0,0,6,7,0,8,0},
    {0,0,0,0,0,5,4,3,7}
 }};
-sudoku::puzzle_input_data_t p14 {{
+inline sudoku::puzzle_input_data_t p14 {{
    {6,3,0,0,0,0,0,0,0},
    {0,0,0,5,0,0,0,0,8},
    {0,0,5,6,7,4,0,0,0},
@@ -159,7 +161,7 @@ sudoku::puzzle_input_data_t p14 {{
    {0,8,0,3,0,0,9,0,2},
    {9,4,7,1,0,0,0,8,0}
 }};
-sudoku::puzzle_input_data_t p15 {{
+inline sudoku::puzzle_input_data_t p15 {{
    {0,0,0,0,2,0,0,4,0},
    {0,0,8,0,3,5,0,0,0},
    {0,0,0,0,7,0,6,0,2},
@@ -170,7 +172,7 @@ sudoku::puzzle_input_data_t p15 {{
    {0,0,0,0,0,0,0,1,0},
    {8,0,0,0,0,4,0,0,0}
 }};
-sudoku::puzzle_input_data_t p16 {{
+inline sudoku::puzzle_input_data_t p16 {{
    {3,6,1,0,2,5,9,0,0},
    {0,8,0,9,6,0,0,1,0},
    {4,0,0,0,0,0,0,5,7},
@@ -181,7 +183,7 @@ sudoku::puzzle_input_data_t p16 {{
    {0,2,0,0,1,8,0,6,0},
    {0,0,5,4,7,0,3,2,9}
 }};
-sudoku::puzzle_input_data_t p17 {{
+inline sudoku::puzzle_input_data_t p17 {{
    {0,5,0,8,0,7,0,2,0},
    {6,0,0,0,1,0,0,9,0},
    {7,0,2,5,4,0,0,0,6},
@@ -192,7 +194,7 @@ sudoku::puzzle_input_data_t p17 {{
    {0,6,0,0,9,0,0,0,3},
    {0,8,0,1,0,3,0,4,0}
 }};
-sudoku::puzzle_input_data_t p18 {{
+inline sudoku::puzzle_input_data_t p18 {{
    {0,8,0,0,0,5,0,0,0},
    {0,0,0,0,0,3,4,5,7},
    {0,0,0,0,7,0,8,0,9},
@@ -203,7 +205,7 @@ sudoku::puzzle_input_data_t p18 {{
    {8,4,2,3,0,0,0,0,0},
    {0,0,0,1,0,0,0,8,0}
 }};
-sudoku::puzzle_input_data_t p19 {{
+inline sudoku::puzzle_input_data_t p19 {{
    {0,0,3,5,0,2,9,0,0},
    {0,0,0,0,4,0,0,0,0},
    {1,0,6,0,0,0,3,0,5},
@@ -214,7 +216,7 @@ sudoku::puzzle_input_data_t p19 {{
    {0,0,0,0,2,0,0,0,0},
    {0,0,5,1,0,4,8,0,0}
 }};
-sudoku::puzzle_input_data_t p20 {{
+inline sudoku::puzzle_input_data_t p20 {{
    {0,0,0,0,0,0,0,0,0},
    {0,0,9,8,0,5,1,0,0},
    {0,5,1,9,0,7,4,2,0},
@@ -225,7 +227,7 @@ sudoku::puzzle_input_data_t p20 {{
    {0,0,5,1,0,3,6,0,0},
    {0,0,0,0,0,0,0,0,0}
 }};
-sudoku::puzzle_input_data_t p21 {{
+inline sudoku::puzzle_input_data_t p21 {{
    {0,2,0,0,3,0,0,9,0},
    {0,0,0,9,0,7,0,0,0},
    {9,0,0,2,0,8,0,0,5},
@@ -236,7 +238,7 @@ sudoku::puzzle_input_data_t p21 {{
    {0,0,0,3,0,9,0,0,0},
    {0,3,0,0,2,0,0,5,0}
 }};
-sudoku::puzzle_input_data_t p22 {{
+inline sudoku::puzzle_input_data_t p22 {{
    {0,0,5,0,0,0,0,0,6},
    {0,7,0,0,0,9,0,2,0},
    {0,0,0,5,0,0,1,0,7},
@@ -247,7 +249,7 @@ sudoku::puzzle_input_data_t p22 {{
    {0,3,0,4,0,0,0,1,0},
    {2,0,0,0,0,0,6,0,0}
 }};
-sudoku::puzzle_input_data_t p23 {{
+inline sudoku::puzzle_input_data_t p23 {{
    {0,4,0,0,0,0,0,5,0},
    {0,0,1,9,4,3,6,0,0},
    {0,0,9,0,0,0,3,0,0},
@@ -258,7 +260,7 @@ sudoku::puzzle_input_data_t p23 {{
    {0,0,2,4,3,6,7,0,0},
    {0,3,0,0,0,0,0,4,0}
 }};
-sudoku::puzzle_input_data_t p24 {{
+inline sudoku::puzzle_input_data_t p24 {{
    {0,0,4,0,0,0,0,0,0},
    {0,0,0,0,3,0,0,0,2},
    {3,9,0,7,0,0,0,8,0},
@@ -269,7 +271,7 @@ sudoku::puzzle_input_data_t p24 {{
    {9,0,0,0,4,0,0,0,0},
    {0,0,0,0,0,0,8,0,0}
 }};
-sudoku::puzzle_input_data_t p25 {{
+inline sudoku::puzzle_input_data_t p25 {{
    {3,6,0,0,2,0,0,8,9},
    {0,0,0,3,6,1,0,0,0},
    {0,0,0,0,0,0,0,0,0},
@@ -280,7 +282,7 @@ sudoku::puzzle_input_data_t p25 {{
    {0,0,0,4,1,8,0,0,0},
    {9,7,0,0,3,0,0,1,4}
 }};
-sudoku::puzzle_input_data_t p26 {{
+inline sudoku::puzzle_input_data_t p26 {{
    {5,0,0,4,0,0,0,6,0},
    {0,0,9,0,0,0,8,0,0},
    {6,4,0,0,2,0,0,0,0},
@@ -291,7 +293,7 @@ sudoku::puzzle_input_data_t p26 {{
    {0,0,3,0,0,0,6,0,0},
    {0,6,0,0,0,3,0,0,2}
 }};
-sudoku::puzzle_input_data_t p27 {{
+inline sudoku::puzzle_input_data_t p27 {{
    {0,0,7,2,5,6,4,0,0},
    {4,0,0,0,0,0,0,0,5},
    {0,1,0,0,3,0,0,6,0},
@@ -302,7 +304,7 @@ sudoku::puzzle_input_data_t p27 {{
    {2,0,0,0,0,0,0,0,4},
    {0,0,6,3,1,2,7,0,0}
 }};
-sudoku::puzzle_input_data_t p28 {{
+inline sudoku::puzzle_input_data_t p28 {{
    {0,0,0,0,0,0,0,0,0},
    {0,7,9,0,5,0,1,8,0},
    {8,0,0,0,0,0,0,0,7},
@@ -313,7 +315,7 @@ sudoku::puzzle_input_data_t p28 {{
    {0,1,6,0,3,0,4,2,0},
    {0,0,0,0,0,0,0,0,0}
 }};
-sudoku::puzzle_input_data_t p29 {{
+inline sudoku::puzzle_input_data_t p29 {{
    {0,3,0,0,0,0,0,8,0},
    {0,0,9,0,0,0,5,0,0},
    {0,0,7,5,0,9,2,0,0},
@@ -324,7 +326,7 @@ sudoku::puzzle_input_data_t p29 {{
    {0,0,2,0,0,0,8,0,0},
    {0,7,0,0,0,0,0,9,0}
 }};
-sudoku::puzzle_input_data_t p30 {{
+inline sudoku::puzzle_input_data_t p30 {{
    {2,0,0,1,7,0,6,0,3},
    {0,5,0,0,0,0,1,0,0},
    {0,0,0,0,0,6,0,7,9},
@@ -335,7 +337,7 @@ sudoku::puzzle_input_data_t p30 {{
    {0,0,5,0,0,0,0,6,0},
    {9,0,6,0,3,7,0,0,2}
 }};
-sudoku::puzzle_input_data_t p31 {{
+inline sudoku::puzzle_input_data_t p31 {{
    {0,0,0,0,0,0,0,8,0},
    {8,0,0,7,0,1,0,4,0},
    {0,4,0,0,2,0,0,3,0},
@@ -346,7 +348,7 @@ sudoku::puzzle_input_data_t p31 {{
    {0,5,0,8,0,2,0,0,6},
    {0,8,0,0,0,0,0,0,0}
 }};
-sudoku::puzzle_input_data_t p32 {{
+inline sudoku::puzzle_input_data_t p32 {{
    {0,0,0,0,0,0,0,8,5},
    {0,0,0,2,1,0,0,0,9},
    {9,6,0,0,8,0,1,0,0},
@@ -357,7 +359,7 @@ sudoku::puzzle_input_data_t p32 {{
    {3,0,0,0,5,4,0,0,0},
    {4,8,0,0,0,0,0,0,0}
 }};
-sudoku::puzzle_input_data_t p33 {{
+inline sudoku::puzzle_input_data_t p33 {{
    {6,0,8,0,7,0,5,0,2},
    {0,5,0,6,0,8,0,7,0},
    {0,0,2,0,0,0,3,0,0},
@@ -368,7 +370,7 @@ sudoku::puzzle_input_data_t p33 {{
    {0,1,0,7,0,4,0,9,0},
    {4,0,9,0,6,0,7,0,1}
 }};
-sudoku::puzzle_input_data_t p34 {{
+inline sudoku::puzzle_input_data_t p34 {{
    {0,5,0,0,1,0,0,4,0},
    {1,0,7,0,0,0,6,0,2},
    {0,0,0,9,0,5,0,0,0},
@@ -379,7 +381,7 @@ sudoku::puzzle_input_data_t p34 {{
    {3,0,4,0,0,0,7,0,9},
    {0,2,0,0,6,0,0,1,0}
 }};
-sudoku::puzzle_input_data_t p35 {{
+inline sudoku::puzzle_input_data_t p35 {{
    {0,5,3,0,0,0,7,9,0},
    {0,0,9,7,5,3,4,0,0},
    {1,0,0,0,0,0,0,0,2},
@@ -390,7 +392,7 @@ sudoku::puzzle_input_data_t p35 {{
    {0,0,7,6,4,1,2,0,0},
    {0,6,1,0,0,0,9,4,0}
 }};
-sudoku::puzzle_input_data_t p36 {{
+inline sudoku::puzzle_input_data_t p36 {{
    {0,0,6,0,8,0,3,0,0},
    {0,4,9,0,7,0,2,5,0},
    {0,0,0,4,0,5,0,0,0},
@@ -401,7 +403,7 @@ sudoku::puzzle_input_data_t p36 {{
    {0,7,5,0,4,0,1,9,0},
    {0,0,3,0,9,0,6,0,0}
 }};
-sudoku::puzzle_input_data_t p37 {{
+inline sudoku::puzzle_input_data_t p37 {{
    {0,0,5,0,8,0,7,0,0},
    {7,0,0,2,0,4,0,0,5},
    {3,2,0,0,0,0,0,8,4},
@@ -412,7 +414,7 @@ sudoku::puzzle_input_data_t p37 {{
    {6,0,0,5,0,8,0,0,7},
    {0,0,3,0,1,0,6,0,0}
 }};
-sudoku::puzzle_input_data_t p38 {{
+inline sudoku::puzzle_input_data_t p38 {{
    {0,0,0,9,0,0,8,0,0},
    {1,2,8,0,0,6,4,0,0},
    {0,7,0,8,0,0,0,6,0},
@@ -423,7 +425,7 @@ sudoku::puzzle_input_data_t p38 {{
    {0,0,3,6,0,0,2,8,4},
    {0,0,1,0,0,7,0,0,0}
 }};
-sudoku::puzzle_input_data_t p39 {{
+inline sudoku::puzzle_input_data_t p39 {{
    {0,0,0,0,8,0,0,0,0},
    {2,7,0,0,0,0,0,5,4},
    {0,9,5,0,0,0,8,1,0},
@@ -434,7 +436,7 @@ sudoku::puzzle_input_data_t p39 {{
    {4,6,0,0,0,0,0,3,8},
    {0,0,0,0,9,0,0,0,0}
 }};
-sudoku::puzzle_input_data_t p40 {{
+inline sudoku::puzzle_input_data_t p40 {{
    {0,0,0,6,0,2,0,0,0},
    {4,0,0,0,5,0,0,0,1},
    {0,8,5,0,1,0,6,2,0},
@@ -445,7 +447,7 @@ sudoku::puzzle_input_data_t p40 {{
    {9,0,0,0,2,0,0,0,7},
    {0,0,0,8,0,9,0,0,0}
 }};
-sudoku::puzzle_input_data_t p41 {{
+inline sudoku::puzzle_input_data_t p41 {{
    {0,0,0,9,0,0,0,0,2},
    {0,5,0,1,2,3,4,0,0},
    {0,3,0,0,0,0,1,6,0},
@@ -456,7 +458,7 @@ sudoku::puzzle_input_data_t p41 {{
    {0,0,7,4,3,9,0,2,0},
    {4,0,0,0,0,7,0,0,0}
 }};
-sudoku::puzzle_input_data_t p42 {{
+inline sudoku::puzzle_input_data_t p42 {{
    {3,8,0,0,0,0,0,0,0},
    {0,0,0,4,0,0,7,8,5},
    {0,0,9,0,2,0,3,0,0},
@@ -467,7 +469,7 @@ sudoku::puzzle_input_data_t p42 {{
    {4,9,5,0,0,6,0,0,0},
    {0,0,0,0,0,0,0,9,2}
 }};
-sudoku::puzzle_input_data_t p43 {{
+inline sudoku::puzzle_input_data_t p43 {{
    {0,0,0,1,5,8,0,0,0},
    {0,0,2,0,6,0,8,0,0},
    {0,3,0,0,0,0,0,4,0},
@@ -478,7 +480,7 @@ sudoku::puzzle_input_data_t p43 {{
    {0,0,4,0,7,0,1,0,0},
    {0,0,0,3,2,5,0,0,0}
 }};
-sudoku::puzzle_input_data_t p44 {{
+inline sudoku::puzzle_input_data_t p44 {{
    {0,1,0,5,0,0,2,0,0},
    {9,0,0,0,0,1,0,0,0},
    {0,0,2,0,0,8,0,3,0},
@@ -489,7 +491,7 @@ sudoku::puzzle_input_data_t p44 {{
    {0,0,0,7,0,0,0,0,6},
    {0,0,3,0,0,4,0,5,0}
 }};
-sudoku::puzzle_input_data_t p45 {{
+inline sudoku::puzzle_input_data_t p45 {{
    {0,8,0,0,0,0,0,4,0},
    {0,0,0,4,6,9,0,0,0},
    {4,0,0,0,0,0,0,0,7},
@@ -500,7 +502,7 @@ sudoku::puzzle_input_data_t p45 {{
    {0,0,0,7,8,1,0,0,0},
    {0,6,0,0,0,0,0,1,0}
 }};
-sudoku::puzzle_input_data_t p46 {{
+inline sudoku::puzzle_input_data_t p46 {{
    {9,0,4,2,0,0,0,0,7},
    {0,1,0,0,0,0,0,0,0},
    {0,0,0,7,0,6,5,0,0},
@@ -511,7 +513,7 @@ sudoku::puzzle_input_data_t p46 {{
    {0,0,0,0,0,0,0,3,0},
    {3,0,0,0,0,5,7,0,2}
 }};
-sudoku::puzzle_input_data_t p47 {{
+inline sudoku::puzzle_input_data_t p47 {{
    {0,0,0,7,0,0,8,0,0},
    {0,0,6,0,0,0,0,3,1},
    {0,4,0,0,0,2,0,0,0},
@@ -522,7 +524,7 @@ sudoku::puzzle_input_data_t p47 {{
    {8,6,0,0,0,0,5,0,0},
    {0,0,2,0,0,6,0,0,0}
 }};
-sudoku::puzzle_input_data_t p48 {{
+inline sudoku::puzzle_input_data_t p48 {{
    {0,0,1,0,0,7,0,9,0},
    {5,9,0,0,8,0,0,0,1},
    {0,3,0,0,0,0,0,8,0},
@@ -533,7 +535,7 @@ sudoku::puzzle_input_data_t p48 {{
    {1,0,0,0,2,0,0,7,9},
    {0,2,0,7,0,0,4,0,0}
 }};
-sudoku::puzzle_input_data_t p49 {{
+inline sudoku::puzzle_input_data_t p49 {{
    {0,0,0,0,0,3,0,1,7},
    {0,1,5,0,0,9,0,0,8},
    {0,6,0,0,0,0,0,0,0},
@@ -544,7 +546,7 @@ sudoku::puzzle_input_data_t p49 {{
    {5,0,0,6,0,0,3,4,0},
    {3,4,0,2,0,0,0,0,0}
 }};
-sudoku::puzzle_input_data_t p50 {{
+inline sudoku::puzzle_input_data_t p50 {{
    {3,0,0,2,0,0,0,0,0},
    {0,0,0,1,0,7,0,0,0},
    {7,0,6,0,3,0,5,0,0},
@@ -555,3 +557,6 @@ sudoku::puzzle_input_data_t p50 {{
    {0,0,0,7,0,2,0,0,0},
    {0,0,0,0,0,8,0,0,6}
 }};
+
+};
+};
