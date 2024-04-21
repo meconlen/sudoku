@@ -2359,4 +2359,6 @@ namespace find_hidden_triple
    inline sudoku s2(p2);
 }
 
+
+
 }
