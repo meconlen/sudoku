@@ -295,26 +295,24 @@ void sudoku::reduce_pointing_pairs(puzzle_data_p puzzle, value_t block)
    auto start = get_block_start(block);
    // for each candidate get a list of rows
    std::array<sudoku_set, 9> candidate_rows;
-   for(value_t candidate = 1; candidate < 10; candidate++) {
-      for(value_t i = start.first; i < start.first + 3; i++) {
-         for(value_t j = start.second; j < start.second + 3; j++) {
-            // for this cell for each candidate add i to the list
-            for(const auto& candidate : puzzle[i][j]->second) {
-               candidate_rows[candidate-1].insert(i);
-            }
+   for(value_t i = start.first; i < start.first + 3; i++) {
+      for(value_t j = start.second; j < start.second + 3; j++) {
+         // for this cell for each candidate add i to the list
+         for(const auto& candidate : puzzle[i][j]->second) {
+            candidate_rows[candidate-1].insert(i);
          }
       }
-      // now we know which rows each candidate appears in
-      for(value_t candidate = 1; candidate < 10; candidate++) {
-         // for the candidate we see if there's only one row 
-         if(candidate_rows[candidate-1].size() == 1) {
-            // the canddiate is in a single row
-            value_t i = *(candidate_rows[candidate-1].begin());
-            for(value_t j = 0; j < 9; j++) {
-               if(j < start.second || j >= start.second + 3) {
-                  // remove the candidate if we are outside the block
-                  puzzle[i][j]->second.erase(candidate);
-               }
+   }
+   // now we know which rows each candidate appears in
+   for(value_t candidate = 1; candidate < 10; candidate++) {
+      // for the candidate we see if there's only one row 
+      if(candidate_rows[candidate-1].size() == 1) {
+         // the canddiate is in a single row
+         value_t i = *(candidate_rows[candidate-1].begin());
+         for(value_t j = 0; j < 9; j++) {
+            if(j < start.second || j >= start.second + 3) {
+               // remove the candidate if we are outside the block
+               puzzle[i][j]->second.erase(candidate);
             }
          }
       }
