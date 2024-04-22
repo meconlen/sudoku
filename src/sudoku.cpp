@@ -423,7 +423,8 @@ std::array<sudoku_set, 9> sudoku::get_candidate_columns(puzzle_data_p puzzle, va
 
 void sudoku::reduce_naked_triple(puzzle_data_p puzzle)
 {
-   for(value_t i = 0; i < 9; i++) {
+   for(value_t i = 0; i < 9; i++) { // for each row
+      // get the columns each candidate appears in for the current row
       std::array<sudoku_set, 9> candidate_columns = get_candidate_columns(puzzle, i);
       for(value_t c1 = 1; c1 < 10; c1++) {
          for(value_t c2 = c1 + 1; c2 < 10; c2++) {
@@ -432,7 +433,7 @@ void sudoku::reduce_naked_triple(puzzle_data_p puzzle)
                // so we need to know if the cell candidates is a subset 
                // of {c1, c2, c3}
                sudoku_set candidate_set { c1, c2, c3 };
-               sudoku_set candidate_set_columns;
+               sudoku_set candidate_set_columns; // which unsolved columns in the row are a subset of the candidate_set
                for(value_t column = 0; column < 9; column++) {
                   if(puzzle[i][column]->first == 0 && candidate_set.includes(puzzle[i][column]->second)) {
                            candidate_set_columns.insert(column);
