@@ -10,6 +10,19 @@
 
 #include "sudoku.hpp"
 
+// NB: This code is very C-like but after attempting to rewrite much of it using iterators and C++ algorithms I don't belive it's valueable in this case.
+// The reason is that we often need to do a computation or call a method with knowledge of what row/column we are acting on. The variables 
+// i, j (or k, l or m, n) have good semantic meaning as indexes to a row/column of a matrix, which in the context of a Sudoku puzzle conveys meaning. 
+
+// We often need to know the row or column we are working with, for example, given a candidate cell with two candidates, if we wish to find 
+// a naked pair we must work with the row, column and block we are in. With an iterator we lose that information. We can reconstruct it each time if we must but 
+// that makes the code harder to read and more care must be taken to compute that properly.
+
+// Further, when was the last time you thought the following was a good idea
+// std::array<puzzle_entry_t, 81> p = reinterpret_cast<std::array<puzzle_entry_t, 81>>(puzzle_data);
+// which is used to then compute your indexes by doing &(*current) - &p[0] to get your current offset. 
+// likewise if you have const puzzle_data_t x in a lambda you compute x - &p[0]; 
+
 const sudoku::puzzle_candidate_t sudoku::default_candidates {};
 const sudoku::puzzle_candidate_t sudoku::all_candidates {1, 2, 3, 4, 5, 6, 7, 8, 9};
 const sudoku::puzzle_entry_t sudoku::empty_entry {0, default_candidates};
@@ -21,16 +34,13 @@ sudoku::sudoku(const puzzle_input_data_t& p)
 {
    for(auto i = 0; i < 9; i++) {
       for(auto j = 0; j < 9; j++) {
-         *puzzle[i][j] = puzzle_entry_t(p[i][j], default_candidates);
+         puzzle_data[i][j] = puzzle_entry_t(p[i][j], default_candidates);
       }
    }
 }
 
 sudoku::sudoku(const std::string& p)
 {
-   if(p.length() != 81) return;
-   std::regex nums("[0-9]*");
-   if(! std::regex_match(p, nums)) return;
    auto it = p.begin();
    for(value_t i = 0; i < 9; i++) {
       for(value_t j = 0; j < 9; j++) {
@@ -73,14 +83,14 @@ void sudoku::set_candidates()
 {
    for(auto i = 0; i < 9; i++) {
       for(auto j = 0; j < 9; j++) {
-         if(puzzle[i][j]->first == 0) {
+         if(puzzle_data[i][j].first == 0) {
             sudoku_set row_set, column_set, block_set;
             row_set = get_row(i);
             column_set = get_column(j);
             value_t block_number = get_block_number(i, j);
             block_set = get_block(block_number);
-            puzzle[i][j]->second = all_candidates;
-            puzzle[i][j]->second.remove(row_set | column_set | block_set);
+            puzzle_data[i][j].second = all_candidates;
+            puzzle_data[i][j].second.remove(row_set | column_set | block_set);
 
          }
       }
@@ -90,14 +100,14 @@ void sudoku::set_candidates()
 
 void sudoku::solve_cell(uint_fast8_t row, uint_fast8_t column, uint_fast8_t value)
 {
-   puzzle[row][column]->first = value;
-   puzzle[row][column]->second.clear();
+   puzzle_data[row][column].first = value;
+   puzzle_data[row][column].second.clear();
    // remove candidate from the row and column
    for(auto k = 0; k < 9; k++) {
       // row i
-      puzzle[row][k]->second.erase(value);
+      puzzle_data[row][k].second.erase(value);
       // column j
-      puzzle[k][column]->second.erase(value);
+      puzzle_data[k][column].second.erase(value);
    }
    // we need to find the top left of the block. 
    uint_fast8_t first_row = row - (row % 3);
@@ -105,7 +115,7 @@ void sudoku::solve_cell(uint_fast8_t row, uint_fast8_t column, uint_fast8_t valu
    // remove the candidate from the block
    for(auto k = first_row; k < first_row + 3; k++) {
       for(auto l = first_column; l < first_column + 3; l++) {
-         puzzle[k][l]->second.erase(value);
+         puzzle_data[k][l].second.erase(value);
       }
    }
    return;
@@ -116,7 +126,7 @@ sudoku_set sudoku::get_row(uint_fast8_t r)
 {
    sudoku_set rv;
    for(auto i = 0; i < 9; i++) {
-      rv.insert(puzzle[r][i]->first);
+      rv.insert(puzzle_data[r][i].first);
    }
    rv.erase(0);
    return rv;
@@ -127,7 +137,7 @@ sudoku_set sudoku::get_column(uint_fast8_t c)
 {
    sudoku_set rv;
    for(auto i = 0; i < 9; i++) {
-      rv.insert(puzzle[i][c]->first);
+      rv.insert(puzzle_data[i][c].first);
    }
    rv.erase(0);
    return rv;
@@ -149,7 +159,7 @@ sudoku::puzzle_input_data_t sudoku::get_puzzle() const
 
    for(auto i = 0; i < 9; i++) {
       for(auto j=0; j < 9; j++) {
-         p[i][j] = puzzle[i][j]->first;
+         p[i][j] = puzzle_data[i][j].first;
       }
    }
    return p;
@@ -161,8 +171,8 @@ void sudoku::solve_single_candidates()
       bool updated = false;
       for(auto i = 0; i < 9; i++) {
          for(auto j = 0; j < 9; j++) {
-            if(puzzle[i][j]->first == 0 && puzzle[i][j]->second.size() == 1) {
-               solve_cell(i, j, *(puzzle[i][j]->second.begin()));
+            if(puzzle_data[i][j].second.size() == 1) {
+               solve_cell(i, j, *(puzzle_data[i][j].second.begin()));
                updated = true;
             }
          }
