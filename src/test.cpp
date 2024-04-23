@@ -8,9 +8,9 @@ using namespace sudoku_puzzles;
 
 TEST(sudoku_set, brace_initializer) {
    sudoku_set s0 {};
-   EXPECT_EQ(s0.get_value(), 0);
+   EXPECT_EQ(s0.get_value(), static_cast<sudoku_set::set_t>(0));
    sudoku_set s1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-   EXPECT_EQ(s1.get_value(), 0b01111111110);
+   EXPECT_EQ(s1.get_value(), static_cast<sudoku_set::set_t>(0b01111111110));
 }
 
 TEST(sudoku, string_constructor) {

@@ -4,6 +4,7 @@ AC_CONFIG_SRCDIR([src/test.cpp])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
 AC_PROG_CXX([g++])
+AM_SILENT_RULES([yes])
 #AC_CHECK_INCLUDES_DEFAULT
 #AC_PROG_EGREP
 

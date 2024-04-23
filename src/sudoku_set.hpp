@@ -11,6 +11,8 @@
 
 class sudoku_set
 {
+ 
+ public:
    using set_t = uint_fast16_t; 
    using value_t = uint_fast8_t;
 
@@ -22,8 +24,8 @@ private:
 
    // static const std::array<set_t, 10> set_values;
    set_t value_set = 0;
-   static constexpr std::array<sudoku_set::set_t, 10> set_values { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 };
-   static constexpr std::array<std::size_t, 256> pop_count { 
+   static constexpr std::array<sudoku_set::set_t, 10> set_values {{ 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 }};
+   static constexpr std::array<std::size_t, 256> pop_count {{ 
       0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4,
       1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
       1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
@@ -40,7 +42,7 @@ private:
       3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
       3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
       4, 5, 5, 6, 5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8
-   };
+   }};
 
 public:
 
@@ -71,7 +73,7 @@ public:
 
    // std::size_t size() { return std::popcount(value_set); }
 
-   std::size_t size() { 
+   std::size_t size() const { 
       return pop_count[value_set & 0xFF] + pop_count[value_set >> 8];
    }
 
@@ -96,8 +98,8 @@ public:
    std::string to_string() const {
       std::ostringstream os;
       os << "{ ";
-      for(auto i = 0; i < 10; i++) {
-         if(value_set & set_values[i] == set_values[i]) {
+      for(std::size_t i = 0; i < 10; i++) {
+         if((value_set & set_values[i]) == set_values[i]) {
             os << i << ", ";
          }
       }
@@ -107,7 +109,7 @@ public:
 
    // Non-std::set methods 
 
-   set_t get_value() { return value_set; }
+   set_t get_value() const { return value_set; }
    bool includes(const sudoku_set& other) { return (value_set & other.value_set) == other.value_set; }
    void remove(const sudoku_set& other) {
       value_set = value_set & ~other.value_set;
@@ -117,7 +119,7 @@ public:
 private:
    template<typename T>
    class set_iterator {
-   static constexpr std::array<T, 10> values {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+   static constexpr std::array<T, 10> values {{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}};
 
    public:
       using iterator_category = std::bidirectional_iterator_tag;

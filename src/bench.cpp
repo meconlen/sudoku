@@ -531,7 +531,7 @@ static void BM_EULER(benchmark::State& state) {
          "000003017015009008060000000100007000009000200000500004000000020500600340340200000",
          "300200000000107000706030500070009080900020004010800050009040301000702000000008006"
       };
-      unsigned total = 0;
+      int total = 0;
 
       for(const auto& p : puzzle_strings) {
          sudoku s(p);
