@@ -20,11 +20,6 @@ public:
    using puzzle_data_t = std::array<puzzle_row_t, 9>;
    using puzzle_input_data_t = std::array<std::array<value_t, 9>, 9>;
 
-   using puzzle_entry_p = puzzle_entry_t*;
-   using puzzle_row_p = std::array<puzzle_entry_p, 9>;
-   using puzzle_data_p = std::array<puzzle_row_p, 9>;
-
-
    static const puzzle_candidate_t default_candidates;
    static const puzzle_candidate_t all_candidates;
    static const puzzle_entry_t empty_entry;
@@ -457,8 +452,6 @@ inline bool sudoku::are_houses_valid_impl() const
    }
    return true;
 }
-
-
 
 bool operator==(const sudoku& lhs, const sudoku& rhs);
 std::ostream& operator<<(std::ostream& os, const sudoku& s);

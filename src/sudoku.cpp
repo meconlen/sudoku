@@ -227,7 +227,7 @@ void sudoku::find_hidden_pairs()
 {
    find_hidden_pairs_impl<sudoku::orientation::row>();
    find_hidden_pairs_impl<sudoku::orientation::column>();
-   // find_hidden_pairs_impl<sudoku::orientation::block>();
+   find_hidden_pairs_impl<sudoku::orientation::block>();
    return;
 }
 
@@ -255,8 +255,6 @@ void sudoku::reduce_box_line()
 
 void sudoku::reduce_x_wing()
 {
-   // reduce_x_wing(puzzle);
-   // reduce_x_wing(transposed_puzzle);
    reduce_x_wing_impl<orientation::row>();
    reduce_x_wing_impl<orientation::column>();
    return;
