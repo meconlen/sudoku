@@ -24,10 +24,10 @@
 // likewise if you have const puzzle_data_t x in a lambda you compute x - &p[0]; 
 
 const sudoku::puzzle_candidate_t sudoku::default_candidates {};
-const sudoku::puzzle_candidate_t sudoku::all_candidates {1, 2, 3, 4, 5, 6, 7, 8, 9};
+const sudoku::puzzle_candidate_t sudoku::all_candidates {{1, 2, 3, 4, 5, 6, 7, 8, 9}};
 const sudoku::puzzle_entry_t sudoku::empty_entry {0, default_candidates};
-const sudoku::puzzle_row_t sudoku::empty_row {empty_entry, empty_entry, empty_entry, empty_entry, empty_entry, empty_entry, empty_entry, empty_entry, empty_entry};
-const sudoku::puzzle_data_t sudoku::empty_puzzle {empty_row, empty_row, empty_row, empty_row, empty_row, empty_row, empty_row, empty_row, empty_row};
+const sudoku::puzzle_row_t sudoku::empty_row {{empty_entry, empty_entry, empty_entry, empty_entry, empty_entry, empty_entry, empty_entry, empty_entry, empty_entry}};
+const sudoku::puzzle_data_t sudoku::empty_puzzle {{empty_row, empty_row, empty_row, empty_row, empty_row, empty_row, empty_row, empty_row, empty_row}};
 
 
 sudoku::sudoku(const puzzle_input_data_t& p)
@@ -544,6 +544,8 @@ constexpr std::pair<sudoku::value_t, sudoku::value_t> sudoku::get_block_start(va
       case 9:
          start.first = 6;
          start.second = 6;
+         break;
+      default:
          break;
    }         
    return start;

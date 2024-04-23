@@ -24,8 +24,8 @@ private:
 
    // static const std::array<set_t, 10> set_values;
    set_t value_set = 0;
-   static constexpr std::array<sudoku_set::set_t, 10> set_values { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 };
-   static constexpr std::array<std::size_t, 256> pop_count { 
+   static constexpr std::array<sudoku_set::set_t, 10> set_values {{ 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 }};
+   static constexpr std::array<std::size_t, 256> pop_count {{ 
       0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4,
       1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
       1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
@@ -42,7 +42,7 @@ private:
       3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
       3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
       4, 5, 5, 6, 5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8
-   };
+   }};
 
 public:
 
@@ -119,7 +119,7 @@ public:
 private:
    template<typename T>
    class set_iterator {
-   static constexpr std::array<T, 10> values {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+   static constexpr std::array<T, 10> values {{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}};
 
    public:
       using iterator_category = std::bidirectional_iterator_tag;

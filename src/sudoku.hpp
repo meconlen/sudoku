@@ -339,8 +339,8 @@ inline void sudoku::reduce_x_wing_impl()
             for(value_t k = i+1; k < 9; k++) {
                std::array<sudoku_set, 9> k_candidate_columns;
                for(value_t l = 0; l < 9; l++) {
-                  for(const auto& candidate : cell<O>(k, l).second) {
-                     k_candidate_columns[candidate-1].insert(l);
+                  for(const auto& k_candidate : cell<O>(k, l).second) {
+                     k_candidate_columns[k_candidate-1].insert(l);
                   }
                }
                if(candidate_columns[candidate-1] == k_candidate_columns[candidate-1]) {
@@ -444,7 +444,7 @@ template<sudoku::orientation O>
 inline bool sudoku::are_houses_valid_impl() const 
 {
    for(value_t i = 0; i < 9; i++) {
-      std::array<bool, 9> values {false, false, false, false, false, false, false, false, false};
+      std::array<bool, 9> values {{false, false, false, false, false, false, false, false, false}};
       for(value_t j = 0; j < 9; j++) {
          if(cell<O>(i, j).first != 0) {
             if(values[cell<O>(i, j).first - 1]) {
