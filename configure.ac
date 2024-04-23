@@ -1,5 +1,5 @@
 AC_PREREQ([2.71])
-AC_INIT([sudoku],[0.1],[mike@conlen.org])
+AC_INIT([sudoku],[1.0],[mike@conlen.org])
 AC_CONFIG_SRCDIR([src/test.cpp])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
