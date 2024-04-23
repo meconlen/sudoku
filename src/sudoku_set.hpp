@@ -11,6 +11,8 @@
 
 class sudoku_set
 {
+ 
+ public:
    using set_t = uint_fast16_t; 
    using value_t = uint_fast8_t;
 
@@ -71,7 +73,7 @@ public:
 
    // std::size_t size() { return std::popcount(value_set); }
 
-   std::size_t size() { 
+   std::size_t size() const { 
       return pop_count[value_set & 0xFF] + pop_count[value_set >> 8];
    }
 
@@ -96,8 +98,8 @@ public:
    std::string to_string() const {
       std::ostringstream os;
       os << "{ ";
-      for(auto i = 0; i < 10; i++) {
-         if(value_set & set_values[i] == set_values[i]) {
+      for(std::size_t i = 0; i < 10; i++) {
+         if((value_set & set_values[i]) == set_values[i]) {
             os << i << ", ";
          }
       }
@@ -107,7 +109,7 @@ public:
 
    // Non-std::set methods 
 
-   set_t get_value() { return value_set; }
+   set_t get_value() const { return value_set; }
    bool includes(const sudoku_set& other) { return (value_set & other.value_set) == other.value_set; }
    void remove(const sudoku_set& other) {
       value_set = value_set & ~other.value_set;
