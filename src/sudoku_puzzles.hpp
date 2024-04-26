@@ -72,8 +72,8 @@ namespace set_candidates {
          { 0, {{ 4, 9 }} },
          { 0, {{ 4, 5, 9 }} },
          { 0, {{ 3, 4, 5, 6, 9 }} },
-         { 0, {{ 4 }} },
-         { 0, {{ 1 }} },
+         { 0, { 4 } },
+         { 0, { 1 } },
          { 0, {{ 1, 3, 4, 5, 6 }} },
          { 8, sudoku::default_candidates }
       }},
@@ -114,7 +114,7 @@ namespace set_candidates {
          { 0, {{ 4, 6 }} }, // entry
          { 0, {{ 4, 6, 7, 9 }} }, // entry
          { 5, sudoku::default_candidates },
-         { 0, {{ 4 }} },
+         { 0, { 4 } },
          { 1, sudoku::default_candidates },
          { 0, {{ 4, 7 }} },
          { 3, sudoku::default_candidates },
@@ -377,7 +377,7 @@ namespace hidden_singles {
          { 8,  sudoku::default_candidates }
       }},
       {{ // row 2
-         { 0, {{ 5 }} },
+         { 0, { 5 } },
          { 0, {{ 5, 8, 9 }} },
          { 0, {{ 1, 5, 9 }} },
          { 3,  sudoku::default_candidates },
@@ -587,7 +587,7 @@ namespace naked_pairs {
          { 8,  sudoku::default_candidates }
       }},
       {{ // row 2
-         { 0, {{ 7 }} },
+         { 0, { 7 } },
          { 3,  sudoku::default_candidates },
          { 2,  sudoku::default_candidates },
          { 0, {{ 5, 8 }} },
@@ -598,7 +598,7 @@ namespace naked_pairs {
          { 0, {{ 5, 6, 7 }} }
       }},
       {{ // row 3
-         { 0, {{ 8 }} },
+         { 0, { 8 } },
          { 9,  sudoku::default_candidates },
          { 5,  sudoku::default_candidates },
          { 3,  sudoku::default_candidates },
@@ -1231,7 +1231,7 @@ namespace pointing_pair{
       }},
       {{ // row 3
          { 0, {{ 6, 7, 8 }} },
-         { 0, {{ 8 }} },
+         { 0, { 8 } },
          { 0, {{ 5, 6, 8 }} },
          { 9,  sudoku::default_candidates },
          { 0, {{ 3, 4, 5, 7, 8 }} },
@@ -1448,7 +1448,7 @@ namespace reduce_box_line_row {
          { 0, {{ 3, 4, 5 }} },
          { 0, {{ 3, 4, 5, 9 }} },
          { 1,  sudoku::default_candidates },
-         { 0, {{ 2 }} },
+         { 0, { 2 } },
          { 6,  sudoku::default_candidates },
          { 0, {{ 5, 9 }} }
       }},
@@ -2053,7 +2053,7 @@ namespace naked_triple
          { 4,  sudoku::default_candidates },
          { 0, {{ 1, 3, 5 }} },
          { 8,  sudoku::default_candidates },
-         { 0, {{ 5 }} },
+         { 0, { 5 } },
          { 2,  sudoku::default_candidates },
          { 9,  sudoku::default_candidates }
       }},
@@ -2064,7 +2064,7 @@ namespace naked_triple
          { 0, {{ 1, 5, 7, 9 }} },
          { 0, {{ 1, 3, 5 }} },
          { 0, {{ 5, 6, 7, 9 }} },
-         { 0, {{ 8 }} },
+         { 0, { 8 } },
          { 0, {{ 3, 6 }} },
          { 4,  sudoku::default_candidates }
       }},
@@ -2075,7 +2075,7 @@ namespace naked_triple
          { 0, {{ 1, 9 }} },
          { 2,  sudoku::default_candidates },
          { 0, {{ 6, 9 }} },
-         { 0, {{ 1 }} },
+         { 0, { 1 } },
          { 0, {{ 3, 6 }} },
          { 7,  sudoku::default_candidates }
       }},
@@ -2097,8 +2097,8 @@ namespace naked_triple
          { 0, {{ 5, 8, 9 }} },
          { 0, {{ 5, 8 }} },
          { 0, {{ 5, 9 }} },
-         { 0, {{ 3 }} },
-         { 0, {{ 4 }} },
+         { 0, { 3 } },
+         { 0, { 4 } },
          { 0, {{ 1, 6 }} }
       }},
       {{ // row 6
@@ -2141,7 +2141,7 @@ namespace naked_triple
          { 6,  sudoku::default_candidates },
          { 4,  sudoku::default_candidates },
          { 2,  sudoku::default_candidates },
-         { 0, {{ 9 }} },
+         { 0, { 9 } },
          { 7,  sudoku::default_candidates },
          { 0, {{ 5, 8 }} }
       }}
