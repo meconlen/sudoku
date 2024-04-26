@@ -1,10 +1,10 @@
 AC_PREREQ([2.71])
-AC_INIT([sudoku],[1.0],[mike@conlen.org])
+AC_INIT([sudoku],[1.1],[mike@conlen.org])
 AC_CONFIG_SRCDIR([src/test.cpp])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
 AC_PROG_CXX([g++])
-AM_SILENT_RULES([yes])
+AM_SILENT_RULES([no])
 #AC_CHECK_INCLUDES_DEFAULT
 #AC_PROG_EGREP
 

@@ -1,10 +1,4 @@
-cxx_flags = -Werror -Wall -pedantic -Wcast-align -Wcast-align -Wcast-qual \
--Wctor-dtor-privacy -Wdisabled-optimization -Weffc++ -Wextra -Wfloat-equal \
--Winit-self -Wlogical-op -Wmissing-declarations -Wmissing-include-dirs \
--Wnoexcept -Wno-unused -Wno-unused-parameter -Wold-style-cast -Woverloaded-virtual \
--Wparentheses -Wpointer-arith -Wredundant-decls -Wreturn-type -Wshadow \
--Wsign-conversion -Wsign-promo -Wstrict-null-sentinel -Wswitch-default -Wundef \
--Wuninitialized -Wunreachable-code -Wunused -Wwrite-strings -Wmissing-braces
+cxx_flags = -Werror -Wall -pedantic
 
 check_LTLIBRARIES = libgtest.la
 libgtest_la_SOURCES = ../googletest/googletest/src/gtest-all.cc
