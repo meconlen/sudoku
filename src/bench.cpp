@@ -531,12 +531,12 @@ static void BM_EULER(benchmark::State& state) {
          "000003017015009008060000000100007000009000200000500004000000020500600340340200000",
          "300200000000107000706030500070009080900020004010800050009040301000702000000008006"
       };
-      int total = 0;
+      volatile int total = 0;
 
       for(const auto& p : puzzle_strings) {
          sudoku s(p);
          s.solve_puzzle();
-         total += (s.get_puzzle()[0][0] * 100) + (s.get_puzzle()[0][1] * 10) + (s.get_puzzle()[0][2]);
+         total = total + (s.get_puzzle()[0][0] * 100) + (s.get_puzzle()[0][1] * 10) + (s.get_puzzle()[0][2]);
       }
    }
 }
