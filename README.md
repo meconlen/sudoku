@@ -12,9 +12,21 @@ This code can be used to solve sudoku puzzles. You can instantiate `sudoku` with
 
 Install the following brews (or similar for your package manager)
 
-* autoconf
-* automake
-* google-benchmark
+* `autoconf`
+* `automake`
+* `google-benchmark`
+
+## Linux
+
+On Debian install the following (substitute for your Linux system as necessary)
+
+* `g++`
+* `autoconf`
+* `automake`
+* `libtool`
+* `make`
+* `libbenchmark-dev`
+* `git`
 
 # Build
 
@@ -25,7 +37,18 @@ Run the following (substitute for `/opt/homebrew/` if you use a different packag
 ```
 git submodule update --init --recursive
 autoreconf -vfi 
-./configure CPPFLAGS="-O3 -g -I/opt/homebrew/include" LDFLAGS="-L/opt/homebrew/lib"
+./configure CPPFLAGS="-O3 -g -march=native -I/opt/homebrew/include" LDFLAGS="-L/opt/homebrew/lib"
+make
+```
+
+## Linux
+
+Run the following
+
+```
+git submodule update --init --recursive
+autoreconf -vfi
+./configure CPPFLAGS="-O3 -g -march=native"
 make
 ```
 
